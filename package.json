@@ -1,6 +1,10 @@
 {
   "name": "delta",
   "version": "0.1.0",
+  "engines": {
+    "node": "12.13.1",
+    "npm": "6.x"
+  },
   "private": true,
   "dependencies": {
     "bootstrap": "^4.3.1",
