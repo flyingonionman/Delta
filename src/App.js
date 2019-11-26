@@ -28,7 +28,7 @@ class App extends React.Component {
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
               <h5 class="mt-0 mb-1">Drop Blocks</h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              Implemented Dropblocks in resnet-50 according to https://arxiv.org/abs/1810.12890. Source code https://github.com/ArianaFreitag/cgml-midterm.
             </div>
           </li>
 
