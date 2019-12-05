@@ -22,7 +22,7 @@ class App extends React.Component {
         </div>
         <div className="description">
         
-        <h1>Recent Projects</h1>
+        <h1>Recent Projects. 2019 Winter</h1>
         <ul class="list-unstyled">
           <li class="media">
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
