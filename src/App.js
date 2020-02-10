@@ -17,7 +17,7 @@ class App extends React.Component {
       </div>
       <div className="content">
         <div className="picture">
-            <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/75199760_2668333133223417_2342838246888701952_n.jpg?_nc_cat=100&_nc_ohc=fvOyMs2mwKgAQm-SisQ-SrZeN-aXTjR0iX60LEut6jK9q3NQsORe9IVwA&_nc_ht=scontent-lga3-1.xx&oh=f3d7471dbe4bf8bcc8cb9c534eca617d&oe=5E85DCCB"/>
+             <img src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-9/75199760_2668333133223417_2342838246888701952_n.jpg?_nc_cat=100&_nc_ohc=fvOyMs2mwKgAQm-SisQ-SrZeN-aXTjR0iX60LEut6jK9q3NQsORe9IVwA&_nc_ht=scontent-lga3-1.xx&oh=f3d7471dbe4bf8bcc8cb9c534eca617d&oe=5E85DCCB"/>
 
         </div>
         <div className="description">
@@ -25,18 +25,11 @@ class App extends React.Component {
         <h1>Projects 2020 Spring</h1>
         
         <ul class="list-unstyled">
+    
           <li class="media">
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
-              <h5 class="mt-0 mb-1">Drop Blocks</h5>
-              Implemented Dropblocks in resnet-50 according to https://arxiv.org/abs/1810.12890. Source code https://github.com/ArianaFreitag/cgml-midterm.
-            </div>
-          </li>
-
-          <li class="media">
-            <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
-            <div class="media-body">
-              <h5 class="mt-0 mb-1">Data visualization project </h5>
+              <h5 class="mt-0 mb-1">Poster design for tax abatement </h5>
               Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
             </div>
           </li>
@@ -44,8 +37,16 @@ class App extends React.Component {
           <li class="media">
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
-              <h5 class="mt-0 mb-1">Runescape Hi-score parser</h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              <h5 class="mt-0 mb-1">Baby monitoring device project</h5>
+              Done as an electrical engineering final project.
+            </div>
+          </li>
+
+          <li class="media">
+            <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
+            <div class="media-body">
+              <h5 class="mt-0 mb-1">UNION web journal design / programming</h5>
+              Done as an electrical engineering final project.
             </div>
           </li>
         </ul>
@@ -56,16 +57,25 @@ class App extends React.Component {
           <li class="media">
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
+              <h5 class="mt-0 mb-1">A small study on BERT</h5>
+              KEK
+            </div>
+          </li>
+          
+          <li class="media">
+            <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
+            <div class="media-body">
               <h5 class="mt-0 mb-1">Drop Blocks</h5>
-              Implemented Dropblocks in resnet-50 according to https://arxiv.org/abs/1810.12890. Source code https://github.com/ArianaFreitag/cgml-midterm.
+              Implemented Dropblocks in resnet-50 according to <a href="https://arxiv.org/abs/1810.12890">this article</a>. 
+              <a href="https://github.com/ArianaFreitag/cgml-midterm">Source code</a>.
             </div>
           </li>
 
           <li class="media">
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
-              <h5 class="mt-0 mb-1">Data visualization project </h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              <h5 class="mt-0 mb-1">Graphic design portfolio</h5>
+              I know how to use the illustrator a little bit. My sense of color is a bit off but I do what I can do.
             </div>
           </li>
 
@@ -73,12 +83,14 @@ class App extends React.Component {
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
               <h5 class="mt-0 mb-1">Runescape Hi-score parser</h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
+              <a href="https://github.com/flyingonionman/ECE-464-1-Databases/tree/master/pset2">Github Link</a>
+
             </div>
           </li>
         </ul>
 
         </div>
+
       </div>    
      
     </div>
