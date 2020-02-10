@@ -27,6 +27,10 @@ time, mark, audio, video {
   width: 100%;
 }
 
+body::-webkit-scrollbar {
+  display: none;
+}
+
 .content{
   min-height: 100%;
   width: 100%;
@@ -35,7 +39,8 @@ time, mark, audio, video {
   flex-direction: row;
   flex-wrap: nowrap;
   background-color: #D1D3C4;
-  
+  -ms-overflow-style: none;
+
   .picture{
     justify-content: center;
     align-content: center;
@@ -48,6 +53,8 @@ time, mark, audio, video {
   }
 
   .description{
+    overflow: hidden;
+
     justify-content: center;
     align-content: center;
     width: 50%;
