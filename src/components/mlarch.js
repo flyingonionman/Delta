@@ -56,31 +56,11 @@ class Mlarch extends React.Component {
                 <h3>
                   Coooode
                 </h3>
-
-                <pre>
-                def define_model(vocab_size, max_length): 
-                  # feature extractor model
-                  inputs1 = Input(shape=(4096,))
-                  fe1 = Dropout(0.5)(inputs1)
-                  fe2 = Dense(256, activation='relu')(fe1)
-                  # sequence model
-                  inputs2 = Input(shape=(max_length,))
-                  se1 = Embedding(vocab_size, 256, mask_zero=True)(inputs2)
-                  se2 = Dropout(0.5)(se1)
-                  se3 = LSTM(256)(se2)
-                  # decoder model
-                  decoder1 = add([fe2, se3])
-                  decoder2 = Dense(256, activation='relu')(decoder1)
-                  outputs = Dense(vocab_size, activation='softmax')(decoder2)
-                  # tie it together [image, seq] [word]
-                  model = Model(inputs=[inputs1, inputs2], outputs=outputs)
-                  # compile model
-                  model.compile(loss='categorical_crossentropy', optimizer='adam')
-                  # summarize model
-                  model.summary()
-                  return model
-                </pre>
-
+            
+                <code>
+                https://github.com/flyingonionman/ML_ARCH
+                </code>
+                
                 <h3>Instructions ?</h3>
                 <code>startseq cut a four x two ”x four ” at thirty eight inch b two x two ”x four ” at thirty six inch c two x two ”x four ” at thirty nine inch d six x one ”x six ” at thirty eight inch endseq
                 </code>
