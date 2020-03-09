@@ -20,6 +20,13 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
+@font-face {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  src:url('./font/Raleway-Regular.ttf') format('truetype') /* Safari, Android, iOS */
+}
+
 .App{
   min-height: 100vh;
   background-color:#D1D3C4;
@@ -101,5 +108,63 @@ body::-webkit-scrollbar {
   /* Change the link color to #111 (black) on hover */
   li a:hover {
     background-color: #111;
+  }
+}
+
+
+.Mlarch {
+  background-color: #f5f5f5;
+  text-align: center;
+  font-family: 'Raleway';
+  img{
+    margin-top:2%;
+    width:75%;
+    margin-bottom:2%;
+  }
+  .App-header {
+    width: 50%;
+    min-height: 18vh;
+    margin-top: 2%;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: #282c34;
+    text-align:left;
+    border-bottom: 2px solid black;
+    h1{
+      font-size:3em;
+  
+    }
+  }
+
+  h3{
+    font-size:1.5em;
+  }
+
+  .content{
+    padding:2%;
+    position: relative;
+    margin: 2% 25%;
+    /* left: 0; */
+    text-align: left;
+    display: block;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 1.5vmin);
+  }
+  
+  .contentblock{
+    margin-bottom: 4%;
+  }  
+  .code{  
+    font-family: 'Courier New', Courier, monospace;
+
+    font-size:.8em;
+    line-height:0.9em;
+    margin-bottom: .5%;
+
   }
 }
