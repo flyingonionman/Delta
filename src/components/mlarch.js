@@ -66,14 +66,14 @@ class Mlarch extends React.Component {
                   </Carousel>
                   
                   <p>
-                    These are few of the thousands of benches created by grasshopper, by parametricizing each of the dimensions.
+                  Thousands of unique parametrically generated renders serve as the ground truth bench data set for the machine learning model.
                   </p>
                                <hr></hr>
 
                   <h3>SCRIBBLE AS BENCH</h3>
                   <img src = {bench2}/>
                   <p>
-                    This is a bench that I took 12 seconds drawing on MS paint. 
+                    A 12 second MS Paint sketch tests the model’s accuracy.
                   </p>
 
                 <hr></hr>
