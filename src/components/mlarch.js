@@ -25,7 +25,7 @@ class Mlarch extends React.Component {
     <div className="Mlarch" >    
         <div className="blog">
             <div className='App-header'>
-                <h1>Ai-progettazione : "Self-design" </h1>
+                <h1>Ai-progettazione : "AI-design" </h1>
 
             </div>
             <div className='content'>
@@ -77,6 +77,11 @@ class Mlarch extends React.Component {
                   </p>
 
                 <hr></hr>
+                <h3>Instructions</h3>
+                <code>startseq cut a 4x 2”x4” at 42 inch b 2x 2”x4” at 18 inch c 2x 2”x4” at 20 inch d 3x 1”x6” at 20 inch endseq
+                </code>
+
+                <hr></hr>
                 <h3>
                   How does it work?
                 </h3>
@@ -98,11 +103,7 @@ class Mlarch extends React.Component {
                 
                 <hr></hr>
 
-                <h3>Instructions</h3>
-                <code>startseq cut a 4x 2”x4” at 42 inch b 2x 2”x4” at 18 inch c 2x 2”x4” at 20 inch d 3x 1”x6” at 20 inch endseq
-                </code>
-
-                <hr></hr>
+                
 
                 <h3>GAN in the works</h3>
                 <img src = {bench3}/>
