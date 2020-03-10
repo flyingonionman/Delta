@@ -1,6 +1,7 @@
 import React from 'react';
 import '../App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import gif1 from '../images/latent.gif'; // Tell webpack this JS file uses this image
 
 class Home extends React.Component {
   render() {
@@ -28,10 +29,23 @@ class Home extends React.Component {
         <ul class="list-unstyled">
     
           <li class="media">
+            <img src={gif1}   width="64" height="64" class="mr-3" alt="bert"></img>
+            <div class="media-body">
+              <h5 class="mt-0 mb-1">Machine learning with architecture </h5>
+            </div>
+          </li>
+
+          <li class="media">
+            <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
+            <div class="media-body">
+              <h5 class="mt-0 mb-1">Data science for unfair bail bonds </h5>
+            </div>
+          </li>
+
+          <li class="media">
             <img src="https://image.flaticon.com/icons/svg/120/120845.svg"   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
               <h5 class="mt-0 mb-1">Poster design for tax abatement </h5>
-              Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
             </div>
           </li>
 

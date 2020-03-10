@@ -25,7 +25,7 @@ class Mlarch extends React.Component {
     <div className="Mlarch" >    
         <div className="blog">
             <div className='App-header'>
-                <h1>Ai-progettazione : "AI-design" </h1>
+                <h1>AI-progettazione : <br></br> AI-design </h1>
 
             </div>
             <div className='content'>
