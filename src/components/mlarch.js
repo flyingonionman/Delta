@@ -12,7 +12,7 @@ import bench04 from '../images/2Bench_00004.jpg'; // Tell webpack this JS file u
 import bench2 from '../images/example2.jpg'; // Tell webpack this JS file uses this image
 import bench3 from '../images/example3.png'; // Tell webpack this JS file uses this image
 
-import model1 from '../images/model1.png'; // Tell webpack this JS file uses this image
+import model1 from '../images/Diagram.png'; // Tell webpack this JS file uses this image
 import model2 from '../images/model2.png'; // Tell webpack this JS file uses this image
 
 import gif1 from '../images/train.gif'; // Tell webpack this JS file uses this image
@@ -30,16 +30,16 @@ class Mlarch extends React.Component {
             </div>
             <div className='content'>
                 <div className='contentblock'>
-                  <h3> Who is Enzo Mari </h3>
+                  <h3>ENZO MARI </h3>
                   <img src = {autoprogetta}/>
-
+                  <p>Enzo Mari “Autoprogettazione” published 1974</p>
                 </div>
                 <hr></hr>
 
                 <div className='contentblock'>
 
                   <h3>
-                    Bench is a bench
+                    RENDER AS BENCH
                   </h3>
 
                   <Carousel>
@@ -70,7 +70,7 @@ class Mlarch extends React.Component {
                   </p>
                                <hr></hr>
 
-                  <h3>Bench is not a bench</h3>
+                  <h3>SCRIBBLE AS BENCH</h3>
                   <img src = {bench2}/>
                   <p>
                     This is a bench that I took 12 seconds drawing on MS paint. 
@@ -83,7 +83,7 @@ class Mlarch extends React.Component {
 
                 <hr></hr>
                 <h3>
-                  How does it work?
+                GENERATIVE MODEL
                 </h3>
                 <img src = {model1}/>
                 <img src = {model2}/>
@@ -105,7 +105,7 @@ class Mlarch extends React.Component {
 
                 
 
-                <h3>GAN in the works</h3>
+                <h3>GAN_WORK IN PROGRESS</h3>
                 <img src = {bench3}/>
 
                 <img src = {gif1}/>
