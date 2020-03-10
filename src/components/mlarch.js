@@ -113,6 +113,14 @@ class Mlarch extends React.Component {
 
                 </div>
                 
+                <hr></hr>
+
+                <h3>Credits go to</h3>
+                <p>Ariana Freitag</p>
+                <p>Minyoung Na</p>
+                <p>Jihoon Park</p>
+                <p>Willem Smith-Clark</p>
+
             </div>
 
           </div>
