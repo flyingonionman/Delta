@@ -110,7 +110,7 @@ class Mlarch extends React.Component {
 
     <div className="Mlarch_intro" >    
           <div id="c" ref={ref => (this.mount = ref)} />
-          <input type="range" min="0" max="100" step="0.1" id="slider" orient="vertical" />
+          <input type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
           <div id="info-body">
           <h1>AI-progettazione</h1>
           <h3>Move around ! </h3>
