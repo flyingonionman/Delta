@@ -1,7 +1,6 @@
 import React from 'react';
 import '../App.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import gif1 from '../images/latent.gif'; // Tell webpack this JS file uses this image
 
 class Home extends React.Component {
   render() {
@@ -29,7 +28,6 @@ class Home extends React.Component {
         <ul class="list-unstyled">
     
           <li class="media">
-            <img src={gif1}   width="64" height="64" class="mr-3" alt="bert"></img>
             <div class="media-body">
               <h5 class="mt-0 mb-1">Machine learning with architecture </h5>
             </div>
