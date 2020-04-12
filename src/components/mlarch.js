@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 import * as THREE from "three";
-//const OrbitControls = require('three-orbitcontrols')
+const OrbitControls = require('three-orbitcontrols')
 
 
 class Mlarch extends React.Component {
@@ -39,8 +39,8 @@ class Mlarch extends React.Component {
     this.mount.appendChild(this.renderer.domElement)
 
     //ADD CONTROLS
-    //this.controls = new OrbitControls(this.camera, this.renderer.domElement );
-    //this.controls.update();
+    this.controls = new OrbitControls(this.camera, this.renderer.domElement );
+    this.controls.update();
 
     //ADD CUBE
     var geometry = new THREE.BoxGeometry(2, 1, 2)
@@ -74,7 +74,7 @@ class Mlarch extends React.Component {
   animate = () => {
     this.cube.rotation.x += 0.01
     this.cube.rotation.y += 0.01
-    //this.controls.update();
+    this.controls.update();
 
     this.renderScene()
     this.frameId = window.requestAnimationFrame(this.animate)
