@@ -42,26 +42,25 @@ class Mlarch extends React.Component {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement );
     this.controls.update();
 
-
-
     //ADD CUBE
     var geometry = new THREE.BoxGeometry(2, 1, 2)
     var material = new THREE.MeshBasicMaterial({ color: '#FFFFFF'     })
 
     this.cube = new THREE.Mesh(geometry, material)
     this.cube.position.x -= 2.5
+
+    //ADD SLIDER
+    var slider = document.getElementById("slider");
+    slider.addEventListener("input", this.resizeCube);
+
     this.scene.add(this.cube)
     this.start()
 
     window.addEventListener('resize', this.handleWindowResize);
 
-  }
-
-  movecam = () =>{
-
-
     
   }
+
   start = () => {
       if (!this.frameId) {
         this.frameId = requestAnimationFrame(this.animate)
@@ -97,15 +96,21 @@ class Mlarch extends React.Component {
     this.stop()
     this.mount.removeChild(this.renderer.domElement)
     window.removeEventListener('resize', this.handleWindowResize);
+    window.removeEventListener('input', this.resizeCube);
+
   }
 
+  resizeCube = (e) => {
+    var target = (e.target) ? e.target : e.srcElement;
+    this.cube.scale.x  = target.value;
+  }
 
   render() {
   return (
 
     <div className="Mlarch_intro" >    
           <div id="c" ref={ref => (this.mount = ref)} />
-          <input type="range" min="0" max="10" value="0" step="0.1" id="slider" orient="vertical" />
+          <input type="range" min="0" max="100" step="0.1" id="slider" orient="vertical" />
           <div id="info-body">
           <h1>AI-progettazione</h1>
           <h3>Move around ! </h3>

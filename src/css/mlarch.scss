@@ -25,6 +25,31 @@ html, body {margin: 0; height: 100%; overflow: hidden}
 .Mlarch_intro{
   font-family: 'Bahnschrift';
 
+  #slider{
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 50%; /* Full-width */
+    height: 25px; /* Specified height */
+    background: #FFFFFF; /* Grey background */
+    outline: none; /* Remove outline */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+    position: absolute;
+    bottom:0;
+    margin:3%;
+    z-index:101;
+    writing-mode: bt-lr; /* IE */
+  }
+
+  #slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 25px; /* Set a specific slider handle width */
+    height: 20px; /* Slider handle height */
+    background: #000000; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
   button{
     background-color: white;
     border: none;
@@ -44,6 +69,7 @@ html, body {margin: 0; height: 100%; overflow: hidden}
     display:block;
     color:white;
     right :0 ;
+    margin-top:-5%;
     margin-right:5%;
 
   }
