@@ -9,6 +9,7 @@ import {
 } from "react-router-dom";
 import Home from './components/home'
 import Mlarch from './components/mlarch';
+import MlarchGallery from './components/mlarch_gallery';
 
 class App extends React.Component {
   render() {
@@ -20,7 +21,13 @@ class App extends React.Component {
               <Home/>
             </Route>
             <Route path="/mlarch" >
+
               <Mlarch/>
+            </Route>
+
+            <Route path="/mlarch_gallery" >
+              
+              <MlarchGallery/>
             </Route>
           </Switch>
       </div>

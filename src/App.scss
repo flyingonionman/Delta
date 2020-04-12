@@ -120,6 +120,7 @@ body::-webkit-scrollbar {
     font-size:0.7em;    
   }
 
+
   .App-header {
     min-height: 14vh;
     margin-top: 2%;
@@ -131,10 +132,12 @@ body::-webkit-scrollbar {
     font-size: calc(10px + 2vmin);
     color: #282c34;
     text-align:left;
-    h1{
-      font-size:2.2em;
-  
-    }
+   
+  }
+
+  h1{
+    font-size:2.2em;
+
   }
 
   h3{
@@ -176,4 +179,28 @@ body::-webkit-scrollbar {
 .carousel-control-next,
 .carousel-control-prev {
     filter: invert(100%);
+}
+
+.Mlarch_intro{
+  font-family: 'Bahnschrift';
+  position:fixed;
+  #info-body {
+    position: absolute;
+    top: 35%;
+    width: 40%;
+    text-align: left;
+    z-index: 100;
+    display:block;
+    color:white;
+    right :0 ;
+    margin-right:5%;
+  }
+  h1{
+    font-size:2.2em;
+
+  }
+
+  h3{
+    font-size:1.5em;
+  }
 }
