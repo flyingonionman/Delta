@@ -20,6 +20,9 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
+html, body {margin: 0; height: 100%; overflow: hidden}
+
+
 @font-face {
   font-family: 'Bahnschrift';
   font-style: normal;
@@ -183,10 +186,21 @@ body::-webkit-scrollbar {
 
 .Mlarch_intro{
   font-family: 'Bahnschrift';
-  position:fixed;
+
+  button{
+    background-color: white;
+    border: none;
+    color: black;
+    display:block;
+    margin-top:4%;
+    padding: 15px 32px;
+    font-size: 18px;
+
+  }
+
   #info-body {
     position: absolute;
-    top: 35%;
+    top: 30%;
     width: 40%;
     text-align: left;
     z-index: 100;
