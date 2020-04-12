@@ -21,7 +21,6 @@ import model2 from '../images/model2.png'; // Tell webpack this JS file uses thi
 import gif1 from '../images/train.gif'; // Tell webpack this JS file uses this image
 import gif2 from '../images/latent.gif'; // Tell webpack this JS file uses this image
 
-import * as THREE from "three";
 
 
 class Mlarch extends React.Component {
