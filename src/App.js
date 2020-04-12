@@ -10,9 +10,13 @@ import {
 import Home from './components/home'
 import Mlarch from './components/mlarch';
 import MlarchGallery from './components/mlarch_gallery';
+import {isMobile} from 'react-device-detect';
 
 class App extends React.Component {
   render() {
+  if (isMobile) {
+      return <div> This content is unavailable on mobile</div>
+  }
   return (
     <Router>
       <div  >    
