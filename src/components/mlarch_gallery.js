@@ -41,7 +41,7 @@ class Mlarch extends React.Component {
     return _.map(_.range(this.props.items), function(i) {
       return (
         <div className="slot" key={i}>
-          <span ><img src={images['sparks2.jpg']}/></span>
+          <span><img src={images["p"+i+".png"]}/></span>
         </div>
       );
     });
@@ -57,7 +57,7 @@ class Mlarch extends React.Component {
         w: 1,
         h: y,
         i: i.toString(),
-        static: true
+        static: false
       };
     });
   }

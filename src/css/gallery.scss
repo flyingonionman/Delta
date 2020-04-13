@@ -24,6 +24,7 @@ html,body{
   background-color: black;
   height:100%;
   margin:0;
+  overflow:hidden;
 }
 
 div{
@@ -66,4 +67,10 @@ body::-webkit-scrollbar {
 .slot{
     background-color:white;
     color:black;
+}
+
+img{
+  object-fit: contain;
+  width: 100%;
+
 }
