@@ -12,6 +12,8 @@ function importAll(r) {
   console.log(r.keys())
   let images = {};
   r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
+  console.log(images);
+
   return images;
 }
 
@@ -25,7 +27,7 @@ class Mlarch extends React.Component {
     items: 20,
     rowHeight: 30,
     onLayoutChange: function() {},
-    cols: 12
+    cols: 7
   };
 
   constructor(props) {
@@ -39,7 +41,7 @@ class Mlarch extends React.Component {
     return _.map(_.range(this.props.items), function(i) {
       return (
         <div className="slot" key={i}>
-          <span >{i}</span>
+          <span ><img src={images['sparks2.jpg']}/></span>
         </div>
       );
     });
@@ -48,13 +50,14 @@ class Mlarch extends React.Component {
   generateLayout() {
     const p = this.props;
     return _.map(new Array(p.items), function(item, i) {
-      const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
+      const y = 4;
       return {
-        x: (i * 2) % 12,
-        y: Math.floor(i / 6) * y,
-        w: 2,
+        x: (i ) % 7,
+        y: Math.floor(i / 7) * y,
+        w: 1,
         h: y,
-        i: i.toString()
+        i: i.toString(),
+        static: true
       };
     });
   }

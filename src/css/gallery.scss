@@ -20,7 +20,16 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-  .gallery{
+html,body{
+  background-color: black;
+  height:100%;
+  margin:0;
+}
+
+div{
+  height:inherit;
+}
+.gallery{
     html,body,div{
 
     margin:0;
@@ -46,10 +55,11 @@ body::-webkit-scrollbar {
     color: white;
     position: relative;
     width: 80%;
-    margin: 4% 10%;
+    margin: 6% 10%;
     /* height: inherit; */
     height: 80%;
-
+    border-color:white;
+    border-style: solid;
 }
 
 
