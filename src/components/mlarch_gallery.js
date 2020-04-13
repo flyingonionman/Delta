@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Carousel} from 'react-bootstrap';
 import '../css/gallery.scss';
-import GridLayout from 'react-grid-layout';
+import RGL, { WidthProvider } from "react-grid-layout";
+import _ from "lodash";
+
+const ReactGridLayout = WidthProvider(RGL);
+
 
 function importAll(r) {
   console.log(r.keys())
@@ -16,24 +20,59 @@ const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$
 
 
 class Mlarch extends React.Component {
- 
+  static defaultProps = {
+    className: "layout",
+    items: 20,
+    rowHeight: 30,
+    onLayoutChange: function() {},
+    cols: 12
+  };
+
+  constructor(props) {
+    super(props);
+
+    const layout = this.generateLayout();
+    this.state = { layout };
+  }
+
+  generateDOM() {
+    return _.map(_.range(this.props.items), function(i) {
+      return (
+        <div className="slot" key={i}>
+          <span >{i}</span>
+        </div>
+      );
+    });
+  }
+
+  generateLayout() {
+    const p = this.props;
+    return _.map(new Array(p.items), function(item, i) {
+      const y = _.result(p, "y") || Math.ceil(Math.random() * 4) + 1;
+      return {
+        x: (i * 2) % 12,
+        y: Math.floor(i / 6) * y,
+        w: 2,
+        h: y,
+        i: i.toString()
+      };
+    });
+  }
+
 
   render() {
-    const layout = [
-      {i: 'a', x: 0, y: 0, w: 2, h: 2, static: true},
-      {i: 'b', x: 2, y: 0, w: 2, h: 2, static: true},
-      {i: 'c', x: 4, y: 0, w: 2, h: 2, static: true},
-    ];
 
 
     return (
       <div className ="gallery">
 
-        <GridLayout className="layout" layout={layout} cols={12} rowHeight={30} width={1200}>
-          <div key="a">            <img src={images['sparks3.jpg']} class="card-img-top" alt="..."/></div>
-          <div key="b">  <img src={images['sparks2.jpg']} class="card-img-top" alt="..."/></div>
-          <div key="c">  <img src={images['sparks.jpg']} class="card-img-top" alt="..."/></div>
-        </GridLayout>
+        <ReactGridLayout className="layout" 
+            layout={this.state.layout}
+            onLayoutChange={this.onLayoutChange}
+            {...this.props}
+          >
+            {this.generateDOM()}
+        </ReactGridLayout>
 
       </div>
     );
