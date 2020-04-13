@@ -1,30 +1,28 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Carousel} from 'react-bootstrap';
-import '../App.scss';
-import autoprogetta from '../images/autoprogetta.jpg'; // Tell webpack this JS file uses this image
-import bench00 from '../images/2Bench_00000.jpg'; // Tell webpack this JS file uses this image
-import bench01 from '../images/2Bench_00001.jpg'; // Tell webpack this JS file uses this image
-import bench02 from '../images/2Bench_00002.jpg'; // Tell webpack this JS file uses this image
-import bench03 from '../images/2Bench_00003.jpg'; // Tell webpack this JS file uses this image
-import bench04 from '../images/2Bench_00004.jpg'; // Tell webpack this JS file uses this image
+import '../css/archive.scss';
+import autoprogetta from '../archive/autoprogetta.jpg'; // Tell webpack this JS file uses this image
+import bench00 from '../archive/2Bench_00000.jpg'; // Tell webpack this JS file uses this image
+import bench01 from '../archive/2Bench_00001.jpg'; // Tell webpack this JS file uses this image
+import bench02 from '../archive/2Bench_00002.jpg'; // Tell webpack this JS file uses this image
+import bench03 from '../archive/2Bench_00003.jpg'; // Tell webpack this JS file uses this image
+import bench04 from '../archive/2Bench_00004.jpg'; // Tell webpack this JS file uses this image
 
-import bench2 from '../images/example2.jpg'; // Tell webpack this JS file uses this image
-import bench3 from '../images/example3.png'; // Tell webpack this JS file uses this image
+import bench2 from '../archive/example2.jpg'; // Tell webpack this JS file uses this image
+import bench3 from '../archive/example3.png'; // Tell webpack this JS file uses this image
 
-import abench1 from '../images/actualbench1.jpg'; // Tell webpack this JS file uses this image
-import abench2 from '../images/actualbench2.jpg'; // Tell webpack this JS file uses this image
+import abench1 from '../archive/actualbench1.jpg'; // Tell webpack this JS file uses this image
+import abench2 from '../archive/actualbench2.jpg'; // Tell webpack this JS file uses this image
 
-import model1 from '../images/Diagram.png'; // Tell webpack this JS file uses this image
-import model2 from '../images/model2.png'; // Tell webpack this JS file uses this image
+import model1 from '../archive/Diagram.png'; // Tell webpack this JS file uses this image
+import model2 from '../archive/model2.png'; // Tell webpack this JS file uses this image
 
-import gif1 from '../images/train.gif'; // Tell webpack this JS file uses this image
-import gif2 from '../images/latent.gif'; // Tell webpack this JS file uses this image
+import gif1 from '../archive/train.gif'; // Tell webpack this JS file uses this image
+import gif2 from '../archive/latent.gif'; // Tell webpack this JS file uses this image
 
 
-
-class Mlarch extends React.Component {
- 
+class archive extends React.Component {
 
   render() {
   return (
@@ -154,4 +152,4 @@ class Mlarch extends React.Component {
   }
 }
 
-export default Mlarch;
+export default archive;
