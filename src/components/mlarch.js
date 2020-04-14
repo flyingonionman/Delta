@@ -19,13 +19,13 @@ function importAll(r) {
 
 const stlfiles = importAll(require.context('../stl', false, /\.(stl)$/));
 
-var camera, scene, renderer;
+var camera, scene, renderer,controls;
 var bench;
+var frameId;
 
 class Mlarch extends React.Component {
   componentDidMount(){
     this.init();
-    this.start();
   }
 
   init = () =>{
@@ -57,7 +57,7 @@ class Mlarch extends React.Component {
       1,
       1000
     )
-    camera.position.z = 8
+    camera.position.z = 12
 
     // Lights
     scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
@@ -74,8 +74,8 @@ class Mlarch extends React.Component {
     this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    this.controls = new OrbitControls(camera,renderer.domElement );
-    this.controls.update();
+    controls = new OrbitControls(camera,renderer.domElement );
+    controls.update();
 
     
 
@@ -103,28 +103,32 @@ class Mlarch extends React.Component {
     var material = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0x111111, shininess: 300 } );
 
     loader.load( stlfiles['Bench.stl'], function ( geometry ) {
+      geometry.applyMatrix( new THREE.Matrix4().makeTranslation(20, 32, -20) );
+
       bench = new THREE.Mesh( geometry, material );
       bench.scale.set( 0.05,  0.05, 0.05 );
-      bench.rotation.x = 90;
+      bench.rotation.x = 45;
       
-      bench.position.x = -6 ;
-      bench.position.y = 0.6 ;
-      bench.position.z = 4 ;
+      bench.position.x = -8 ;
+      bench.position.y = .8 ;
+      bench.position.z = 0 ;
 
       bench.castShadow = true;
       bench.receiveShadow = true;
       scene.add( bench );
       console.log( bench)
-      //test
-      var geometry = new THREE.BoxGeometry(.5, 1, 2)
-      test();
+      
+      start();
     } );  
 
 
     //ADD SLIDER
     var slider = document.getElementById("slider");
-    slider.addEventListener("input", this.resizeCube);
+    slider.addEventListener("input", resize);
     
+    var slider2 = document.getElementById("slider2");
+    slider2.addEventListener("input", resizey);
+
     scene.add(this.cube);
     window.addEventListener('resize', this.handleWindowResize);
 
@@ -152,47 +156,28 @@ class Mlarch extends React.Component {
 
   }
 
-  start = () => {
-      if (!this.frameId) {
-        this.frameId = requestAnimationFrame(this.animate)
-      }
-  }
+  
   
   stop = () => {
-      cancelAnimationFrame(this.frameId)
+      cancelAnimationFrame(frameId)
   }
-  
-  
-  animate = () => {
-
-    this.controls.update();
-    
-
-    renderScene()
-    this.frameId = window.requestAnimationFrame(this.animate)
-  }
-  
-  
-  
  
   handleWindowResize = () => {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    this.renderer.setSize(width, height)
+    renderer.setSize(width, height)
 
   };
 
   componentWillUnmount() {
     this.stop()
-    this.mount.removeChild(this.renderer.domElement)
+    this.mount.removeChild(renderer.domElement)
     window.removeEventListener('resize', this.handleWindowResize);
-    window.removeEventListener('input', this.resizeCube);
+    window.removeEventListener('input', this.resize);
 
   }
 
-  resizeCube = (e) => {
-    var target = (e.target) ? e.target : e.srcElement;
-  }
+  
 
   
   render() {
@@ -200,14 +185,16 @@ class Mlarch extends React.Component {
 
     <div className="Mlarch_intro" >    
           <div id="c" ref={ref => (this.mount = ref)} />
-          <input type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
+          <input className="controller" type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
+          <input className="controller" type="range" min="0" max="10" step="0.1" id="slider2" orient="vertical" />
+
           <div id="info-body">
           <h1>AI-progettazione</h1>
           <h3>Move around ! </h3>
 
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
+          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-          
+          </p>  
           <button type="button"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch_gallery">To gallery</Link></button>
           
             <div id="credits">
@@ -228,9 +215,36 @@ class Mlarch extends React.Component {
     );
   }
 }
+function start () {
+  if (!frameId) {
+    frameId = requestAnimationFrame(animate)
+  }
+}
 
 function renderScene () {
   renderer.render(scene, camera)
+}
+
+function animate () {
+
+  controls.update();
+  bench.rotation.x += 0.01;
+  //bench.rotation.z += 0.01;
+
+  renderScene()
+  frameId = window.requestAnimationFrame(animate)
+}
+
+function resize (e) {
+  var target = (e.target) ? e.target : e.srcElement;
+  bench.scale.x = target.value/100; 
+  //bench.position.x = target.value/100 -8
+}
+
+function resizey (e) {
+  var target = (e.target) ? e.target : e.srcElement;
+  bench.scale.y = target.value/100;
+  bench.position.y = target.value/100  
 }
 
 export default Mlarch;
