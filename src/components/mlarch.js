@@ -5,6 +5,7 @@ import {
   Link
 } from "react-router-dom";
 import { STLLoader } from '../stl/STLLoader.js';
+import STLViewer from 'stl-viewer'
 
 import * as THREE from "three";
 const OrbitControls = require('three-orbitcontrols')
@@ -18,19 +19,24 @@ function importAll(r) {
 
 const stlfiles = importAll(require.context('../stl', false, /\.(stl)$/));
 
+var camera, scene, renderer;
+var bench;
+
 class Mlarch extends React.Component {
   componentDidMount(){
+    this.init();
+    this.start();
+  }
+
+  init = () =>{
     var loader = new STLLoader()
-
-
     var width = window.innerWidth
     var height = window.innerHeight
     //ADD SCENE
 
-
-    this.scene = new THREE.Scene()
-    this.scene.background = new THREE.Color( 0x72645b );
-    this.scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
+    scene = new THREE.Scene()
+    scene.background = new THREE.Color( 0x949292  );
+    scene.fog = new THREE.Fog( 0x152238 , 4, 15 );
 
     // Ground
 
@@ -40,35 +46,38 @@ class Mlarch extends React.Component {
     );
     plane.rotation.x = - Math.PI / 2;
     plane.position.y = - 0.5;
-    this.scene.add( plane );
+    scene.add( plane );
 
     plane.receiveShadow = true;
 
     //ADD CAMERA
-    this.camera = new THREE.PerspectiveCamera(
+    camera = new THREE.PerspectiveCamera(
       35,
       width / height,
       1,
-      15
+      1000
     )
-    this.camera.position.z = 8
+    camera.position.z = 8
+
+    // Lights
+    scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
+    this.addShadowedLight( 1, 1, 1, 0x000000,5 );
+    this.addShadowedLight( 0.5, 1, - 1, 0x00aaff, .51 );
 
     //ADD RENDERER
-    this.renderer = new THREE.WebGLRenderer({ antialias: true })
-    this.renderer.setSize(width, height)
-    this.mount.appendChild(this.renderer.domElement)
+    renderer = new THREE.WebGLRenderer({ antialias: true })
+    renderer.setSize(width, height)
+    renderer.setPixelRatio( window.devicePixelRatio );
+    renderer.outputEncoding = THREE.sRGBEncoding;
+    renderer.shadowMap.enabled = true;
+
+    this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement );
+    this.controls = new OrbitControls(camera,renderer.domElement );
     this.controls.update();
 
-    //ADD CUBE
-    var geometry = new THREE.BoxGeometry(2, 1, 2)
-    var material = new THREE.MeshBasicMaterial({ color: '#FFFFFF'     })
-
-    this.cube = new THREE.Mesh(geometry, material)
-
-    this.cube.position.x -= 2.5
+    
 
     // GRID
     var size = 20,
@@ -87,34 +96,60 @@ class Mlarch extends React.Component {
     }
     var line = new THREE.Line(geometry, material, THREE.LinePieces);
     line.position.y = -0.46;
-    this.scene.add(line);
+    scene.add(line);
 
     //ADD BENCH 
     //LOAD as ASCII
-    var reader = new FileReader();
+    var material = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0x111111, shininess: 300 } );
 
-    var geometry = loader.load(stlfiles["tilt.stl"]);
+    loader.load( stlfiles['Bench.stl'], function ( geometry ) {
+      bench = new THREE.Mesh( geometry, material );
+      bench.scale.set( 0.05,  0.05, 0.05 );
+      bench.rotation.x = 90;
+      
+      bench.position.x = -6 ;
+      bench.position.y = 0.6 ;
+      bench.position.z = 4 ;
 
-    var material = new THREE.MeshPhongMaterial( {
-        ambient: 0xff5533, 
-        color: 0xffffff, 
-        specular: 0x111111,
-        shininess: 200 } 
-                                                
-    );
-    var mesh = new THREE.Mesh( geometry, material );		
-    mesh.scale.set( 200, 200.5, 200.5 );
-    this.scene.add( mesh ); 
+      bench.castShadow = true;
+      bench.receiveShadow = true;
+      scene.add( bench );
+      console.log( bench)
+      //test
+      var geometry = new THREE.BoxGeometry(.5, 1, 2)
+      test();
+    } );  
+
 
     //ADD SLIDER
     var slider = document.getElementById("slider");
     slider.addEventListener("input", this.resizeCube);
     
-    this.scene.add(this.cube);
-
-    this.start()
-
+    scene.add(this.cube);
     window.addEventListener('resize', this.handleWindowResize);
+
+  }
+ 
+
+  addShadowedLight = ( x, y, z, color, intensity ) =>{
+
+    var directionalLight = new THREE.DirectionalLight( color, intensity );
+    directionalLight.position.set( x, y, z );
+    scene.add( directionalLight );
+
+    directionalLight.castShadow = true;
+
+    var d = 1;
+    directionalLight.shadow.camera.left = - d;
+    directionalLight.shadow.camera.right = d;
+    directionalLight.shadow.camera.top = d;
+    directionalLight.shadow.camera.bottom = - d;
+
+    directionalLight.shadow.camera.near = 1;
+    directionalLight.shadow.camera.far = 4;
+
+    directionalLight.shadow.bias = - 0.002;
+
   }
 
   start = () => {
@@ -129,17 +164,15 @@ class Mlarch extends React.Component {
   
   
   animate = () => {
-    this.cube.rotation.x += 0.01
-    this.cube.rotation.y += 0.01
-    this.controls.update();
 
-    this.renderScene()
+    this.controls.update();
+    
+
+    renderScene()
     this.frameId = window.requestAnimationFrame(this.animate)
   }
   
-  renderScene = () => {
-    this.renderer.render(this.scene, this.camera)
-  }
+  
   
  
   handleWindowResize = () => {
@@ -159,7 +192,6 @@ class Mlarch extends React.Component {
 
   resizeCube = (e) => {
     var target = (e.target) ? e.target : e.srcElement;
-    this.cube.scale.x  = target.value;
   }
 
   
@@ -195,6 +227,10 @@ class Mlarch extends React.Component {
  
     );
   }
+}
+
+function renderScene () {
+  renderer.render(scene, camera)
 }
 
 export default Mlarch;

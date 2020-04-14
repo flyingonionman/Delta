@@ -158,6 +158,7 @@ STLLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 			var r, g, b, hasColors = false, colors;
 			var defaultR, defaultG, defaultB, alpha;
 
+
 			// process STL header
 			// check for default color in header ("COLOR=rgba" sequence).
 
@@ -188,7 +189,6 @@ STLLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 			var normals = new Float32Array( faces * 3 * 3 );
 
 			for ( var face = 0; face < faces; face ++ ) {
-
 				var start = dataOffset + face * faceLength;
 				var normalX = reader.getFloat32( start, true );
 				var normalY = reader.getFloat32( start + 4, true );
@@ -243,7 +243,6 @@ STLLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 
 			geometry.setAttribute( 'position', new THREE.BufferAttribute( vertices, 3 ) );
 			geometry.setAttribute( 'normal', new THREE.BufferAttribute( normals, 3 ) );
-
 			if ( hasColors ) {
 
 				geometry.setAttribute( 'color', new THREE.BufferAttribute( colors, 3 ) );
@@ -251,6 +250,7 @@ STLLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 				geometry.alpha = alpha;
 
 			}
+			console.log("I hate my life")
 
 			return geometry;
 
@@ -339,6 +339,7 @@ STLLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 
 			geometry.setAttribute( 'position', new THREE.Float32BufferAttribute( vertices, 3 ) );
 			geometry.setAttribute( 'normal', new THREE.Float32BufferAttribute( normals, 3 ) );
+			console.log("I hate my life 2.0")
 
 			return geometry;
 
