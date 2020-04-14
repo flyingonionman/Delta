@@ -1,38 +1,52 @@
-import React, { Component } from "react";
+import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/mlarch.scss';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
   Link
 } from "react-router-dom";
+import { STLLoader } from '../stl/STLLoader.js';
 
 import * as THREE from "three";
 const OrbitControls = require('three-orbitcontrols')
 
 
 class Mlarch extends React.Component {
-  constructor(props) {
-    super(props);
-
-  }
-
   componentDidMount(){
+    var loader = new STLLoader()
+
+
     var width = window.innerWidth
     var height = window.innerHeight
     //ADD SCENE
 
 
     this.scene = new THREE.Scene()
+    this.scene.background = new THREE.Color( 0x72645b );
+    this.scene.fog = new THREE.Fog( 0x72645b, 2, 15 );
+
+    // Ground
+
+    var plane = new THREE.Mesh(
+      new THREE.PlaneBufferGeometry( 40, 40 ),
+      new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
+    );
+    plane.rotation.x = - Math.PI / 2;
+    plane.position.y = - 0.5;
+    this.scene.add( plane );
+
+    plane.receiveShadow = true;
+
     //ADD CAMERA
     this.camera = new THREE.PerspectiveCamera(
-      75,
+      35,
       width / height,
-      0.1,
-      1000
+      1,
+      15
     )
     this.camera.position.z = 4
+    this.cameraTarget = new THREE.Vector3( 0, - 0.25, 0 );
+
+
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
     this.renderer.setSize(width, height)
@@ -47,18 +61,55 @@ class Mlarch extends React.Component {
     var material = new THREE.MeshBasicMaterial({ color: '#FFFFFF'     })
 
     this.cube = new THREE.Mesh(geometry, material)
+
     this.cube.position.x -= 2.5
+
+    // GRID
+    var size = 20,
+    step = 0.25;
+    var geometry = new THREE.Geometry();
+    var material = new THREE.LineBasicMaterial(
+    {
+        color: 0xFFFFFF
+    });
+    for (var i = -size; i <= size; i += step)
+    {
+        geometry.vertices.push(new THREE.Vector3(-size, -0.04, i));
+        geometry.vertices.push(new THREE.Vector3(size, -0.04, i));
+        geometry.vertices.push(new THREE.Vector3(i, -0.04, -size));
+        geometry.vertices.push(new THREE.Vector3(i, -0.04, size));
+    }
+    var line = new THREE.Line(geometry, material, THREE.LinePieces);
+    line.position.y = -0.46;
+    this.scene.add(line);
+
+    //ADD BENCH 
+    //LOAD as ASCII
+
+    loader.load( '../stl/Bench.stl', function ( geometry ) {
+      var material = new THREE.MeshPhongMaterial( {
+          ambient: 0xff5533, 
+          color: 0xffffff, 
+          specular: 0x111111,
+          shininess: 200 } 
+                                                  
+      );
+      var mesh = new THREE.Mesh( geometry, material );		
+      mesh.scale.set( 200, 200.5, 200.5 );
+	
+      this.scene.add( mesh ); 
+      
+    } );
 
     //ADD SLIDER
     var slider = document.getElementById("slider");
     slider.addEventListener("input", this.resizeCube);
+    
+    this.scene.add(this.cube);
 
-    this.scene.add(this.cube)
     this.start()
 
     window.addEventListener('resize', this.handleWindowResize);
-
-    
   }
 
   start = () => {
@@ -70,6 +121,7 @@ class Mlarch extends React.Component {
   stop = () => {
       cancelAnimationFrame(this.frameId)
   }
+  
   
   animate = () => {
     this.cube.rotation.x += 0.01
@@ -119,9 +171,20 @@ class Mlarch extends React.Component {
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
           
           <button type="button"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch_gallery">To gallery</Link></button>
+          
+            <div id="credits">
+              <h3>Credits go to</h3>
+              <h4>Students :</h4>
+              <p>Ariana Freitag, EE'20 | Minyoung Na, BSE'20 | Jihoon Park, ARCH'21 | Willem Smith-Clark, ARCH'21</p>
+              <h4>Advisors :</h4>
+              <p>Sam Keene, Professor of Electrical Engineering | Ben Aranda, Assistant professor of Architecture  </p>
 
+              <hr></hr>
+              <h3><a href="https://www.instagram.com/machine_learning_architecture/">ML + ARCH @ Cooper Union</a></h3>
+            </div>
+          
           </div>
-
+         
       </div>    
  
     );

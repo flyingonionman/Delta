@@ -1,6 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Carousel} from 'react-bootstrap';
 import '../css/gallery.scss';
 import RGL, { WidthProvider } from "react-grid-layout";
 import _ from "lodash";
@@ -9,10 +8,8 @@ const ReactGridLayout = WidthProvider(RGL);
 
 
 function importAll(r) {
-  console.log(r.keys())
   let images = {};
   r.keys().map((item, index) => { images[item.replace('./', '')] = r(item); });
-  console.log(images);
 
   return images;
 }
