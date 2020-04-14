@@ -9,6 +9,14 @@ import { STLLoader } from '../stl/STLLoader.js';
 import * as THREE from "three";
 const OrbitControls = require('three-orbitcontrols')
 
+function importAll(r) {
+  let stlfiles = {};
+  r.keys().map((item, index) => { stlfiles[item.replace('./', '')] = r(item); });
+  console.log(stlfiles["Bench.stl"])
+  return stlfiles;
+}
+
+const stlfiles = importAll(require.context('../stl', false, /\.(stl)$/));
 
 class Mlarch extends React.Component {
   componentDidMount(){
@@ -43,9 +51,7 @@ class Mlarch extends React.Component {
       1,
       15
     )
-    this.camera.position.z = 4
-    this.cameraTarget = new THREE.Vector3( 0, - 0.25, 0 );
-
+    this.camera.position.z = 8
 
     //ADD RENDERER
     this.renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -85,21 +91,20 @@ class Mlarch extends React.Component {
 
     //ADD BENCH 
     //LOAD as ASCII
+    var reader = new FileReader();
 
-    loader.load( '../stl/Bench.stl', function ( geometry ) {
-      var material = new THREE.MeshPhongMaterial( {
-          ambient: 0xff5533, 
-          color: 0xffffff, 
-          specular: 0x111111,
-          shininess: 200 } 
-                                                  
-      );
-      var mesh = new THREE.Mesh( geometry, material );		
-      mesh.scale.set( 200, 200.5, 200.5 );
-	
-      this.scene.add( mesh ); 
-      
-    } );
+    var geometry = loader.load(stlfiles["tilt.stl"]);
+
+    var material = new THREE.MeshPhongMaterial( {
+        ambient: 0xff5533, 
+        color: 0xffffff, 
+        specular: 0x111111,
+        shininess: 200 } 
+                                                
+    );
+    var mesh = new THREE.Mesh( geometry, material );		
+    mesh.scale.set( 200, 200.5, 200.5 );
+    this.scene.add( mesh ); 
 
     //ADD SLIDER
     var slider = document.getElementById("slider");
@@ -157,6 +162,7 @@ class Mlarch extends React.Component {
     this.cube.scale.x  = target.value;
   }
 
+  
   render() {
   return (
 

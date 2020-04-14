@@ -71,7 +71,6 @@ STLLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 	load: function ( url, onLoad, onProgress, onError ) {
 
 		var scope = this;
-
 		var loader = new THREE.FileLoader( scope.manager );
 		loader.setPath( scope.path );
 		loader.setResponseType( 'arraybuffer' );
