@@ -7,7 +7,6 @@ import { Container, Row, Col } from 'react-bootstrap';
 import {
   Link
 } from "react-router-dom";
-import strings from "../string/description.ts";
 
 
 function importAll(r) {
@@ -100,23 +99,23 @@ function Describe(props){
     switch(props.name) {
        case 3:
          console.log(props.name)
-        return <p>{strings.TWOBENCH}</p>;
+        return <p>1500 image data set of two benches randomly (and individually) rotating and shearing to create a confusing multi-perspectival images where the objects can no longer understood in reference to the ground plane.    </p>;
 
          break;
        case 2:
-        return <p>{strings.BENCHWALK}</p>;
+        return <p>Latent space walk in which a progressive gan is learning and becoming confused by the multi-perspectival bench images where the benches twist, grow, split, and meld like amoebas in a petri dish.</p>;
 
          break;
        case 1:
-        return <p>{strings.CONSTRUCTION}</p>;
+        return <p>1500 image data set that displays a bottom up construction approach to random timber joinery where these members are sequentially daisy-chained and occasionally become cluttered in a bird’s nest logic. </p>;
   
            break;  
         case 4:
-        return <p>{strings.CONSWALK}</p>;
+        return <p>Latent space walk through the progressive gan trained on randomly assembled timber members at some points finding regularity with straight member perpendicularly connected while other times melting into glitchy bird’s nests  </p>;
 
             break;  
        default:
-         return <p>{strings.PLACEHOLDER}</p>;
+         return <p>I havne't figured out what to write here yet</p>;
      }
 }
 
