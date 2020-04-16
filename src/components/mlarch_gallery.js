@@ -4,7 +4,9 @@ import '../css/gallery.scss';
 import RGL, { WidthProvider } from "react-grid-layout";
 import _ from "lodash";
 import { Container, Row, Col } from 'react-bootstrap';
-
+import {
+  Link
+} from "react-router-dom";
 
 
 function importAll(r) {
@@ -19,11 +21,7 @@ const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$
 
 
 class Mlarch extends React.Component {
-  componentDidMount(){
-    this.init();
-  }
-  
-  
+ 
   
   constructor(props) {
     super(props);
@@ -37,7 +35,14 @@ class Mlarch extends React.Component {
   enlarge(number) {
     const currentState = this.state.isActive;
     this.setState({ isActive: !currentState });
-    this.setState({ chosenimg: number });
+    if (Number.isInteger(number)){
+      this.setState({ chosenimg: number });
+      console.log("what");
+    }
+    else{
+      setTimeout(() => {this.setState({ chosenimg: null });}, 700);
+
+    }
   }
 
 
@@ -69,7 +74,6 @@ class Mlarch extends React.Component {
 
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
             <p className={"description"}>
-              {console.log(this.state.chosenimg)}
               <Welcome name={this.state.chosenimg} ></Welcome>
             <button  onClick={this.enlarge}  >return</button>
           </p>
@@ -91,6 +95,8 @@ class Mlarch extends React.Component {
           </p>
 
         </div>
+        <button id="return"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch">Return</Link></button>
+
       </div>
     );
   }

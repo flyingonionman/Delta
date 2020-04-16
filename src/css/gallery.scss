@@ -130,17 +130,28 @@ body::-webkit-scrollbar {
           color:white;
         }
         button{
-          margin:5%;
-          position:absolute;
-          right:0;
-          bottom:0;
+          margin: 5%;
+          position: absolute;
+          right: 0;
+          border-style: solid;
+          background-color: white;
+          border-color: black;
+          padding: 1%;
+          bottom: 0;
         }
         img{
           transition:1s;
 
         }
     }
-    
+    #return{
+      text-decoration: none;
+    color: black;
+    padding: 1%;
+    /* padding-top: 9%; */
+    margin-top: 2%;
+    font-size: 1.5vw;
+    }
     
     .description{
       font-size:1.2vw;
