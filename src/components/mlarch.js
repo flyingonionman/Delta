@@ -5,10 +5,12 @@ import {
   Link
 } from "react-router-dom";
 import { STLLoader } from '../stl/STLLoader.js';
-import STLViewer from 'stl-viewer'
+import { STLExporter } from '../stl/STLexporter.js';
+import * as tf from '@tensorflow/tfjs';
+import * as tfvis from '@tensorflow/tfjs-vis';
 
 import * as THREE from "three";
-const OrbitControls = require('three-orbitcontrols')
+const OrbitControls = require('three-orbitcontrols');
 
 function importAll(r) {
   let stlfiles = {};
@@ -22,8 +24,13 @@ const stlfiles = importAll(require.context('../stl', false, /\.(stl)$/));
 var camera, scene, renderer,controls;
 var bench;
 var frameId;
+var link 
+var exporter = new STLExporter();
 
 class Mlarch extends React.Component {
+  constructor(props){
+    super(props);
+  }
   componentDidMount(){
     this.init();
   }
@@ -117,7 +124,6 @@ class Mlarch extends React.Component {
       bench.receiveShadow = true;
       scene.add( bench );
       console.log( bench)
-      
       start();
     } );  
 
@@ -131,6 +137,11 @@ class Mlarch extends React.Component {
 
     scene.add(this.cube);
     window.addEventListener('resize', this.handleWindowResize);
+
+    //ADD LINK DOWNLOAD
+    link = document.createElement( 'a' );
+    link.style.display = 'none';
+    document.body.appendChild( link );
 
   }
  
@@ -170,16 +181,11 @@ class Mlarch extends React.Component {
   };
 
   componentWillUnmount() {
-    this.stop()
-    this.mount.removeChild(renderer.domElement)
     window.removeEventListener('resize', this.handleWindowResize);
     window.removeEventListener('input', this.resize);
 
   }
 
-  
-
-  
   render() {
   return (
 
@@ -196,7 +202,9 @@ class Mlarch extends React.Component {
           ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
           </p>  
           <button type="button"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch_gallery">To gallery</Link></button>
-          
+          <button type="button " id="downloadSTL" onClick={exportBinary}style={{ textDecoration: 'none' , color:'black'}}>Download STL</button>
+          <button type="button " onClick={train_start}style={{ textDecoration: 'none' , color:'black'}}>Start Training</button>
+
             <div id="credits">
               <h3>Credits go to</h3>
               <h4>Students :</h4>
@@ -215,6 +223,7 @@ class Mlarch extends React.Component {
     );
   }
 }
+
 function start () {
   if (!frameId) {
     frameId = requestAnimationFrame(animate)
@@ -247,4 +256,27 @@ function resizey (e) {
   bench.position.y = target.value/100  
 }
 
+function exportBinary() {
+  var result = exporter.parse( bench, { binary: true } );
+  saveArrayBuffer( result, 'bench.stl' );
+
+}
+
+function saveArrayBuffer ( buffer, filename ){
+
+  save( new Blob( [ buffer ], { type: 'application/octet-stream' } ), filename );
+
+}
+
+function save ( blob, filename )  {
+
+  link.href = URL.createObjectURL( blob );
+  link.download = filename;
+  link.click();
+
+}
+
+async function train_start() {
+  console.log("opoop")
+}
 export default Mlarch;

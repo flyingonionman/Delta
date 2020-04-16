@@ -86,13 +86,15 @@ html, body {
     background-color: white;
     border: none;
     color: black;
-    display:block;
+    display:inline;
     margin-top:4%;
     padding: 15px 32px;
     font-size: 18px;
 
   }
-
+  #downloadSTL{
+    margin-left: 4%;
+  }
   #info-body {
     border: 2px solid white;
     padding: 1.5%;

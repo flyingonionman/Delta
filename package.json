@@ -7,8 +7,11 @@
   },
   "private": true,
   "dependencies": {
+    "@tensorflow/tfjs": "^1.7.2",
+    "@tensorflow/tfjs-vis": "^1.4.0",
     "bootstrap": "^4.3.1",
     "halogenium": "^2.3.0",
+    "keras-js": "^1.0.3",
     "node-sass": "^4.13.0",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
@@ -18,11 +21,13 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "react-transition-group": "^4.3.0",
+    "stl-exporter": "^0.3.6",
     "stl-viewer": "^0.12.0",
     "styled-components": "^5.1.0",
     "three": "^0.115.0",
     "three-orbitcontrols": "^2.110.3",
-    "three-stl-loader": "^1.0.6"
+    "three-stl-loader": "^1.0.6",
+    "three-stlexporter": "^1.0.0"
   },
   "scripts": {
     "start": "react-scripts start",

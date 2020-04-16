@@ -5,7 +5,6 @@ import RGL, { WidthProvider } from "react-grid-layout";
 import _ from "lodash";
 import { Container, Row, Col } from 'react-bootstrap';
 
-const ReactGridLayout = WidthProvider(RGL);
 
 
 function importAll(r) {
@@ -20,7 +19,12 @@ const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$
 
 
 class Mlarch extends React.Component {
-
+  componentDidMount(){
+    this.init();
+  }
+  
+  
+  
   constructor(props) {
     super(props);
     this.enlarge = this.enlarge.bind(this);
@@ -35,6 +39,7 @@ class Mlarch extends React.Component {
     this.setState({ isActive: !currentState });
     this.setState({ chosenimg: number });
   }
+
 
   render() {
     return (
