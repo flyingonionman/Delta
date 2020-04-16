@@ -69,6 +69,7 @@ class Mlarch extends React.Component {
 
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
             <p className={"description"}>
+              {console.log(this.state.chosenimg)}
               <Welcome name={this.state.chosenimg} ></Welcome>
             <button  onClick={this.enlarge}  >return</button>
           </p>

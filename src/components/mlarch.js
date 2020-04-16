@@ -203,7 +203,7 @@ class Mlarch extends React.Component {
           </p>  
           <button type="button"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch_gallery">To gallery</Link></button>
           <button type="button " id="downloadSTL" onClick={exportBinary}style={{ textDecoration: 'none' , color:'black'}}>Download STL</button>
-          <button type="button " onClick={train_start}style={{ textDecoration: 'none' , color:'black'}}>Start Training</button>
+          <button type="button " id="startmodel" onClick={train_start}style={{ textDecoration: 'none' , color:'black'}}>Start Training</button>
 
             <div id="credits">
               <h3>Credits go to</h3>
