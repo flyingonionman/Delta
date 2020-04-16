@@ -7,6 +7,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import {
   Link
 } from "react-router-dom";
+import strings from "../string/description.ts";
 
 
 function importAll(r) {
@@ -17,7 +18,7 @@ function importAll(r) {
 }
 
 
-const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$/));
+const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg|gif)$/));
 
 
 class Mlarch extends React.Component {
@@ -26,6 +27,7 @@ class Mlarch extends React.Component {
   constructor(props) {
     super(props);
     this.enlarge = this.enlarge.bind(this);
+
     this.state = { 
       isActive: false ,
       chosenimg : 1
@@ -37,7 +39,6 @@ class Mlarch extends React.Component {
     this.setState({ isActive: !currentState });
     if (Number.isInteger(number)){
       this.setState({ chosenimg: number });
-      console.log("what");
     }
     else{
       setTimeout(() => {this.setState({ chosenimg: null });}, 700);
@@ -45,16 +46,15 @@ class Mlarch extends React.Component {
     }
   }
 
-
   render() {
     return (
       <div className ="gallery">
         <Container fluid> 
           <Row>
             <Col><img  onClick={() => this.enlarge(1)} src={images["p"+1+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(2)} src={images["p"+2+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(2)} src={images["p"+2+".gif"]}/></Col>
             <Col><img onClick={() => this.enlarge(3)} src={images["p"+3+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(4)}src={images["p"+4+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(4)}src={images["p"+4+".gif"]}/></Col>
             <Col><img onClick={() => this.enlarge(5)}src={images["p"+5+".png"]}/></Col>
             <Col><img  onClick={() => this.enlarge(6)}src={images["p"+6+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(7)}src={images["p"+7+".png"]}/></Col>
@@ -75,35 +75,59 @@ class Mlarch extends React.Component {
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
             <p className={"description"}>
               <Welcome name={this.state.chosenimg} ></Welcome>
-            <button  onClick={this.enlarge}  >return</button>
           </p>
 
         </div>
         
         <div className={  this.state.isActive ? 'blurb': 'hidden-right'}> 
             <p className={"description"}>
-            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-             totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae 
-             dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
-             sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, 
-             qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora 
-             incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum 
-             exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
-             Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+              <Describe name={this.state.chosenimg} ></Describe>
 
 
           </p>
+          <button  onClick={this.enlarge}  >return</button>
 
         </div>
-        <button id="return"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch">Return</Link></button>
+       {/*  <button id="return"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch">Go back</Link></button> */}
 
       </div>
     );
   }
 }
 
+function Describe(props){
+  
+    switch(props.name) {
+       case 3:
+         console.log(props.name)
+        return <p>{strings.TWOBENCH}</p>;
+
+         break;
+       case 2:
+        return <p>{strings.BENCHWALK}</p>;
+
+         break;
+       case 1:
+        return <p>{strings.CONSTRUCTION}</p>;
+  
+           break;  
+        case 4:
+        return <p>{strings.CONSWALK}</p>;
+
+            break;  
+       default:
+         return <p>{strings.PLACEHOLDER}</p>;
+     }
+}
+
 function Welcome(props) {
-  return <img src={images["p"+props.name+".png"]}></img>;
+  if (props.name==2 || props.name==4){
+    return <img src={images["p"+props.name+".gif"]}></img>;
+  }
+  else{
+    return <img src={images["p"+props.name+".png"]}></img>;
+
+  }
 }
 
 

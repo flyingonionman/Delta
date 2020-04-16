@@ -75,6 +75,16 @@ body::-webkit-scrollbar {
     border-color:white;
     border-style: solid;
 
+    button{
+      margin: 4%;
+      position: absolute;
+      right: 0;
+      border-style: solid;
+      background-color: white;
+      border-color: black;
+      padding: 2%;
+      bottom: 0;
+    }
 
     .menu{
       position: absolute;
@@ -129,34 +139,29 @@ body::-webkit-scrollbar {
         h1{
           color:white;
         }
-        button{
-          margin: 5%;
-          position: absolute;
-          right: 0;
-          border-style: solid;
-          background-color: white;
-          border-color: black;
-          padding: 1%;
-          bottom: 0;
-        }
+        
         img{
           transition:1s;
 
         }
     }
     #return{
+      position: fixed;
       text-decoration: none;
-    color: black;
-    padding: 1%;
-    /* padding-top: 9%; */
-    margin-top: 2%;
-    font-size: 1.5vw;
+      color: black;
+      padding: 2%;
+      /* padding-top: 9%; */
+      margin-top: 2%;
+      font-size: 1.5vw;
+      left: 0;
+
     }
     
     .description{
-      font-size:1.2vw;
-      margin:3%;
-      color:black;
+      font-size: 1.8vw;
+    padding: 2%;
+    margin: 3%;
+    color: black;
     }
 
     img{
