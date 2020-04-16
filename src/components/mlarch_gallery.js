@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/gallery.scss';
 import RGL, { WidthProvider } from "react-grid-layout";
 import _ from "lodash";
+import { Container, Row, Col } from 'react-bootstrap';
 
 const ReactGridLayout = WidthProvider(RGL);
 
@@ -19,64 +20,79 @@ const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg)$
 
 
 class Mlarch extends React.Component {
-  static defaultProps = {
-    className: "layout",
-    items: 20,
-    rowHeight: 30,
-    onLayoutChange: function() {},
-    cols: 7
-  };
 
   constructor(props) {
     super(props);
-
-    const layout = this.generateLayout();
-    this.state = { layout };
+    this.enlarge = this.enlarge.bind(this);
+    this.state = { 
+      isActive: false ,
+      chosenimg : 1
+    };
   }
-
-  generateDOM() {
-    return _.map(_.range(this.props.items), function(i) {
-      return (
-        <div className="slot" key={i}>
-          <span><img src={images["p"+i+".png"]}/></span>
-        </div>
-      );
-    });
+  
+  enlarge(number) {
+    const currentState = this.state.isActive;
+    this.setState({ isActive: !currentState });
+    this.setState({ chosenimg: number });
   }
-
-  generateLayout() {
-    const p = this.props;
-    return _.map(new Array(p.items), function(item, i) {
-      const y = 4;
-      return {
-        x: (i ) % 7,
-        y: Math.floor(i / 7) * y,
-        w: 1,
-        h: y,
-        i: i.toString(),
-        static: false
-      };
-    });
-  }
-
 
   render() {
-
-
     return (
       <div className ="gallery">
+        <Container fluid> 
+          <Row>
+            <Col><img  onClick={() => this.enlarge(1)} src={images["p"+1+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(2)} src={images["p"+2+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(3)} src={images["p"+3+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(4)}src={images["p"+4+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(5)}src={images["p"+5+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(6)}src={images["p"+6+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(7)}src={images["p"+7+".png"]}/></Col>
+          </Row>
 
-        <ReactGridLayout className="layout" 
-            layout={this.state.layout}
-            onLayoutChange={this.onLayoutChange}
-            {...this.props}
-          >
-            {this.generateDOM()}
-        </ReactGridLayout>
+          <Row>
+            <Col><img src={images["p"+8+".png"]}/></Col>
+            <Col><img src={images["p"+9+".png"]}/></Col>
+            <Col><img src={images["p"+10+".png"]}/></Col>
+            <Col><img src={images["p"+11+".png"]}/></Col>
+            <Col><img src={images["p"+12+".png"]}/></Col>
+            <Col><img src={images["p"+13+".png"]}/></Col>
+            <Col><img src={images["p"+14+".png"]}/></Col>
+          </Row>
 
+        </Container>
+
+        <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
+            <p className={"description"}>
+              <Welcome name={this.state.chosenimg} ></Welcome>
+            <button  onClick={this.enlarge}  >return</button>
+          </p>
+
+        </div>
+        
+        <div className={  this.state.isActive ? 'blurb': 'hidden-right'}> 
+            <p className={"description"}>
+            "Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+             totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae 
+             dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
+             sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, 
+             qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora 
+             incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum 
+             exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? 
+             Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
+
+
+          </p>
+
+        </div>
       </div>
     );
   }
 }
+
+function Welcome(props) {
+  return <img src={images["p"+props.name+".png"]}></img>;
+}
+
 
 export default Mlarch;

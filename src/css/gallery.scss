@@ -26,17 +26,28 @@ html,body{
   margin:0;
   overflow:hidden;
 }
-
-div{
-  height:inherit;
-}
 .gallery{
-    html,body,div{
+
+    html,body{
 
     margin:0;
-    height:100%;
     overflow:hidden;
+    .container-fluid{
+      div{
+        height:100%;
+
+      }
+      .row{
+        height:70%;
+      }
+      
+    }
   }
+}
+
+.col{
+  padding-right: 2px;
+  padding-left: 2px;
 }
 
 @font-face {
@@ -52,15 +63,96 @@ body::-webkit-scrollbar {
 }
 
 .gallery{
+  font-family: 'Bahnschrift';
+
     background-color: black;
     color: white;
     position: relative;
     width: 80%;
-    margin: 6% 10%;
+    margin: 13% 10%;
     /* height: inherit; */
     height: 80%;
     border-color:white;
     border-style: solid;
+
+
+    .menu{
+      position: absolute;
+      margin: 0%;
+      display: block;
+      width: 198%;
+    }
+    
+    .hidden-right{
+      position: fixed;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      right: -50%;
+      background: white;
+      transition:  1s;
+    
+    }
+    
+    .hidden-left{
+      position: fixed;
+      width: 50%;
+      height: 100%;
+      top: 0;
+      left: -50%;
+      background: black;
+      transition:  1s;
+    
+    }
+
+
+    .blurb{
+      position: fixed;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        right: 0;
+        background: white;
+        transition:  1s;
+    }
+
+    .imgenlarge{
+      position: fixed;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: black;
+        transition:  1s;
+        z-index:200;
+
+        h1{
+          color:white;
+        }
+        button{
+          margin:5%;
+          position:absolute;
+          right:0;
+          bottom:0;
+        }
+        img{
+          transition:1s;
+
+        }
+    }
+    
+    
+    .description{
+      font-size:1.2vw;
+      margin:3%;
+      color:black;
+    }
+
+    img{
+      object-fit: contain;
+      width: 100%;
+    }
+    
 }
 
 
@@ -69,8 +161,4 @@ body::-webkit-scrollbar {
     color:black;
 }
 
-img{
-  object-fit: contain;
-  width: 100%;
 
-}
