@@ -15,7 +15,6 @@ const OrbitControls = require('three-orbitcontrols');
 function importAll(r) {
   let stlfiles = {};
   r.keys().map((item, index) => { stlfiles[item.replace('./', '')] = r(item); });
-  console.log(stlfiles["Bench.stl"])
   return stlfiles;
 }
 

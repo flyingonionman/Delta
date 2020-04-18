@@ -9,6 +9,15 @@ import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
 import { GUI } from '../gui/dat.gui.module.js';
 
+//import SVG
+function importAll(r) {
+    let svgfiles = {};
+    r.keys().map((item, index) => { svgfiles[item.replace('./', '')] = r(item); });
+    console.log(svgfiles["tiger.svg"])
+    return svgfiles;
+  }
+  
+const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
 const OrbitControls = require('three-orbitcontrols');
 
 var camera, scene, renderer,controls;
@@ -28,7 +37,7 @@ var direction = new THREE.Vector3();
 
 //Prelim data for
 var guiData = {
-    currentURL: 'svg/seminopoly.svg',
+    currentURL: 'src/svg/Seminopoly.svg',
     drawFillShapes: true,
     drawStrokes: true,
     fillShapesWireframe: false,
@@ -72,7 +81,7 @@ class Mlarch extends React.Component {
       1,
       1000
     )
-    camera.position.set( 0, 10, - 12 );
+    camera.position.set( 0, 7, - 10 );
 
     // Lights
     scene.add( new THREE.HemisphereLight( 0x000000, 0x111122 ) );
@@ -96,8 +105,7 @@ class Mlarch extends React.Component {
     createGUI();
 
     //Load SVG
-    var url = '../svg/Seminopoly.svg'
-    loadSVG(url);
+    loadSVG();
 
     // GRID
     var size = 20,
@@ -124,7 +132,7 @@ class Mlarch extends React.Component {
     var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
     torus = new THREE.Mesh( geometry, material );
     torus.rotation.x = 1.57;
-    torus.position.set(0,-.45,0);
+    torus.position.set(0,-.1,0);
     scene.add( torus );
     
 
@@ -227,8 +235,11 @@ function start () {
 }
 
 function renderScene () {
-  camera.lookAt(torus.position);
+    
+     camera.lookAt(torus.position);
 
+
+  
   renderer.render(scene, camera)
 }
 
@@ -244,13 +255,24 @@ function animate () {
   direction.z = Number( moveForward ) - Number( moveBackward );
   direction.x = Number( moveRight ) - Number( moveLeft );
 
-  if ( moveForward || moveBackward ) velocity.z -= direction.z * 100.0 * delta;
-  if ( moveRight || moveLeft ) velocity.x -= direction.x * 100.0 * delta;
+  if ( moveForward || moveBackward ) {
+      velocity.z -= direction.z * 100.0 * delta;
+      prompt();
+
+  }
+  if ( moveRight || moveLeft ) {
+      velocity.x -= direction.x * 100.0 * delta;
+      prompt();
+
+  }
 
   prevTime = time;
 
+
   torus.position.z += - velocity.z * delta 
   torus.position.x -= - velocity.x * delta 
+
+  // Prompt 
 
   // Scene update
 
@@ -259,15 +281,23 @@ function animate () {
   frameId = window.requestAnimationFrame(animate)
 }
 
+function prompt() {
+  if (torus.position.z <= -3 && torus.position.z >=-4.5  && torus.position.x <= -4 && torus.position.x >= -4.5){
+      console.log("ooga")
+  }
+  else{
+  }
+}
+
 function createGUI() {
 
     if ( gui ) gui.destroy();
 
     gui = new GUI( { width: 350 } );
 
-    gui.add( guiData, 'drawStrokes' ).name( 'Draw strokes' ).onChange( update );
+    gui.add( guiData, 'drawStrokes' ).name( 'W A S D to MOVE' ).onChange( update );
 
-    gui.add( guiData, 'drawFillShapes' ).name( 'Draw fill shapes' ).onChange( update );
+    gui.add( guiData, 'drawFillShapes' ).name( 'Go to the blue question mark' ).onChange( update );
 
     gui.add( guiData, 'strokesWireframe' ).name( 'Wireframe strokes' ).onChange( update );
 
@@ -275,29 +305,30 @@ function createGUI() {
 
     function update() {
 
-        loadSVG( guiData.currentURL );
+        loadSVG(  );
 
     }
 
 }
 
-function loadSVG( url ) {
+function loadSVG( ) {
     var loader = new SVGLoader();
 
-    loader.load( url, function ( data ) {
-
+    loader.load( svgfiles['board.svg'], function ( data ) {
         var paths = data.paths;
-        console.log(url);
         var group = new THREE.Group();
-        group.scale.multiplyScalar( 0.25 );
-        group.position.x = 0;
-        group.position.y = 0;
-        group.scale.y *= - 1;
+        group.scale.multiplyScalar( 0.01 );
+        group.position.x = -8;
+        group.position.z = -5;
+
+        group.position.y = -.35;
+        group.scale.y *= 1;
+        group.rotation.x = 1.57;
 
         for ( var i = 0; i < paths.length; i ++ ) {
 
             var path = paths[ i ];
-
+            
             var fillColor = path.userData.style.fill;
             if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none' ) {
 

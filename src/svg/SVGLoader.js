@@ -19,11 +19,10 @@ SVGLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 	load: function ( url, onLoad, onProgress, onError ) {
 
 		var scope = this;
-
 		var loader = new THREE.FileLoader( scope.manager );
 		loader.setPath( scope.path );
 		loader.load( url, function ( text ) {
-
+			
 			onLoad( scope.parse( text ) );
 
 		}, onProgress, onError );
@@ -87,7 +86,7 @@ SVGLoader.prototype = Object.assign( Object.create( THREE.Loader.prototype ), {
 					break;
 
 				default:
-					console.log( node );
+					//console.log( node );
 
 			}
 
