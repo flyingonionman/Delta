@@ -12,6 +12,7 @@ import Archive from './components/archivepage.js';
 
 import Mlarch from './components/mlarch';
 import MlarchGallery from './components/mlarch_gallery';
+import Datasci from './components/datasci';
 import {isMobile} from 'react-device-detect';
 
 class App extends React.Component {
@@ -39,6 +40,11 @@ class App extends React.Component {
             <Route path="/archivepage" >
               
               <Archive/>
+            </Route>
+
+            <Route path="/datasci" >
+              
+              <Datasci/>
             </Route>
           </Switch>
       </div>
