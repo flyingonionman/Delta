@@ -6,21 +6,36 @@ import {
 } from "react-router-dom";
 
 import * as THREE from "three";
+import { SVGLoader } from '../svg/SVGLoader.js';
+import { GUI } from '../gui/dat.gui.module.js';
+
 const OrbitControls = require('three-orbitcontrols');
 
 var camera, scene, renderer,controls;
 var frameId;
-var cube;
+var torus;
 
 //Movement 
 var moveForward = false;
 var moveBackward = false;
+var moveRight = false;
+var moveLeft = false;
 
 
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 
+//Prelim data for
+var guiData = {
+    currentURL: 'svg/seminopoly.svg',
+    drawFillShapes: true,
+    drawStrokes: true,
+    fillShapesWireframe: false,
+    strokesWireframe: false
+};
+
+var gui;
 class Mlarch extends React.Component {
   constructor(props){
     super(props);
@@ -36,13 +51,13 @@ class Mlarch extends React.Component {
     //ADD SCENE
 
     scene = new THREE.Scene()
-    scene.background = new THREE.Color( 0x949292  );
+    scene.background = new THREE.Color( 0xf5f5f5  );
 
     // Ground
 
     var plane = new THREE.Mesh(
       new THREE.PlaneBufferGeometry( 40, 40 ),
-      new THREE.MeshPhongMaterial( { color: 0x999999, specular: 0x101010 } )
+      new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0xFFFFFF } )
     );
     plane.rotation.x = - Math.PI / 2;
     plane.position.y = - 0.5;
@@ -57,10 +72,10 @@ class Mlarch extends React.Component {
       1,
       1000
     )
-    camera.position.z = 12
+    camera.position.set( 0, 10, - 12 );
 
     // Lights
-    scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
+    scene.add( new THREE.HemisphereLight( 0x000000, 0x111122 ) );
     this.addShadowedLight( 1, 1, 1, 0x000000,5 );
     this.addShadowedLight( 0.5, 1, - 1, 0x00aaff, .51 );
 
@@ -76,6 +91,13 @@ class Mlarch extends React.Component {
     //ADD CONTROLS
     controls = new OrbitControls(camera,renderer.domElement );
     controls.update();
+
+    //GUI
+    createGUI();
+
+    //Load SVG
+    var url = '../svg/Seminopoly.svg'
+    loadSVG(url);
 
     // GRID
     var size = 20,
@@ -96,16 +118,22 @@ class Mlarch extends React.Component {
     line.position.y = -0.46;
     scene.add(line);
 
-    //ADD CUBE 
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    var material = new THREE.MeshBasicMaterial( {color: 0x00ff00} );
-    cube = new THREE.Mesh( geometry, material );
-    scene.add(cube);
+
+    //ADD torus 
+    var geometry = new THREE.TorusGeometry( .4, .07, 16, 100 );
+    var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+    torus = new THREE.Mesh( geometry, material );
+    torus.rotation.x = 1.57;
+    torus.position.set(0,-.45,0);
+    scene.add( torus );
+    
+
     window.addEventListener('resize', this.handleWindowResize);
 
     // ADD KEYBOARD CONTROLS
     window.addEventListener( 'keydown', this.onKeyDown, false );
     window.addEventListener( 'keyup', this.onKeyUp, false );
+    
   }
 
   addShadowedLight = ( x, y, z, color, intensity ) =>{
@@ -142,11 +170,17 @@ class Mlarch extends React.Component {
 
     onKeyDown = (e) => {
         switch (e.keyCode) {
-            case 87:
+            case 87: // w 
                 moveForward = true;
                 break;
             case 83: // s
                 moveBackward = true;
+                break;
+            case 65: // a
+                moveLeft = true;
+                break;
+            case 68: // d
+                moveRight = true;
                 break;
         }
     };
@@ -158,6 +192,12 @@ class Mlarch extends React.Component {
                 break;
             case 83: // s
                 moveBackward = false;
+                break;
+            case 65: // a
+                moveLeft = false;
+                break;
+            case 68: // d
+                moveRight = false;
                 break;
         }
     };
@@ -187,6 +227,8 @@ function start () {
 }
 
 function renderScene () {
+  camera.lookAt(torus.position);
+
   renderer.render(scene, camera)
 }
 
@@ -195,19 +237,129 @@ function animate () {
   // Movement control
   var time = performance.now();
   var delta = ( time - prevTime ) / 1000;
+
   velocity.z -= velocity.z * 10.0 * delta;
+  velocity.x -= velocity.x * 10.0 * delta;
+
   direction.z = Number( moveForward ) - Number( moveBackward );
-  
-  if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
+  direction.x = Number( moveRight ) - Number( moveLeft );
+
+  if ( moveForward || moveBackward ) velocity.z -= direction.z * 100.0 * delta;
+  if ( moveRight || moveLeft ) velocity.x -= direction.x * 100.0 * delta;
+
   prevTime = time;
 
-  cube.position.z -= - velocity.z * delta 
+  torus.position.z += - velocity.z * delta 
+  torus.position.x -= - velocity.x * delta 
 
   // Scene update
+
   controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
 }
 
+function createGUI() {
+
+    if ( gui ) gui.destroy();
+
+    gui = new GUI( { width: 350 } );
+
+    gui.add( guiData, 'drawStrokes' ).name( 'Draw strokes' ).onChange( update );
+
+    gui.add( guiData, 'drawFillShapes' ).name( 'Draw fill shapes' ).onChange( update );
+
+    gui.add( guiData, 'strokesWireframe' ).name( 'Wireframe strokes' ).onChange( update );
+
+    gui.add( guiData, 'fillShapesWireframe' ).name( 'Wireframe fill shapes' ).onChange( update );
+
+    function update() {
+
+        loadSVG( guiData.currentURL );
+
+    }
+
+}
+
+function loadSVG( url ) {
+    var loader = new SVGLoader();
+
+    loader.load( url, function ( data ) {
+
+        var paths = data.paths;
+        console.log(url);
+        var group = new THREE.Group();
+        group.scale.multiplyScalar( 0.25 );
+        group.position.x = 0;
+        group.position.y = 0;
+        group.scale.y *= - 1;
+
+        for ( var i = 0; i < paths.length; i ++ ) {
+
+            var path = paths[ i ];
+
+            var fillColor = path.userData.style.fill;
+            if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none' ) {
+
+                var material = new THREE.MeshBasicMaterial( {
+                    color: new THREE.Color().setStyle( fillColor ),
+                    opacity: path.userData.style.fillOpacity,
+                    transparent: path.userData.style.fillOpacity < 1,
+                    side: THREE.DoubleSide,
+                    depthWrite: false,
+                    wireframe: guiData.fillShapesWireframe
+                } );
+
+                var shapes = path.toShapes( true );
+
+                for ( var j = 0; j < shapes.length; j ++ ) {
+
+                    var shape = shapes[ j ];
+
+                    var geometry = new THREE.ShapeBufferGeometry( shape );
+                    var mesh = new THREE.Mesh( geometry, material );
+
+                    group.add( mesh );
+
+                }
+
+            }
+
+            var strokeColor = path.userData.style.stroke;
+
+            if ( guiData.drawStrokes && strokeColor !== undefined && strokeColor !== 'none' ) {
+
+                var material = new THREE.MeshBasicMaterial( {
+                    color: new THREE.Color().setStyle( strokeColor ),
+                    opacity: path.userData.style.strokeOpacity,
+                    transparent: path.userData.style.strokeOpacity < 1,
+                    side: THREE.DoubleSide,
+                    depthWrite: false,
+                    wireframe: guiData.strokesWireframe
+                } );
+
+                for ( var j = 0, jl = path.subPaths.length; j < jl; j ++ ) {
+
+                    var subPath = path.subPaths[ j ];
+
+                    var geometry = SVGLoader.pointsToStroke( subPath.getPoints(), path.userData.style );
+
+                    if ( geometry ) {
+
+                        var mesh = new THREE.Mesh( geometry, material );
+
+                        group.add( mesh );
+
+                    }
+
+                }
+
+            }
+
+        }
+        scene.add( group );
+
+	} );
+}
 
 export default Mlarch;
