@@ -1,6 +1,6 @@
 import React from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../css/mlarch.scss';
+import '../css/datasci.scss';
 import {
   Link
 } from "react-router-dom";
@@ -13,7 +13,6 @@ import { GUI } from '../gui/dat.gui.module.js';
 function importAll(r) {
     let svgfiles = {};
     r.keys().map((item, index) => { svgfiles[item.replace('./', '')] = r(item); });
-    console.log(svgfiles["tiger.svg"])
     return svgfiles;
   }
   
@@ -44,14 +43,29 @@ var guiData = {
     strokesWireframe: false
 };
 
+var flag = 0;
 var gui;
 class Mlarch extends React.Component {
   constructor(props){
     super(props);
+    this.state = { 
+        descriptor : 0,
+        pog :"poggers"
+      };
+    
   }
   componentDidMount(){
     this.init();
+    this.loop();
     start();
+  }
+
+  loop = () =>{
+        this.setState({
+            descriptor : flag,
+            pog : "kappa pride"
+        });
+      setTimeout(this.loop, 500);
   }
 
   init = () =>{
@@ -177,6 +191,7 @@ class Mlarch extends React.Component {
     };
 
     onKeyDown = (e) => {
+        
         switch (e.keyCode) {
             case 87: // w 
                 moveForward = true;
@@ -221,12 +236,21 @@ class Mlarch extends React.Component {
 
     <div className="datasci" >    
         <div id="c" ref={ref => (this.mount = ref)} />
+        <div className="information">
+            <p>Welcome to our datascience exhibition ! Try going to the blue chance questionmark</p>
+    
+            <Describe name={this.state.descriptor} ></Describe>
 
+        </div>
     </div>    
  
     );
   }
 }
+
+//GLOBAL FUNCITONS 
+//
+//
 
 function start () {
   if (!frameId) {
@@ -273,7 +297,7 @@ function animate () {
   torus.position.x -= - velocity.x * delta 
 
   // Prompt 
-
+  prompt();
   // Scene update
 
   controls.update();
@@ -283,9 +307,11 @@ function animate () {
 
 function prompt() {
   if (torus.position.z <= -3 && torus.position.z >=-4.5  && torus.position.x <= -4 && torus.position.x >= -4.5){
-      console.log("ooga")
+      flag = 1;
+
   }
   else{
+      flag = 0;
   }
 }
 
@@ -393,4 +419,27 @@ function loadSVG( ) {
 	} );
 }
 
+function Describe(props){
+      switch(props.name) {
+         case 3:
+          return <p>1500 image data set of two benches randomly (and individually) rotating and shearing to create a confusing multi-perspectival images where the objects can no longer understood in reference to the ground plane.    </p>;
+  
+           break;
+         case 2:
+          return <p>Latent space walk in which a progressive gan is learning and becoming confused by the multi-perspectival bench images where the benches twist, grow, split, and meld like amoebas in a petri dish.</p>;
+  
+           break;
+         case 1:
+          return <p>You arrived at the blue questionmark ! </p>;
+    
+             break;  
+          case 4:
+          return <p>Latent space walk through the progressive gan trained on randomly assembled timber members at some points finding regularity with straight member perpendicularly connected while other times melting into glitchy bird’s nests  </p>;
+  
+              break;  
+         default:
+           return <p>huehue</p>;
+       }
+  }
+  
 export default Mlarch;

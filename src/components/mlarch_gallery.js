@@ -95,10 +95,10 @@ class Mlarch extends React.Component {
 }
 
 function Describe(props){
-  
+  console.log(props.name)
+
     switch(props.name) {
        case 3:
-         console.log(props.name)
         return <p>1500 image data set of two benches randomly (and individually) rotating and shearing to create a confusing multi-perspectival images where the objects can no longer understood in reference to the ground plane.    </p>;
 
          break;
