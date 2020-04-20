@@ -8,27 +8,30 @@ import {
 import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
 import { GUI } from '../gui/dat.gui.module.js';
+import { OBJLoader } from '../obj/OBJLoader.js';
 
 //import SVG
 function importAll(r) {
-    let svgfiles = {};
-    r.keys().map((item, index) => { svgfiles[item.replace('./', '')] = r(item); });
-    return svgfiles;
+    let objfiles = {};
+    r.keys().map((item, index) => { objfiles[item.replace('./', '')] = r(item); });
+    return objfiles;
   }
   
-const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
+const objfiles = importAll(require.context('../svg', false, /\.(obj)$/));
 const OrbitControls = require('three-orbitcontrols');
+
 
 var camera, scene, renderer,controls;
 var frameId;
 var torus;
+var object;
 
 //Movement 
 var moveForward = false;
 var moveBackward = false;
 var moveRight = false;
 var moveLeft = false;
-
+var texture
 
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
@@ -57,7 +60,6 @@ class Mlarch extends React.Component {
   componentDidMount(){
     this.init();
     this.loop();
-    start();
   }
 
   loop = () =>{
@@ -115,11 +117,6 @@ class Mlarch extends React.Component {
     controls = new OrbitControls(camera,renderer.domElement );
     controls.update();
 
-    //GUI
-    createGUI();
-
-    //Load SVG
-    loadSVG();
 
     // GRID
     var size = 20,
@@ -149,13 +146,27 @@ class Mlarch extends React.Component {
     torus.position.set(0,-.1,0);
     scene.add( torus );
     
-
     window.addEventListener('resize', this.handleWindowResize);
 
     // ADD KEYBOARD CONTROLS
     window.addEventListener( 'keydown', this.onKeyDown, false );
     window.addEventListener( 'keyup', this.onKeyUp, false );
     
+    var loader = new OBJLoader();
+
+    loader.load( objfiles['tree.obj'], function(model) {
+        model.traverse(function(child) {
+            if (child instanceof THREE.Mesh) {
+                child.material.color = 0x000000;
+            }
+        });
+        model.position.set(0, 0, 0);
+        model.scale.set(10.01, 10.01, 10.01);
+
+        scene.add(model);
+        start();
+
+    });
   }
 
   addShadowedLight = ( x, y, z, color, intensity ) =>{
@@ -312,109 +323,8 @@ function prompt() {
   }
 }
 
-function createGUI() {
 
-    if ( gui ) gui.destroy();
 
-    gui = new GUI( { width: 350 } );
-
-    gui.add( guiData, 'drawStrokes' ).name( 'W A S D to MOVE' ).onChange( update );
-
-    gui.add( guiData, 'drawFillShapes' ).name( 'Go to the blue question mark' ).onChange( update );
-
-    gui.add( guiData, 'strokesWireframe' ).name( 'Wireframe strokes' ).onChange( update );
-
-    gui.add( guiData, 'fillShapesWireframe' ).name( 'Wireframe fill shapes' ).onChange( update );
-
-    function update() {
-
-        loadSVG(  );
-
-    }
-
-}
-
-function loadSVG( ) {
-    var loader = new SVGLoader();
-
-    loader.load( svgfiles['board.svg'], function ( data ) {
-        var paths = data.paths;
-        var group = new THREE.Group();
-        group.scale.multiplyScalar( 0.01 );
-        group.position.x = -8;
-        group.position.z = -5;
-
-        group.position.y = -.35;
-        group.scale.y *= 1;
-        group.rotation.x = 1.57;
-
-        for ( var i = 0; i < paths.length; i ++ ) {
-
-            var path = paths[ i ];
-            
-            var fillColor = path.userData.style.fill;
-            if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none' ) {
-
-                var material = new THREE.MeshBasicMaterial( {
-                    color: new THREE.Color().setStyle( fillColor ),
-                    opacity: path.userData.style.fillOpacity,
-                    transparent: path.userData.style.fillOpacity < 1,
-                    side: THREE.DoubleSide,
-                    depthWrite: false,
-                    wireframe: guiData.fillShapesWireframe
-                } );
-
-                var shapes = path.toShapes( true );
-
-                for ( var j = 0; j < shapes.length; j ++ ) {
-
-                    var shape = shapes[ j ];
-
-                    var geometry = new THREE.ShapeBufferGeometry( shape );
-                    var mesh = new THREE.Mesh( geometry, material );
-
-                    group.add( mesh );
-
-                }
-
-            }
-
-            var strokeColor = path.userData.style.stroke;
-
-            if ( guiData.drawStrokes && strokeColor !== undefined && strokeColor !== 'none' ) {
-
-                var material = new THREE.MeshBasicMaterial( {
-                    color: new THREE.Color().setStyle( strokeColor ),
-                    opacity: path.userData.style.strokeOpacity,
-                    transparent: path.userData.style.strokeOpacity < 1,
-                    side: THREE.DoubleSide,
-                    depthWrite: false,
-                    wireframe: guiData.strokesWireframe
-                } );
-
-                for ( var j = 0, jl = path.subPaths.length; j < jl; j ++ ) {
-
-                    var subPath = path.subPaths[ j ];
-
-                    var geometry = SVGLoader.pointsToStroke( subPath.getPoints(), path.userData.style );
-
-                    if ( geometry ) {
-
-                        var mesh = new THREE.Mesh( geometry, material );
-
-                        group.add( mesh );
-
-                    }
-
-                }
-
-            }
-
-        }
-        scene.add( group );
-
-	} );
-}
 
 
 export default Mlarch;
