@@ -6,8 +6,6 @@ import {
 } from "react-router-dom";
 
 import * as THREE from "three";
-import { SVGLoader } from '../svg/SVGLoader.js';
-import { GUI } from '../gui/dat.gui.module.js';
 import { OBJLoader } from '../obj/OBJLoader.js';
 
 //import SVG
@@ -17,14 +15,35 @@ function importAll(r) {
     return objfiles;
   }
   
-const objfiles = importAll(require.context('../svg', false, /\.(obj)$/));
+const objfiles = importAll(require.context('../obj', false, /\.(obj)$/));
+
+//import texture
+function importtexture(r) {
+  let textures = {};
+  r.keys().map((item, index) => { textures[item.replace('./', '')] = r(item); });
+  return textures;
+}
+
+const textures = importtexture(require.context('../obj/texture', false, /\.(png)$/));
+
+
+
+
+
 const OrbitControls = require('three-orbitcontrols');
 
 
 var camera, scene, renderer,controls;
 var frameId;
 var torus;
-var object;
+var banana;
+var texture;
+var bullet;
+var Shoot;
+var group ;
+
+var bulletgeometry;
+var bulletmaterial;
 
 //Movement 
 var moveForward = false;
@@ -37,17 +56,7 @@ var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 
-//Prelim data for
-var guiData = {
-    currentURL: 'src/svg/Seminopoly.svg',
-    drawFillShapes: true,
-    drawStrokes: true,
-    fillShapesWireframe: false,
-    strokesWireframe: false
-};
-
 var flag = 0;
-var gui;
 class Mlarch extends React.Component {
   constructor(props){
     super(props);
@@ -95,7 +104,7 @@ class Mlarch extends React.Component {
       35,
       width / height,
       1,
-      1000
+      10000
     )
     camera.position.set( 0, 7, - 10 );
 
@@ -151,22 +160,15 @@ class Mlarch extends React.Component {
     // ADD KEYBOARD CONTROLS
     window.addEventListener( 'keydown', this.onKeyDown, false );
     window.addEventListener( 'keyup', this.onKeyUp, false );
+    group = new THREE.Group();
+
+    // BULLEt
+
+    bulletgeometry = new THREE.SphereGeometry( .2, 32, 32 );
+    bulletmaterial = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    bullet  = new THREE.Mesh( bulletgeometry, bulletmaterial );
     
-    var loader = new OBJLoader();
-
-    loader.load( objfiles['tree.obj'], function(model) {
-        model.traverse(function(child) {
-            if (child instanceof THREE.Mesh) {
-                child.material.color = 0x000000;
-            }
-        });
-        model.position.set(0, 0, 0);
-        model.scale.set(10.01, 10.01, 10.01);
-
-        scene.add(model);
-        start();
-
-    });
+    loadOBJ();
   }
 
   addShadowedLight = ( x, y, z, color, intensity ) =>{
@@ -216,6 +218,9 @@ class Mlarch extends React.Component {
             case 68: // d
                 moveRight = true;
                 break;
+            case 74: // J
+                Shoot = true;
+                break;    
         }
     };
   
@@ -233,6 +238,9 @@ class Mlarch extends React.Component {
             case 68: // d
                 moveRight = false;
                 break;
+            case 74: // J
+                Shoot = false;
+                break;      
         }
     };
       
@@ -268,12 +276,47 @@ function start () {
 
 function renderScene () {
     
-     camera.lookAt(torus.position);
-
-
-  
+  camera.lookAt(banana.position);
   renderer.render(scene, camera)
 }
+
+function loadOBJ (){
+
+	//Manager from ThreeJs to track a loader and its status
+  var manager = new THREE.LoadingManager();
+  
+  var textureLoader = new THREE.TextureLoader( manager );
+  texture = textureLoader.load(textures["soldier.png"] );
+
+	//Loader for Obj from Three.js
+	var loader = new OBJLoader( manager );
+  
+	//Launch loading of the obj file, addBananaInScene is the callback when it's ready 
+	loader.load( objfiles['SoldierTorso.obj'], addBananaInScene);
+
+};
+
+function addBananaInScene (object){
+  banana = object
+	//Move the banana in the scene
+
+	banana.position.y = 1;
+  banana.position.z = 0;
+  banana.scale.multiplyScalar(.5 );
+
+	//Go through all children of the loaded object and search for a Mesh
+	banana.traverse( function ( child ) {
+		//This allow us to check if the children is an instance of the Mesh constructor
+		if(child instanceof THREE.Mesh){
+      console.log(texture);
+      child.material.map = texture;
+			//Sometimes there are some vertex normals missing in the .obj files, ThreeJs will compute them
+		}
+	});
+	//Add the 3D object in the scene
+	scene.add(banana);
+	start();
+};
 
 function animate () {
 
@@ -298,11 +341,18 @@ function animate () {
 
   }
 
+  if (Shoot){
+      fire();
+      Shoot = false;
+  }
+
   prevTime = time;
 
+  bullet.position.z += 70* delta;
+  
 
-  torus.position.z += - velocity.z * delta 
-  torus.position.x -= - velocity.x * delta 
+  banana.position.z += - velocity.z * delta 
+  banana.position.x -= - velocity.x * delta 
 
   // Prompt 
   prompt();
@@ -311,6 +361,17 @@ function animate () {
   controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
+}
+
+function fire(){
+  bullet  = new THREE.Mesh( bulletgeometry, bulletmaterial );
+
+  bullet.position.z = banana.position.z
+  bullet.position.x = banana.position.x+.1
+  bullet.position.y = .7
+
+  scene.add( bullet );  
+  
 }
 
 function prompt() {
@@ -322,9 +383,6 @@ function prompt() {
       flag = 0;
   }
 }
-
-
-
 
 
 export default Mlarch;
