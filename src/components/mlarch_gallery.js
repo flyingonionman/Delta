@@ -121,7 +121,19 @@ function Describe(props){
         case 6:
           return  <p>Thousands of unique parametrically generated renders serve as the ground truth bench data set for the machine learning model.</p>
           break; 
-
+        case 8:
+          return  <p>Generative model in progress. </p>
+          break; 
+        case 9:
+          return  <p>Generative model in progress. </p>
+          break;   
+        case 11:
+          return  <p>A 12 second MS Paint sketch tests the model’s accuracy. </p>
+          break; 
+        case 12:
+          return  <p>Link to this very website</p>
+          break;   
+  
        default:
          return <p>I havne't figured out what to write here yet</p>;
      }
