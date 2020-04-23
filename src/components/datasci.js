@@ -218,6 +218,9 @@ class Mlarch extends React.Component {
 
     <div className="datasci" >    
         <div id="c" ref={ref => (this.mount = ref)} />
+        <div id="legend" >
+          W A S D to move around
+        </div>
         <div className="information">
     
             <Describe name={this.state.descriptor} ></Describe>
