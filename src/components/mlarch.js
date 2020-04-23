@@ -197,8 +197,9 @@ class Mlarch extends React.Component {
           <h1>AI-progettazione</h1>
           <h3>Move around ! </h3>
 
-          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt 
-          ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+          <p>Can we generate instructions based on simple sketches? Inspired by Enzo Mari's work, we combined machine learning and architecture
+            to create a system in which you can obtain model files from a png image. We are also using GAN to generate monstrous furnitures that
+            can be plugged back into the model to see how we would actually construct it.
           </p>  
           <button type="button"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch_gallery">To gallery</Link></button>
           <button type="button " id="downloadSTL" onClick={exportBinary}style={{ textDecoration: 'none' , color:'black'}}>Download STL</button>
