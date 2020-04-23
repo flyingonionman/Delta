@@ -90,12 +90,12 @@ class Mlarch extends React.Component {
 
     //ADD CAMERA
     camera = new THREE.PerspectiveCamera(
-      35,
+      45,
       width / height,
       1,
       1000
     )
-    camera.position.set( 0, 7, - 10 );
+    camera.position.set( 0, 15, 0 );
 
     // Lights
     scene.add( new THREE.HemisphereLight( 0x000000, 0x111122 ) );
@@ -112,41 +112,23 @@ class Mlarch extends React.Component {
     this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    controls = new OrbitControls(camera,renderer.domElement );
-    controls.update();
+    //controls = new OrbitControls(camera,renderer.domElement );
+    //controls.update();
 
     //GUI
-    createGUI();
 
     //Load SVG
     loadSVG();
 
-    // GRID
-    var size = 20,
-    step = 0.25;
-    var geometry = new THREE.Geometry();
-    var material = new THREE.LineBasicMaterial(
-    {
-        color: 0xFFFFFF
-    });
-    for (var i = -size; i <= size; i += step)
-    {
-        geometry.vertices.push(new THREE.Vector3(-size, -0.04, i));
-        geometry.vertices.push(new THREE.Vector3(size, -0.04, i));
-        geometry.vertices.push(new THREE.Vector3(i, -0.04, -size));
-        geometry.vertices.push(new THREE.Vector3(i, -0.04, size));
-    }
-    var line = new THREE.Line(geometry, material, THREE.LinePieces);
-    line.position.y = -0.46;
-    scene.add(line);
+    
 
 
     //ADD torus 
     var geometry = new THREE.TorusGeometry( .4, .07, 16, 100 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+    var material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
     torus = new THREE.Mesh( geometry, material );
     torus.rotation.x = 1.57;
-    torus.position.set(0,-.1,0);
+    torus.position.set(-9,-.1,3);
     scene.add( torus );
     
 
@@ -237,7 +219,6 @@ class Mlarch extends React.Component {
     <div className="datasci" >    
         <div id="c" ref={ref => (this.mount = ref)} />
         <div className="information">
-            <p>Welcome to our datascience exhibition ! Try going to the blue chance questionmark</p>
     
             <Describe name={this.state.descriptor} ></Describe>
 
@@ -260,7 +241,7 @@ function start () {
 
 function renderScene () {
     
-     camera.lookAt(torus.position);
+  camera.lookAt(0,0,0);
 
 
   
@@ -293,24 +274,40 @@ function animate () {
   prevTime = time;
 
 
-  torus.position.z += - velocity.z * delta 
-  torus.position.x -= - velocity.x * delta 
+  torus.position.z -= - velocity.z * delta 
+  torus.position.x += - velocity.x * delta 
 
+  console.log( torus.position)
   // Prompt 
   prompt();
   // Scene update
-
-  controls.update();
+  
+  //controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
 }
 
 function prompt() {
-  if (torus.position.z <= -3 && torus.position.z >=-4.5  && torus.position.x <= -4 && torus.position.x >= -4.5){
+  if (torus.position.z <= 4 && torus.position.z >=2  && torus.position.x <= -4.5 && torus.position.x >= -6.5 ){
       flag = 1;
+
+      //Draw lines for directions
+      var material = new THREE.LineBasicMaterial( { color: 0xff00ff } );
+      var points = [];
+      points.push( new THREE.Vector3( -3, 1,-2 ) );
+      points.push( new THREE.Vector3( -6, 1, -2) );
+
+      var geometry = new THREE.BufferGeometry().setFromPoints( points );
+      var line = new THREE.Line( geometry, material );
+      line.name = "blackindividual"
+      scene.add( line );
 
   }
   else{
+      var person = scene.getObjectByName('blackindividual')
+        if(person){
+        scene.remove( person );
+      }
       flag = 0;
   }
 }
@@ -344,7 +341,7 @@ function loadSVG( ) {
         var paths = data.paths;
         var group = new THREE.Group();
         group.scale.multiplyScalar( 0.01 );
-        group.position.x = -8;
+        group.position.x = -11;
         group.position.z = -5;
 
         group.position.y = -.35;
@@ -430,7 +427,7 @@ function Describe(props){
   
            break;
          case 1:
-          return <p>You arrived at the blue questionmark ! </p>;
+          return <p>Black individuals are discrimnated by certain charges and pay more bail on average </p>;
     
              break;  
           case 4:
@@ -438,7 +435,8 @@ function Describe(props){
   
               break;  
          default:
-           return <p>huehue</p>;
+           return <p>           Welcome to our datascience exhibition ! 
+           </p>;
        }
   }
   
