@@ -60,13 +60,13 @@ class Mlarch extends React.Component {
           </Row>
 
           <Row>
-            <Col><img src={images["p"+8+".png"]}/></Col>
-            <Col><img src={images["p"+9+".png"]}/></Col>
-            <Col><img src={images["p"+10+".png"]}/></Col>
-            <Col><img src={images["p"+11+".png"]}/></Col>
-            <Col><img src={images["p"+12+".png"]}/></Col>
-            <Col><img src={images["p"+13+".png"]}/></Col>
-            <Col><img src={images["p"+14+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(8)} src={images["p"+8+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(9)} src={images["p"+9+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(10)} src={images["p"+10+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(11)} src={images["p"+11+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(12)} src={images["p"+12+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(13)}src={images["p"+13+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(14)} src={images["p"+14+".png"]}/></Col>
           </Row>
 
         </Container>
@@ -114,6 +114,14 @@ function Describe(props){
         return <p>Latent space walk through the progressive gan trained on randomly assembled timber members at some points finding regularity with straight member perpendicularly connected while other times melting into glitchy bird’s nests  </p>;
 
             break;  
+        case 5:
+          return <p>Code used for training the model</p>;
+  
+          break;  
+        case 6:
+          return  <p>Thousands of unique parametrically generated renders serve as the ground truth bench data set for the machine learning model.</p>
+          break; 
+
        default:
          return <p>I havne't figured out what to write here yet</p>;
      }
