@@ -13,6 +13,7 @@
     "halogenium": "^2.3.0",
     "keras-js": "^1.0.3",
     "node-sass": "^4.13.0",
+    "postprocessing": "^6.13.3",
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.17",
     "react-device-detect": "^1.11.14",
@@ -24,7 +25,6 @@
     "stl-exporter": "^0.3.6",
     "stl-viewer": "^0.12.0",
     "styled-components": "^5.1.0",
-    "three": "^0.115.0",
     "three-orbitcontrols": "^2.110.3",
     "three-stl-loader": "^1.0.6",
     "three-stlexporter": "^1.0.0"
