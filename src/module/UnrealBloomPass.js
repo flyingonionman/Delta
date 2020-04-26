@@ -2,10 +2,10 @@
  * @author spidersharma / http://eduperiment.com/
  */
 
- 
+
 import { Pass } from "postprocessing";
-import { CopyShader } from "../shaders/CopyShader.js";
-import { LuminosityHighPassShader } from "../shaders/LuminosityHighPassShader.js";
+import { CopyShader } from "../CopyShader.js";
+import { LuminosityHighPassShader } from "../LuminosityHighPassShader.js";
 
 import * as THREE from "three";
 
