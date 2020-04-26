@@ -8,6 +8,7 @@ import {
 import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
 import { GUI } from '../gui/dat.gui.module.js';
+import { OrbitControls } from '../module/OrbitControls';
 
 //import SVG
 function importAll(r) {
@@ -17,7 +18,6 @@ function importAll(r) {
   }
   
 const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
-const OrbitControls = require('three-orbitcontrols');
 
 var camera, scene, renderer,controls;
 var frameId;

@@ -7,6 +7,7 @@ import {
 
 import * as THREE from "three";
 import { OBJLoader } from '../obj/OBJLoader.js';
+import { OrbitControls } from '../module/OrbitControls';
 
 //import SVG
 function importAll(r) {
@@ -25,12 +26,6 @@ function importtexture(r) {
 }
 
 const textures = importtexture(require.context('../obj/texture', false, /\.(png)$/));
-
-
-
-
-
-const OrbitControls = require('three-orbitcontrols');
 
 
 var camera, scene, renderer,controls;

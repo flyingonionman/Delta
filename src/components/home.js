@@ -2,7 +2,7 @@ import React from 'react';
 import '../css/main.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import * as THREE from "three";
-const OrbitControls = require('three-orbitcontrols');
+import { OrbitControls } from '../module/OrbitControls';
 
 //Globals
 var camera, scene, renderer,controls,frameId;
