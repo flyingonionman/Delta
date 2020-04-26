@@ -28,7 +28,6 @@
     "three-stl-loader": "^1.0.6",
     "three-stlexporter": "^1.0.0",
     "three": "^0.115.0"
-
   },
   "scripts": {
     "start": "react-scripts start",

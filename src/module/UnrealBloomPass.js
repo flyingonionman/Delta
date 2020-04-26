@@ -3,9 +3,9 @@
  */
 
 
-import { Pass } from "postprocessing";
-import { CopyShader } from "../CopyShader.js";
-import { LuminosityHighPassShader } from "../LuminosityHighPassShader.js";
+import { Pass } from "./Pass";
+import { CopyShader } from "./CopyShader";
+import { LuminosityHighPassShader } from "./LuminosityHighPassShader";
 
 import * as THREE from "three";
 
