@@ -19,9 +19,9 @@ import {isMobile} from 'react-device-detect';
 
 class App extends React.Component {
   render() {
-  if (isMobile) {
+  /* if (isMobile) {
       return <div> This content is unavailable on mobile</div>
-  }
+  } */
   return (
     <Router>
       <div  >    
