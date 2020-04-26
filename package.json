@@ -26,7 +26,9 @@
     "stl-viewer": "^0.12.0",
     "styled-components": "^5.1.0",
     "three-stl-loader": "^1.0.6",
-    "three-stlexporter": "^1.0.0"
+    "three-stlexporter": "^1.0.0",
+    "three": "^0.115.0"
+
   },
   "scripts": {
     "start": "react-scripts start",
