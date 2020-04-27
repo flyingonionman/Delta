@@ -214,7 +214,6 @@ function animate (time) {
     cube[property].rotation.y += .01;  
 
   };
-  loopcamera();
   position(time);
   controls.update();
   composer.render();
@@ -259,17 +258,15 @@ function onDocumentMouseMove( event ) {
 
 function onclick (event){
   event.preventDefault();
-  project =true;
-}
-
-
-function loopcamera(){
-  if (project){
+  var intersects = raycaster.intersectObjects(  scene.children );
+  if ( intersects.length > 0 ) {
     tween = new TWEEN.Tween(camera.position) // Create a new tween that modifies 'coords'.
     .to({ x: 100 ,y:100 }, 2000) // Move to (300, 200) in 1 second.
     .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
     .start(); // Start the tween immediately.
+  } else {
   }
 }
+
 
 export default Home;
