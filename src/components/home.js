@@ -111,7 +111,7 @@ class Home extends React.Component {
     // SETUP BACKGROUND
     var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
-    for ( var i = 0; i < 20; i ++ ) {
+    for ( var i = 0; i < 40; i ++ ) {
 
       var color = new THREE.Color();
 
@@ -121,7 +121,7 @@ class Home extends React.Component {
       sphere.position.y = Math.random() * 150 - 50;
       sphere.position.z = Math.random() * 10 - 80;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
-      sphere.material.emissive.setHSL( Math.random()*0.25 + .35, 1, Math.random()*0.4+.1);
+      sphere.material.emissive.setHSL( Math.random()*0.25 + .45, 1, Math.random()*0.4+.1);
 
       scene.add( sphere );
     } 
