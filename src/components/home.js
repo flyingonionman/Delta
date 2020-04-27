@@ -7,6 +7,9 @@ import { UnrealBloomPass  } from '../module/UnrealBloomPass';
 import { RenderPass } from '../module/RenderPass';
 
 import { OrbitControls } from '../module/OrbitControls';
+import TWEEN from '@tweenjs/tween.js';
+
+import { Interaction } from 'three.interaction';
 
 function importAll(r) {
   let fontfiles = {};
@@ -19,7 +22,10 @@ const fontfiles = importAll(require.context('../font', false, /\.(json)$/));
 //Globals
 var camera, scene, renderer,controls,frameId,composer,raycaster;
 const cube ={};
+var tween;
 
+//Camera views
+var project = false;
 var afterimagePass;
 
 //Layering
@@ -28,8 +34,8 @@ var bloomLayer = new THREE.Layers();
 bloomLayer.set( BLOOM_SCENE );
       
 var params_bloom  = {
-  exposure: 1.1,
-  bloomStrength: 10,
+  exposure: 1,
+  bloomStrength: 1.2,
   bloomThreshold: 0,
   bloomRadius: 1
 };
@@ -45,7 +51,7 @@ class Home extends React.Component {
   }
   componentDidMount(){
     this.init();
-    start();
+    animstart();
   }
 
   init = () =>{
@@ -84,8 +90,8 @@ class Home extends React.Component {
     var geometry = new THREE.BoxGeometry( 3, 3, 3 );
     var geometry2 = new THREE.BoxGeometry( 2, 2, 2 );
 
-    var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:10,specular:0x00ff00} );
-    var material2 = new THREE.MeshPhongMaterial( {color: 0x3FD0D0, shininess:10,specular:0x00ff00} );
+    var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
+    var material2 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
 
     cube[1] = new THREE.Mesh( geometry, material );
     cube[2] = new THREE.Mesh( geometry2, material2 );
@@ -93,6 +99,8 @@ class Home extends React.Component {
     cube[1].position.y = 1;
     cube[2].position.x = -8;
     cube[1].name = "projects";
+
+
     scene.add(cube[1]);
 
     scene.add(cube[2]);
@@ -106,14 +114,15 @@ class Home extends React.Component {
     for ( var i = 0; i < 20; i ++ ) {
 
       var color = new THREE.Color();
-      color.setHSL( Math.random()*0.15 + .55, .5, Math.random()*0.2);
 
-      var material = new THREE.MeshBasicMaterial( { color: color } );
+      var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:30,specular:0xffffff} );
       var sphere = new THREE.Mesh( geometry, material );
       sphere.position.x = Math.random() * 150 - 75;
       sphere.position.y = Math.random() * 150 - 50;
       sphere.position.z = Math.random() * 10 - 80;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
+      sphere.material.emissive.setHSL( Math.random()*0.25 + .35, 1, Math.random()*0.4+.1);
+
       scene.add( sphere );
     } 
 
@@ -146,10 +155,13 @@ class Home extends React.Component {
       textMesh.position.x = 0 ;      textMesh.position.y = 0 ;      textMesh.position.z = 0 ;
       scene.add(textMesh);
     } );  */
+    //
+    const interaction = new Interaction(renderer, scene, camera);
 
     // Set up ray casting
     raycaster = new THREE.Raycaster();
-    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    window.addEventListener( 'mousemove', onDocumentMouseMove, false );
+    window.addEventListener( 'click', onclick, false );
 
     // postprocessing UNREALBLOOM
 
@@ -160,9 +172,10 @@ class Home extends React.Component {
     
     composer = new EffectComposer( renderer );
     composer.addPass( renderScene );
-    composer.addPass( bloomPass );
+    composer.addPass( bloomPass ); 
 
-
+    //cube interaction
+   
   }
   
   render() {
@@ -180,7 +193,7 @@ class Home extends React.Component {
       </div>
       <div className="content">
         <div id="canvas" ref={ref => (this.mount = ref)} />
-        <div className="lable" >PROJECTS</div>
+        <div className="label" >PROJECTS</div>
       </div>    
        
     </div>
@@ -188,46 +201,48 @@ class Home extends React.Component {
   }
 }
 
-function start () {
+function animstart () {
   if (!frameId) {
     frameId = requestAnimationFrame(animate)
   }
 }
 
-function animate () {
+function animate (time) {
 
   for (let property in cube) {
     cube[property].rotation.x += .01;
     cube[property].rotation.y += .01;  
 
   };
-
-  camera.position.x += .001;
-  position();
+  loopcamera();
+  position(time);
   controls.update();
   composer.render();
-  frameId = window.requestAnimationFrame(animate)
+  frameId = requestAnimationFrame(animate)
 }
 
-function position(){
+function position(time){
   raycaster.setFromCamera( mouse, camera );
 
-  var intersects = raycaster.intersectObjects(  scene.getObjectByName( "projects", true ) );
+  var intersects = raycaster.intersectObjects(  scene.children );
   if ( intersects.length > 0 ) {
-
     if ( INTERSECTED != intersects[ 0 ].object ) {
 
-      if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+      if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
 
-      INTERSECTED = intersects[ 0 ].object;
+      INTERSECTED = intersects[0].object;
       INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-      INTERSECTED.material.emissive.setHex( 0x0000ff );
+      INTERSECTED.material.emissive.setHex(0xadd8e6);
 
+  
+    }
+    else{
+      if(tween) tween.update(time)
     }
 
   } else {
 
-    if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+    if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
 
     INTERSECTED = null;
 
@@ -240,6 +255,21 @@ function onDocumentMouseMove( event ) {
   mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
   mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 
+}
+
+function onclick (event){
+  event.preventDefault();
+  project =true;
+}
+
+
+function loopcamera(){
+  if (project){
+    tween = new TWEEN.Tween(camera.position) // Create a new tween that modifies 'coords'.
+    .to({ x: 100 ,y:100 }, 2000) // Move to (300, 200) in 1 second.
+    .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
+    .start(); // Start the tween immediately.
+  }
 }
 
 export default Home;

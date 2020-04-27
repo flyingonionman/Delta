@@ -9,6 +9,7 @@
   "dependencies": {
     "@tensorflow/tfjs": "^1.7.2",
     "@tensorflow/tfjs-vis": "^1.4.0",
+    "@tweenjs/tween.js": "^18.5.0",
     "bootstrap": "^4.3.1",
     "halogenium": "^2.3.0",
     "keras-js": "^1.0.3",
@@ -25,9 +26,10 @@
     "stl-exporter": "^0.3.6",
     "stl-viewer": "^0.12.0",
     "styled-components": "^5.1.0",
+    "three": "^0.115.0",
     "three-stl-loader": "^1.0.6",
     "three-stlexporter": "^1.0.0",
-    "three": "^0.115.0"
+    "three.interaction": "^0.2.2"
   },
   "scripts": {
     "start": "react-scripts start",

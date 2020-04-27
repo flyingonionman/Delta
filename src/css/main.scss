@@ -35,53 +35,7 @@ html, body {
 .App{
   font-family: 'Bahnschrift';
 
-  #slider{
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 20%; /* Full-width */
-    height: 20px; /* Specified height */
-    background: #FFFFFF; /* Grey background */
-    outline: none; /* Remove outline */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-    position: absolute;
-    bottom:0;
-    margin:3%;
-    z-index:101;
-    writing-mode: bt-lr; /* IE */
-    border-radius: 5px;
-
-  }
-
-
-  #slider2{
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    width: 20%;
-    height: 20px;
-    background: #FFFFFF;
-    outline: none;
-    transition: opacity .2s;
-    position: absolute;
-    bottom: 50px;
-    margin: 3%;
-    z-index: 101;
-    writing-mode: bt-lr; /* IE */
-    border-radius: 5px;
-  }
-
-  .controller::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 20px; /* Slider handle height */
-    background: #000000; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-    border-radius: 5px;
-
-  }
-
+ 
   button{
     background-color: white;
     border: none;
@@ -93,39 +47,8 @@ html, body {
     font-size: 1.2vw;
 
   }
-  #downloadSTL{
-    margin-left: 4%;
-  }
-
-  #startmodel{
-    margin-left: 4%;
-  }
-  #info-body {
-    border: 2px solid white;
-    padding: 1.5%;
-    position: absolute;
-    width: 40%;
-    text-align: left;
-    z-index: 100;
-    display:block;
-    color:white;
-    right :0 ;
-    margin-top:-10%;
-    margin-right:5%;
-    height: 75%;
-  }
-
-  #credits{
-    font-size: 0.6em;
-    margin: 0;
-    position: relative;
-    height: 10%;
-    bottom: 0;
-    margin-top: 11%;
-    p{
-      font-size:.6vw;
-    }
-  }
+ 
+  
   h1{
     font-size:3vw;
     margin: 3% 0%;
@@ -180,3 +103,12 @@ html, body {
     }
   }
   
+
+.label{
+  position: fixed;
+    color: white;
+    font-family: 'Bahnschrift';
+    bottom: 0;
+    font-size: 1.5vw;
+    margin: 12% 47%;
+}
