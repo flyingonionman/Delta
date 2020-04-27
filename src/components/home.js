@@ -8,8 +8,16 @@ import { RenderPass } from '../module/RenderPass';
 
 import { OrbitControls } from '../module/OrbitControls';
 
+function importAll(r) {
+  let fontfiles = {};
+  r.keys().map((item, index) => { fontfiles[item.replace('./', '')] = r(item); });
+  return fontfiles;
+}
+
+const fontfiles = importAll(require.context('../font', false, /\.(json)$/));
+
 //Globals
-var camera, scene, renderer,controls,frameId,composer;
+var camera, scene, renderer,controls,frameId,composer,raycaster;
 const cube ={};
 
 var afterimagePass;
@@ -27,7 +35,7 @@ var params_bloom  = {
 };
 
 //text
-
+var text_materials, textMesh;
 class Home extends React.Component {
   constructor(props){
     super(props);
@@ -90,9 +98,9 @@ class Home extends React.Component {
     var renderScene = new RenderPass( scene, camera );
     
     // SETUP BACKGROUND
-    /* var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
 
-    for ( var i = 0; i < 100; i ++ ) {
+    for ( var i = 0; i < 20; i ++ ) {
 
       var color = new THREE.Color();
       color.setHSL( Math.random()*0.15 + .55, .5, Math.random()*0.2);
@@ -104,14 +112,16 @@ class Home extends React.Component {
       sphere.position.z = Math.random() * 10 - 100;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
       scene.add( sphere );
-
-      if ( Math.random() < 0.25 ) sphere.layers.enable( BLOOM_SCENE );
-
-    } */
+    } 
     // Adding labels
-    /* var loader = new THREE.FontLoader();
+    var loader = new THREE.FontLoader();
 
-    loader.load( '../font/Bahnschrift_Regular.json', function ( font ) {
+    loader.load( fontfiles['default.json'], function ( font ) {
+      text_materials = [
+        new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } ), // front
+        new THREE.MeshPhongMaterial( { color: 0xffffff } ) // side
+      ];
+
 
       var textgeo = new THREE.TextGeometry( 'Projects', {
         font: font,
@@ -124,13 +134,13 @@ class Home extends React.Component {
         bevelOffset: 0,
         bevelSegments: 5
       } );
+
       geometry = new THREE.BufferGeometry().fromGeometry( textgeo );
       textMesh = new THREE.Mesh( geometry, text_materials );
-      console.log(geometry);
 
       textMesh.position.x = 0 ;      textMesh.position.y = 0 ;      textMesh.position.z = 0 ;
       scene.add(textMesh);
-    } ); */
+    } ); 
 
 
     // postprocessing UNREALBLOOM
@@ -162,6 +172,7 @@ class Home extends React.Component {
       </div>
       <div className="content">
         <div id="canvas" ref={ref => (this.mount = ref)} />
+        <div className="lable" >PROJECTS</div>
       </div>    
        
     </div>
