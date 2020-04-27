@@ -36,6 +36,9 @@ var params_bloom  = {
 
 //text
 var text_materials, textMesh;
+
+//mouse movement
+var mouse = new THREE.Vector2(), INTERSECTED;
 class Home extends React.Component {
   constructor(props){
     super(props);
@@ -89,7 +92,7 @@ class Home extends React.Component {
 
     cube[1].position.y = 1;
     cube[2].position.x = -8;
-
+    cube[1].name = "projects";
     scene.add(cube[1]);
 
     scene.add(cube[2]);
@@ -109,12 +112,14 @@ class Home extends React.Component {
       var sphere = new THREE.Mesh( geometry, material );
       sphere.position.x = Math.random() * 150 - 75;
       sphere.position.y = Math.random() * 150 - 50;
-      sphere.position.z = Math.random() * 10 - 100;
+      sphere.position.z = Math.random() * 10 - 80;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
       scene.add( sphere );
     } 
+
+    //
     // Adding labels
-    var loader = new THREE.FontLoader();
+    /* var loader = new THREE.FontLoader();
 
     loader.load( fontfiles['default.json'], function ( font ) {
       text_materials = [
@@ -140,8 +145,11 @@ class Home extends React.Component {
 
       textMesh.position.x = 0 ;      textMesh.position.y = 0 ;      textMesh.position.z = 0 ;
       scene.add(textMesh);
-    } ); 
+    } );  */
 
+    // Set up ray casting
+    raycaster = new THREE.Raycaster();
+    document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 
     // postprocessing UNREALBLOOM
 
@@ -195,10 +203,43 @@ function animate () {
   };
 
   camera.position.x += .001;
-
+  position();
   controls.update();
   composer.render();
   frameId = window.requestAnimationFrame(animate)
+}
+
+function position(){
+  raycaster.setFromCamera( mouse, camera );
+
+  var intersects = raycaster.intersectObjects(  scene.getObjectByName( "projects", true ) );
+  if ( intersects.length > 0 ) {
+
+    if ( INTERSECTED != intersects[ 0 ].object ) {
+
+      if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+
+      INTERSECTED = intersects[ 0 ].object;
+      INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
+      INTERSECTED.material.emissive.setHex( 0x0000ff );
+
+    }
+
+  } else {
+
+    if ( INTERSECTED ) INTERSECTED.material.emissive.setHex( INTERSECTED.currentHex );
+
+    INTERSECTED = null;
+
+  }
+}
+
+function onDocumentMouseMove( event ) {
+
+  event.preventDefault();
+  mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+  mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+
 }
 
 export default Home;
