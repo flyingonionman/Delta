@@ -119,9 +119,9 @@ class Home extends React.Component {
       var sphere = new THREE.Mesh( geometry, material );
       sphere.position.x = Math.random() * 150 - 75;
       sphere.position.y = Math.random() * 150 - 50;
-      sphere.position.z = Math.random() * 10 - 80;
+      sphere.position.z = Math.random() * 10 - 50;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
-      sphere.material.emissive.setHSL( Math.random()*0.25 + .45, 1, Math.random()*0.4+.1);
+      sphere.material.emissive.setHSL( Math.random()*0.15 + .45, 1, Math.random()*0.4+.1);
 
       scene.add( sphere );
     } 
@@ -214,6 +214,8 @@ function animate (time) {
     cube[property].rotation.y += .01;  
 
   };
+  camera.position.x += .001;  
+
   position(time);
   controls.update();
   composer.render();
