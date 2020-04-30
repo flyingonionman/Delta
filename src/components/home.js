@@ -54,6 +54,13 @@ class Home extends React.Component {
     animstart();
   }
 
+  handleWindowResize = () => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    renderer.setSize(width, height)
+
+  };
+
   init = () =>{
     var width = window.innerWidth
     var height = window.innerHeight
@@ -68,7 +75,8 @@ class Home extends React.Component {
       1,
       1000
     )
-    camera.position.z = 25
+    camera.position.z = 50
+    camera.lookAt( new THREE.Vector3(0,0,0) );
 
     // Lights
     scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
@@ -83,8 +91,8 @@ class Home extends React.Component {
     this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    controls = new OrbitControls(camera,renderer.domElement );
-    controls.update();
+    //controls = new OrbitControls(camera,renderer.domElement );
+    //controls.update();
 
     //ADD CUBE 
     var geometry = new THREE.BoxGeometry( 3, 3, 3 );
@@ -94,11 +102,14 @@ class Home extends React.Component {
     var material2 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
 
     cube[1] = new THREE.Mesh( geometry, material );
+    cube[1].material.emissive.setHSL( .1, .8, .2);
+
     cube[2] = new THREE.Mesh( geometry2, material2 );
 
     cube[1].position.y = 1;
-    cube[2].position.x = -8;
+    cube[2].position.x = -20;
     cube[1].name = "projects";
+    cube[2].name = "about";
 
 
     scene.add(cube[1]);
@@ -109,19 +120,19 @@ class Home extends React.Component {
     var renderScene = new RenderPass( scene, camera );
     
     // SETUP BACKGROUND
-    var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    var geometry = new THREE.BoxGeometry( .5, .5, .5 );
 
-    for ( var i = 0; i < 40; i ++ ) {
+    for ( var i = 0; i < 80; i ++ ) {
 
       var color = new THREE.Color();
 
       var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:30,specular:0xffffff} );
       var sphere = new THREE.Mesh( geometry, material );
-      sphere.position.x = Math.random() * 150 - 75;
-      sphere.position.y = Math.random() * 150 - 50;
-      sphere.position.z = Math.random() * 10 - 50;
+      sphere.position.x = Math.random() * 100 - 50;
+      sphere.position.y = Math.random() * 100 - 50;
+      sphere.position.z = Math.random() * 100 - 50;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
-      sphere.material.emissive.setHSL( Math.random()*0.15 + .45, 1, Math.random()*0.4+.1);
+      sphere.material.emissive.setHSL( Math.random()*0.15 + .45, 1, Math.random()*0.4+.4);
 
       scene.add( sphere );
     } 
@@ -186,7 +197,7 @@ class Home extends React.Component {
       <ul>
         <li><a href="#home">Home</a></li>
         <li><a href="#news">News</a></li>
-        <li><a href="#contact">Contact</a></li>
+        <li><a href="#contact">//A MINYOUNG NA WORKS//</a></li>
         <li><a href="#about">//WEBSITE CURRENTLY UNDER CONSTRUCTION//</a></li>
       </ul>
 
@@ -215,32 +226,30 @@ function animate (time) {
 
   };
   camera.position.x += .001;  
+  TWEEN.update();
 
   position(time);
-  controls.update();
+  //controls.update();
   composer.render();
   frameId = requestAnimationFrame(animate)
 }
 
 function position(time){
   raycaster.setFromCamera( mouse, camera );
+  var important = [scene.children[1],scene.children[2]]
 
-  var intersects = raycaster.intersectObjects(  scene.children );
+  var intersects = raycaster.intersectObjects(  important );
+
   if ( intersects.length > 0 ) {
     if ( INTERSECTED != intersects[ 0 ].object ) {
-
       if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
 
       INTERSECTED = intersects[0].object;
       INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
       INTERSECTED.material.emissive.setHex(0xadd8e6);
-
-  
+      
     }
-    else{
-      if(tween) tween.update(time)
-    }
-
+   
   } else {
 
     if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
@@ -260,14 +269,29 @@ function onDocumentMouseMove( event ) {
 
 function onclick (event){
   event.preventDefault();
-  var intersects = raycaster.intersectObjects(  scene.children );
+  var important = [scene.children[1],scene.children[2]]
+  var intersects = raycaster.intersectObjects(  important );
+
   if ( intersects.length > 0 ) {
-    tween = new TWEEN.Tween(camera.position) // Create a new tween that modifies 'coords'.
-    .to({ x: 100 ,y:100 }, 2000) // Move to (300, 200) in 1 second.
-    .easing(TWEEN.Easing.Quadratic.Out) // Use an easing function to make the animation smooth.
-    .start(); // Start the tween immediately.
-  } else {
-  }
+    var id = intersects[0].object.name
+
+    switch (id){
+      case "projects" :{
+      tween = new TWEEN.Tween(camera.position)
+      .to({ x: -16 ,y:1 , z:16}, 1500) 
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start(); 
+
+      tween = new TWEEN.Tween(camera.rotation)
+      .to({ y:-1 }, 1500) 
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start(); 
+      }
+      default:
+        break;
+    }
+    
+  } 
 }
 
 
