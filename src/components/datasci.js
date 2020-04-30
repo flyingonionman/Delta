@@ -9,6 +9,7 @@ import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
 import { GUI } from '../gui/dat.gui.module.js';
 import { OrbitControls } from '../module/OrbitControls';
+import TWEEN from '@tweenjs/tween.js';
 
 //import SVG
 function importAll(r) {
@@ -22,7 +23,12 @@ const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
 var camera, scene, renderer,controls;
 var frameId;
 var torus;
+var tween;
+var trailgeometry;
+var trailmaterial;
+var trail
 
+var finished = false;
 //Movement 
 var moveForward = false;
 var moveBackward = false;
@@ -45,7 +51,7 @@ var guiData = {
 
 var flag = 0;
 var gui;
-class Mlarch extends React.Component {
+class Datasci extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
@@ -79,7 +85,7 @@ class Mlarch extends React.Component {
     // Ground
 
     var plane = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry( 40, 40 ),
+      new THREE.PlaneBufferGeometry( 120, 50 ),
       new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0xFFFFFF } )
     );
     plane.rotation.x = - Math.PI / 2;
@@ -96,7 +102,7 @@ class Mlarch extends React.Component {
       1000
     )
     camera.position.set( 0, 15, 0 );
-
+    camera.lookAt(0,0,0);
     // Lights
     scene.add( new THREE.HemisphereLight( 0x000000, 0x111122 ) );
     this.addShadowedLight( 1, 1, 1, 0x000000,5 );
@@ -120,6 +126,10 @@ class Mlarch extends React.Component {
     //Load SVG
     loadSVG();
 
+    //Add Trail
+    trailgeometry = new THREE.SphereGeometry( .2, 32, 32 );
+    trailmaterial = new THREE.MeshBasicMaterial( {color: 0xffff00} );
+    trail  = new THREE.Mesh( trailgeometry, trailmaterial );
     
 
 
@@ -128,7 +138,7 @@ class Mlarch extends React.Component {
     var material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
     torus = new THREE.Mesh( geometry, material );
     torus.rotation.x = 1.57;
-    torus.position.set(-9,-.1,3);
+    torus.position.set(-9,-.1,0);
     scene.add( torus );
     
 
@@ -220,6 +230,7 @@ class Mlarch extends React.Component {
         <div id="c" ref={ref => (this.mount = ref)} />
         <div id="legend" >
           W A S D to move around
+          <button onClick ={deletetrail}>Reset Trail</button>
         </div>
         <div className="information">
     
@@ -243,11 +254,14 @@ function start () {
 }
 
 function renderScene () {
-    
-  camera.lookAt(0,0,0);
+  if (!finished){
+    camera.position.set( torus.position.x, 15, torus.position.z );
+    camera.lookAt(torus.position.x,0,torus.position.z);
+  }
+  else{
+    camera.position.set( 0, 70, 0 );
 
-
-  
+  }
   renderer.render(scene, camera)
 }
 
@@ -275,16 +289,16 @@ function animate () {
   }
 
   prevTime = time;
-
+  puttrail();
 
   torus.position.z -= - velocity.z * delta 
   torus.position.x += - velocity.x * delta 
 
-  console.log( torus.position)
   // Prompt 
   prompt();
   // Scene update
   
+  console.log(torus.position)
   //controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
@@ -306,6 +320,10 @@ function prompt() {
       scene.add( line );
 
   }
+  if (torus.position.x > 43 ){
+    console.log("pog")
+    finished=true;
+}
   else{
       var person = scene.getObjectByName('blackindividual')
         if(person){
@@ -345,7 +363,7 @@ function loadSVG( ) {
         var group = new THREE.Group();
         group.scale.multiplyScalar( 0.01 );
         group.position.x = -11;
-        group.position.z = -5;
+        group.position.z = -6.5;
 
         group.position.y = -.35;
         group.scale.y *= 1;
@@ -438,9 +456,34 @@ function Describe(props){
   
               break;  
          default:
-           return <p>           Welcome to our datascience exhibition ! 
+           return <p> Welcome to our datascience exhibition ! In this simulation, we attempt to estimate the bond amount
+                      for a given crime varied by specific race / gender / location, to give a sense of the discrepancy
+                      and irregularity in the amounts.
            </p>;
        }
   }
   
-export default Mlarch;
+function puttrail(){
+  trail  = new THREE.Mesh( trailgeometry, trailmaterial );
+  trail.name = "trail"
+  trail.position.z = torus.position.z
+  trail.position.x = torus.position.x
+  trail.position.y = -.3
+  
+  scene.add( trail );  
+  
+}
+
+function deletetrail(){
+  scene.traverse(function(child) {
+        if (child.name === "trail") {
+          if (child.length> 0){
+
+          scene.remove(child)
+          }
+        }
+      
+  })
+  
+}
+export default Datasci;

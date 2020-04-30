@@ -213,7 +213,7 @@ class Mlarch extends React.Component {
               <p>Sam Keene, Professor of Electrical Engineering | Ben Aranda, Assistant professor of Architecture  </p>
 
               <hr></hr>
-              <h3><a href="https://www.instagram.com/machine_learning_architecture/">ML + ARCH @ Cooper Union</a></h3>
+              <h3><a href="https://www.instagram.com/machine_learning_architecture/">ML + ARCH @ Cooper Union [instagram link]</a></h3>
             </div>
           
           </div>
