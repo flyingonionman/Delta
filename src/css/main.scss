@@ -36,18 +36,6 @@ html, body {
   font-family: 'Bahnschrift';
 
  
-  button{
-    background-color: white;
-    border: none;
-    color: black;
-    display:inline;
-    margin-top:4%;
-    padding:4%;
-    font-size: 18px;
-    font-size: 1.2vw;
-
-  }
- 
   
   h1{
     font-size:3vw;
@@ -111,4 +99,48 @@ html, body {
     bottom: 0;
     font-size: 1.5vw;
     margin: 12% 47%;
+}
+
+container{
+  hr{
+    color:white;
+  }
+  transition: margin 1s;
+  #tomlarch{
+    display:inline;
+    padding:1%;
+    margin-top:3%;
+  }
+}
+
+.projectappear{
+  position: absolute;
+  color: white;
+  font-family: 'Bahnschrift';
+  bottom: 0;
+  font-size: 1vw;
+  margin: 19% 50%;
+  width: 45%;
+}
+.hidden{
+  position: absolute;
+  margin: 19% 100%;
+  transition: margin 1s;
+  width: 45%;
+  bottom: 0;
+  color: white;
+}
+
+#return{
+  position: absolute;
+    text-decoration: none;
+    padding: 2%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    /* margin-top: 0; */
+    font-size: 1.5vw;
+    left: 0;
+    outline: none;
+    bottom: 0;
 }

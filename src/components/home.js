@@ -23,7 +23,7 @@ const fontfiles = importAll(require.context('../font', false, /\.(json)$/));
 var camera, scene, renderer,controls,frameId,composer,raycaster;
 const cube ={};
 var tween;
-
+var gzoom = false;
 //Camera views
 var project = false;
 var afterimagePass;
@@ -48,6 +48,9 @@ var mouse = new THREE.Vector2(), INTERSECTED;
 class Home extends React.Component {
   constructor(props){
     super(props);
+    this.state = { 
+      zoomedin: false ,
+    };
   }
   componentDidMount(){
     this.init();
@@ -61,6 +64,56 @@ class Home extends React.Component {
 
   };
 
+  return = () =>{
+    tween = new TWEEN.Tween(camera.position)
+      .to({ x: 0 ,y:0 , z:35}, 1500) 
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start(); 
+
+      tween = new TWEEN.Tween(camera.rotation)
+      .to({ y:0 }, 1500) 
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start(); 
+
+    this.setState({ zoomedin: false });
+    gzoom = false;
+  }
+
+  onclick = (event) =>{
+    event.preventDefault();
+    var important = [scene.children[1],scene.children[2]]
+    var intersects = raycaster.intersectObjects(  important );
+  
+    if ( intersects.length > 0 ) {
+      var id = intersects[0].object.name
+  
+      switch (id){
+        case "projects" :{
+        gzoom = true;
+        this.setState({ zoomedin: true });
+        tween = new TWEEN.Tween(camera.position)
+        .to({ x: -13 ,y:1 , z:17}, 1500) 
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start(); 
+  
+        tween = new TWEEN.Tween(camera.rotation)
+        .to({ y:-1 }, 1500) 
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start(); 
+       
+  
+        tween = new TWEEN.Tween(cube[1].rotation)
+        .to({ y:.5,x:0,z:0}, 1500) 
+        .easing(TWEEN.Easing.Quadratic.Out)
+        .start(); 
+        }
+     
+        default:
+          break;
+      }
+      
+    } 
+  }
   init = () =>{
     var width = window.innerWidth
     var height = window.innerHeight
@@ -75,7 +128,7 @@ class Home extends React.Component {
       1,
       1000
     )
-    camera.position.z = 50
+    camera.position.z = 35
     camera.lookAt( new THREE.Vector3(0,0,0) );
 
     // Lights
@@ -130,7 +183,7 @@ class Home extends React.Component {
       var sphere = new THREE.Mesh( geometry, material );
       sphere.position.x = Math.random() * 100 - 50;
       sphere.position.y = Math.random() * 100 - 50;
-      sphere.position.z = Math.random() * 100 - 50;
+      sphere.position.z = Math.random() * 100 - 100;
       sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
       sphere.material.emissive.setHSL( Math.random()*0.15 + .45, 1, Math.random()*0.4+.4);
 
@@ -172,7 +225,7 @@ class Home extends React.Component {
     // Set up ray casting
     raycaster = new THREE.Raycaster();
     window.addEventListener( 'mousemove', onDocumentMouseMove, false );
-    window.addEventListener( 'click', onclick, false );
+    window.addEventListener( 'click', this.onclick, false );
 
     // postprocessing UNREALBLOOM
 
@@ -195,8 +248,6 @@ class Home extends React.Component {
     <div className="App" >    
       <div className="navigation">
       <ul>
-        <li><a href="#home">Home</a></li>
-        <li><a href="#news">News</a></li>
         <li><a href="#contact">//A MINYOUNG NA WORKS//</a></li>
         <li><a href="#about">//WEBSITE CURRENTLY UNDER CONSTRUCTION//</a></li>
       </ul>
@@ -204,7 +255,14 @@ class Home extends React.Component {
       </div>
       <div className="content">
         <div id="canvas" ref={ref => (this.mount = ref)} />
-        <div className="label" >PROJECTS</div>
+        {/* <div className="label" >PROJECTS</div> */}
+
+        <container className={  this.state.zoomedin ? 'projectappear': 'hidden'}>
+          <Projectlist name="mlarch"></Projectlist>
+        </container> 
+
+        <button id="return" onClick={this.return}  >return</button>
+
       </div>    
        
     </div>
@@ -220,12 +278,14 @@ function animstart () {
 
 function animate (time) {
 
-  for (let property in cube) {
-    cube[property].rotation.x += .01;
-    cube[property].rotation.y += .01;  
+  if (!gzoom){
+    for (let property in cube) {
+      cube[property].rotation.x += .01;
+      cube[property].rotation.y += .01;  
 
-  };
-  camera.position.x += .001;  
+    };
+  }
+  camera.rotation.y -= .00001;  
   TWEEN.update();
 
   position(time);
@@ -267,32 +327,36 @@ function onDocumentMouseMove( event ) {
 
 }
 
-function onclick (event){
-  event.preventDefault();
-  var important = [scene.children[1],scene.children[2]]
-  var intersects = raycaster.intersectObjects(  important );
 
-  if ( intersects.length > 0 ) {
-    var id = intersects[0].object.name
 
-    switch (id){
-      case "projects" :{
-      tween = new TWEEN.Tween(camera.position)
-      .to({ x: -16 ,y:1 , z:16}, 1500) 
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start(); 
 
-      tween = new TWEEN.Tween(camera.rotation)
-      .to({ y:-1 }, 1500) 
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start(); 
-      }
-      default:
-        break;
-    }
-    
-  } 
+function Projectlist(props) {
+  switch ( props.name) { 
+  case "mlarch":
+    return <div>
+      <h1>Machine learning with architecture</h1>
+      <hr></hr>
+      <p>Can we generate instructions based on simple sketches? Inspired by Enzo Mari's work, we combined machine learning and 
+      architecture to create a system in which you can obtain model files from a png image. We are also using GAN to generate 
+      monstrous furnitures that can be plugged back into the model to see how we would actually construct it.
+      </p>
+      <button onClick={transition}  id="tomlarch">To galaxy MLARCH</button>
+      </div>;
+  default:
+    return 
+  }
 }
+ 
+function transition(){
+  console.log("pogger")
+  camera.rotation.y = 0;
+  tween = new TWEEN.Tween(camera.position)
+  .to({ y:0,x:0,z:1000}, 3000) 
+  .easing(TWEEN.Easing.Quadratic.Out)
+  .start(); 
+  
+    setTimeout(function(){   window.location = 'mlarch'; }, 3000);
 
+}
 
 export default Home;
