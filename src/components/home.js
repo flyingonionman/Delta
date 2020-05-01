@@ -53,6 +53,8 @@ class Home extends React.Component {
     super(props);
     this.state = { 
       zoomedin: false ,
+      zoomedin_about: false ,
+
       currproj: 0
     };
   }
@@ -78,6 +80,8 @@ class Home extends React.Component {
       .to({ y:0 }, 1500) 
       .easing(TWEEN.Easing.Quadratic.Out)
       .start(); 
+    
+      cube[1].material.emissive.setHSL( .1, .8, .2);
 
     this.setState({ zoomedin: false });
     gzoom = false;
@@ -90,7 +94,7 @@ class Home extends React.Component {
   
     if ( intersects.length > 0 ) {
       var id = intersects[0].object.name
-  
+      console.log(id)
       switch (id){
         case "projects" :{
         gzoom = true;
@@ -106,12 +110,28 @@ class Home extends React.Component {
         .start(); 
        
   
-        tween = new TWEEN.Tween(cube[1].rotation)
-        .to({ y:.5,x:0,z:0}, 1500) 
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .start(); 
+        
+        break;
         }
-     
+        case "about" :{
+          gzoom = true;
+          this.setState({ zoomedin_about: true });
+          tween = new TWEEN.Tween(camera.position)
+          .to({ x: -2 ,y:0 , z:12}, 1500) 
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .start(); 
+          
+          tween = new TWEEN.Tween(camera.rotation)
+          .to({ y:1 }, 1500) 
+          .easing(TWEEN.Easing.Quadratic.Out)
+          .start(); 
+         
+    
+        
+          break;
+
+          }
+
         default:
           break;
       }
@@ -153,7 +173,7 @@ class Home extends React.Component {
 
     //ADD CUBE 
     var geometry = new THREE.BoxGeometry( 3, 3, 3 );
-    var geometry2 = new THREE.BoxGeometry( 2, 2, 2 );
+    var geometry2 = new THREE.BoxGeometry( 3, 3, 3 );
 
     var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
     var material2 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
@@ -162,9 +182,10 @@ class Home extends React.Component {
     cube[1].material.emissive.setHSL( .1, .8, .2);
 
     cube[2] = new THREE.Mesh( geometry2, material2 );
+    cube[2].material.emissive.setHSL( .4, .8, .1);
 
     cube[1].position.y = 1;
-    cube[2].position.x = -15;
+    cube[2].position.x = -12;
     cube[1].name = "projects";
     cube[2].name = "about";
 
@@ -388,6 +409,28 @@ function Projectlist(props) {
   }
 }
 
+function aboutlist(props) {
+  switch ( props.name) { 
+  case "mlarch":
+    return <div>
+      <h1>Machine learning with architecture</h1>
+      <p>Can we generate instructions based on simple sketches? Inspired by Enzo Mari's work, we combined machine learning and 
+      architecture to create a system in which you can obtain model files from a png image. We are also using GAN to generate 
+      monstrous furnitures that can be plugged back into the model to see how we would actually construct it.
+      </p>
+      <button onClick={() => transition("mlarch")}  id="tomlarch">To MLARCH</button>
+      </div>;
+  case "datasci":
+    return <div>
+      <h1>Data science for social good</h1>
+      <p>Creating simple but effective visualization for the purpose of helping the bail project.
+      </p>
+      <button onClick={() => transition("datasci")}  id="tomlarch">To Datasci </button>
+      </div>;
+  default:
+    return 0
+  }
+}
 
  
 function transition(pageurl){
