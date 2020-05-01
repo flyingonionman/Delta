@@ -24,6 +24,7 @@ var camera, scene, renderer,controls,frameId,composer,raycaster;
 const cube ={};
 var tween;
 var gzoom = false;
+var project_list =["mlarch","datasci"]
 //Camera views
 var project = false;
 var afterimagePass;
@@ -43,6 +44,8 @@ var params_bloom  = {
 //text
 var text_materials, textMesh;
 
+
+
 //mouse movement
 var mouse = new THREE.Vector2(), INTERSECTED;
 class Home extends React.Component {
@@ -50,6 +53,7 @@ class Home extends React.Component {
     super(props);
     this.state = { 
       zoomedin: false ,
+      currproj: 1
     };
   }
   componentDidMount(){
@@ -241,6 +245,10 @@ class Home extends React.Component {
     //cube interaction
    
   }
+
+  cycle = () =>{
+    this.setState({currproj: this.state.currproj+1})
+  }
   
   render() {
   return (
@@ -258,7 +266,9 @@ class Home extends React.Component {
         {/* <div className="label" >PROJECTS</div> */}
 
         <container className={  this.state.zoomedin ? 'projectappear': 'hidden'}>
-          <Projectlist name="mlarch"></Projectlist>
+          <Projectlist name={project_list[this.state.currproj-1]}></Projectlist>
+          <button id="cycle" onClick={this.cycle}> Next</button>
+
         </container> 
 
         <button id="return" onClick={this.return}  >return</button>
@@ -335,26 +345,38 @@ function Projectlist(props) {
   case "mlarch":
     return <div>
       <h1>Machine learning with architecture</h1>
-      <hr></hr>
       <p>Can we generate instructions based on simple sketches? Inspired by Enzo Mari's work, we combined machine learning and 
       architecture to create a system in which you can obtain model files from a png image. We are also using GAN to generate 
       monstrous furnitures that can be plugged back into the model to see how we would actually construct it.
       </p>
       <button onClick={transition}  id="tomlarch">To galaxy MLARCH</button>
       </div>;
+  case "datasci":
+    return <div>
+      <h1>Data science for social good</h1>
+      <p>Creating simple but effective visualization for the purpose of helping the bail project.
+      </p>
+      <button onClick={transition}  id="tomlarch">To galaxy MLARCH</button>
+      </div>;
   default:
-    return 
+    return 0
   }
 }
+
+
  
 function transition(){
   console.log("pogger")
   camera.rotation.y = 0;
   tween = new TWEEN.Tween(camera.position)
-  .to({ y:0,x:0,z:1000}, 3000) 
+  .to({ y:0,x:0,z:500}, 1500) 
   .easing(TWEEN.Easing.Quadratic.Out)
   .start(); 
   
+  tween = new TWEEN.Tween(camera.position)
+  .to({ y:0,x:0,z:0}, 1500) 
+  .easing(TWEEN.Easing.Quadratic.Out)
+  .start();
     setTimeout(function(){   window.location = 'mlarch'; }, 3000);
 
 }
