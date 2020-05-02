@@ -24,7 +24,9 @@ var camera, scene, renderer,controls,frameId,composer,raycaster;
 const cube ={};
 var tween;
 var gzoom = false;
-var project_list =["mlarch","datasci"]
+
+var project_list =["mlarch","datasci","unionjrnl","babymon","dropblocks"]
+var about_list = ["about_me","about_school"]
 //Camera views
 var project = false;
 var afterimagePass;
@@ -54,7 +56,7 @@ class Home extends React.Component {
     this.state = { 
       zoomedin: false ,
       zoomedin_about: false ,
-
+      currabout:0,
       currproj: 0
     };
   }
@@ -83,7 +85,7 @@ class Home extends React.Component {
     
       cube[1].material.emissive.setHSL( .1, .8, .2);
 
-    this.setState({ zoomedin: false });
+    this.setState({ zoomedin: false , zoomedin_about:false });
     gzoom = false;
   }
 
@@ -268,7 +270,7 @@ class Home extends React.Component {
   }
 
   cycle = () =>{
-    if( this.state.currproj < 1){
+    if( this.state.currproj < 4){
       this.setState({currproj: this.state.currproj+1})
 
     }
@@ -303,7 +305,7 @@ class Home extends React.Component {
       <div className="navigation">
       <ul>
         <li><a href="#contact">//A MINYOUNG NA WORKS//</a></li>
-        <li><a href="#about">//WEBSITE CURRENTLY UNDER CONSTRUCTION//</a></li>
+        <li><a href="#about">WEBSITE CURRENTLY UNDER CONSTRUCTION</a></li>
       </ul>
 
       </div>
@@ -311,11 +313,18 @@ class Home extends React.Component {
         <div id="canvas" ref={ref => (this.mount = ref)} />
         {/* <div className="label" >PROJECTS</div> */}
 
-        <container className={  this.state.zoomedin ? 'projectappear': 'hidden'}>
+        <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
           <button id="cycle" onClick={this.cycle}> Next</button>
 
         </container> 
+
+        <container className={  this.state.zoomedin_about ? 'aboutappear': 'hidden_left'}>
+          <Aboutlist name={about_list[this.state.currabout]}></Aboutlist>
+          <button id="cycle" onClick={this.cycle}> Next</button>
+
+        </container> 
+
 
         <button id="return" onClick={this.return}  >return</button>
 
@@ -383,9 +392,6 @@ function onDocumentMouseMove( event ) {
 
 }
 
-
-
-
 function Projectlist(props) {
   switch ( props.name) { 
   case "mlarch":
@@ -404,29 +410,51 @@ function Projectlist(props) {
       </p>
       <button onClick={() => transition("datasci")}  id="tomlarch">To Datasci </button>
       </div>;
+  case "unionjrnl":
+    return <div>
+      <h1>UNION web journal design </h1>
+      <p>Helped artists
+      </p>
+      <button onClick={() => transition("unionjrnl")}  id="tomlarch">To UNION journal </button>
+      </div>;
+  case "babymon":
+    return <div>
+      <h1>Baby monitoring device project</h1>
+      <p>Done as a part of my senior engineering projects.
+      </p>
+      <button onClick={() => transition("babymon")}  id="tomlarch">To Baby monitor </button>
+      </div>;
+  case "dropblocks":
+    return <div>
+      <h1>Drop Blocks</h1>
+      <p>Implemented Dropblocks in resnet-50 according to <a href="https://arxiv.org/abs/1810.12890">this article</a>. 
+      <a href="https://github.com/ArianaFreitag/cgml-midterm">Source code</a>.
+      </p>
+      <button onClick={() => transition("dropblocks")}  id="tomlarch">To Drop blocks </button>
+      </div>;
   default:
     return 0
   }
 }
 
-function aboutlist(props) {
+function Aboutlist(props) {
   switch ( props.name) { 
-  case "mlarch":
+  case "about_me":
     return <div>
-      <h1>Machine learning with architecture</h1>
-      <p>Can we generate instructions based on simple sketches? Inspired by Enzo Mari's work, we combined machine learning and 
-      architecture to create a system in which you can obtain model files from a png image. We are also using GAN to generate 
-      monstrous furnitures that can be plugged back into the model to see how we would actually construct it.
+      <h1>Who am I?</h1>
+      <p>
+      I am Minyoung Na
       </p>
       <button onClick={() => transition("mlarch")}  id="tomlarch">To MLARCH</button>
       </div>;
-  case "datasci":
+  case "about_school":
     return <div>
-      <h1>Data science for social good</h1>
+      <h1>Curriculum</h1>
       <p>Creating simple but effective visualization for the purpose of helping the bail project.
       </p>
       <button onClick={() => transition("datasci")}  id="tomlarch">To Datasci </button>
       </div>;
+
   default:
     return 0
   }
