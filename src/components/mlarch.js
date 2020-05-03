@@ -21,7 +21,7 @@ function importAll(r) {
 const stlfiles = importAll(require.context('../stl', false, /\.(stl)$/));
 
 //machine learning model
-const model = await tf.loadLayersModel('https://foo.bar/tfjs_artifacts/model.json');
+const model = tf.loadLayersModel('https://raw.githubusercontent.com/flyingonionman/Delta/master/src/models/model.json');
 
 var camera, scene, renderer,controls;
 var bench;
