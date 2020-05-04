@@ -11,6 +11,7 @@
     "@tensorflow/tfjs-vis": "^1.4.0",
     "@tweenjs/tween.js": "^18.5.0",
     "bootstrap": "^4.3.1",
+    "canvas": "^2.6.1",
     "halogenium": "^2.3.0",
     "keras-js": "^1.0.3",
     "node-sass": "^4.13.0",

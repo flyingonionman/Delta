@@ -12,6 +12,7 @@ import * as tfvis from '@tensorflow/tfjs-vis';
 import * as THREE from "three";
 import { OrbitControls } from '../module/OrbitControls';
 
+
 function importAll(r) {
   let stlfiles = {};
   r.keys().map((item, index) => { stlfiles[item.replace('./', '')] = r(item); });
@@ -19,15 +20,24 @@ function importAll(r) {
 }
 
 const stlfiles = importAll(require.context('../stl', false, /\.(stl)$/));
+const { createCanvas, loadImage } = require('canvas')
 
 //machine learning model
 const model = tf.loadLayersModel('https://raw.githubusercontent.com/flyingonionman/Delta/master/src/models/model.json');
 
+//Drawing relatted
+
+var canvas;
+var ctx;
+var testimg;
+//Threejs Globals
 var camera, scene, renderer,controls;
 var bench;
 var frameId;
-var link 
+var link ;
 var exporter = new STLExporter();
+
+
 
 class Mlarch extends React.Component {
   constructor(props){
@@ -35,6 +45,17 @@ class Mlarch extends React.Component {
   }
   componentDidMount(){
     this.init();
+    this.drawing();
+  }
+
+  drawing = () =>{
+    canvas = this.refs.canvas
+    ctx = canvas.getContext("2d")
+    testimg = this.refs.image
+
+    testimg.onload = () => {
+      ctx.drawImage(testimg, 0, 0)
+    }
   }
 
   init = () =>{
@@ -170,7 +191,6 @@ class Mlarch extends React.Component {
   }
 
   
-  
   stop = () => {
       cancelAnimationFrame(frameId)
   }
@@ -195,6 +215,8 @@ class Mlarch extends React.Component {
           <div id="c" ref={ref => (this.mount = ref)} />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider2" orient="vertical" />
+          <canvas id="canvas" ref="canvas" width={640} height={425} />
+          <img ref="image" src={"https://raw.githubusercontent.com/flyingonionman/Delta/master/src/images/p11.png"} className="hidden" />
 
           <div id="info-body">
           <h1>AI-progettazione</h1>
@@ -206,8 +228,8 @@ class Mlarch extends React.Component {
           </p>  
           <button type="button"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch_gallery">To gallery</Link></button>
           <button type="button " id="downloadSTL" onClick={exportBinary}style={{ textDecoration: 'none' , color:'black'}}>Download STL</button>
-          <button type="button " id="startmodel" onClick={train_start}style={{ textDecoration: 'none' , color:'black'}}>Start Training</button>
-
+         <button type="button " id="startmodel" onClick={extract_features}style={{ textDecoration: 'none' , color:'black'}}>Start Training</button>
+ 
             <div id="credits">
               <h3>Credits go to</h3>
               <h4>Students :</h4>
@@ -228,6 +250,7 @@ class Mlarch extends React.Component {
 }
 
 function start () {
+
   if (!frameId) {
     frameId = requestAnimationFrame(animate)
   }
@@ -279,7 +302,47 @@ function save ( blob, filename )  {
 
 }
 
-async function train_start() {
-  console.log("opoop")
+function extract_features(){
+
+  var testimg = new Image();
+  testimg.src = "https://media.prod.mdn.mozit.cloud/attachments/2013/06/22/5397/7a3ec0cae64a95ad454ac3bc2c71c004/rhino.jpg";
+  var canvas = createCanvas(1242, 1242);
+  var ctx = canvas.getContext('2d');
+  ctx.fillText('Awesome!', 50, 100)
+
+  ctx.drawImage(testimg, 0, 0,1242,1242);
+
+  let tensor = tf.browser.fromPixels(canvas)
+      .resizeNearestNeighbor([224, 224])
+      .toFloat();
+  tensor.print();
 }
+
+/* def generate_desc(model, tokenizer, photo, max_length):
+    # seed the generation process
+    in_text = 'startseq'
+    # iterate over the whole length of the sequence
+    for i in range(max_length):
+        # integer encode input sequence
+        sequence = tokenizer.texts_to_sequences([in_text])[0]
+        # pad input
+        sequence = pad_sequences([sequence], maxlen=max_length)
+        # predict next word
+        yhat = model.predict([photo,sequence], verbose=0)
+        # convert probability to integer
+        yhat = argmax(yhat)
+        # map integer to word
+        word = word_for_id(yhat, tokenizer)
+        # stop if we cannot map the word
+        if word is None:
+            break
+        # append as input for generating the next word
+        in_text += ' ' + word
+        # stop if we predict the end of the sequence
+        if word == 'endseq':
+            break
+    return in_text */
+
+
+
 export default Mlarch;
