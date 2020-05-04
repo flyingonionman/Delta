@@ -11,7 +11,7 @@ import * as tfvis from '@tensorflow/tfjs-vis';
 
 import * as THREE from "three";
 import { OrbitControls } from '../module/OrbitControls';
-
+import * as benchimg  from '../images/example.png'
 
 function importAll(r) {
   let stlfiles = {};
@@ -51,8 +51,9 @@ class Mlarch extends React.Component {
   drawing = () =>{
     canvas = this.refs.canvas
     ctx = canvas.getContext("2d")
-    testimg = this.refs.image
-
+    testimg = new Image()
+    testimg.crossOrigin = "anonymous";
+    testimg.src = benchimg
     testimg.onload = () => {
       ctx.drawImage(testimg, 0, 0)
     }
@@ -215,8 +216,7 @@ class Mlarch extends React.Component {
           <div id="c" ref={ref => (this.mount = ref)} />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider2" orient="vertical" />
-          <canvas id="canvas" ref="canvas" width={640} height={425} />
-          <img ref="image" src={"https://raw.githubusercontent.com/flyingonionman/Delta/master/src/images/p11.png"} className="hidden" />
+          <canvas id="canvas" ref="canvas" width={224} height={224} />
 
           <div id="info-body">
           <h1>AI-progettazione</h1>
@@ -303,20 +303,12 @@ function save ( blob, filename )  {
 }
 
 function extract_features(){
-
-  var testimg = new Image();
-  testimg.src = "https://media.prod.mdn.mozit.cloud/attachments/2013/06/22/5397/7a3ec0cae64a95ad454ac3bc2c71c004/rhino.jpg";
-  var canvas = createCanvas(1242, 1242);
-  var ctx = canvas.getContext('2d');
-  ctx.fillText('Awesome!', 50, 100)
-
-  ctx.drawImage(testimg, 0, 0,1242,1242);
-
+  const verbose = true
+  
   let tensor = tf.browser.fromPixels(canvas)
-      .resizeNearestNeighbor([224, 224])
       .toFloat();
-  tensor.print();
-}
+    tensor.print(verbose=true)
+  }
 
 /* def generate_desc(model, tokenizer, photo, max_length):
     # seed the generation process
