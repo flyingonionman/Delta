@@ -78,7 +78,7 @@ class Mlarch extends React.Component {
 
           <Row>
             <Col><img onClick={() => this.enlarge(15)} src={images["p"+15+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(19)} src={images["p"+19+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(19)} src={images["p"+19+".gif"]}/></Col>
             <Col><img onClick={() => this.enlarge(20)} src={images["p"+20+".png"]}/></Col>
 
             <Col><img onClick={() => this.enlarge(16)} src={images["p"+16+".png"]}/></Col>
@@ -161,7 +161,7 @@ function Describe(props){
 }
 
 function Welcome(props) {
-  if (props.name==2 || props.name==4 || props.name==12){
+  if (props.name==2 || props.name==4 || props.name==12 || props.name==19){
     return <img src={images["p"+props.name+".gif"]}></img>;
   }
   else{
