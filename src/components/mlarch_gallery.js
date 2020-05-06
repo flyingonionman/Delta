@@ -63,6 +63,8 @@ class Mlarch extends React.Component {
           <Row>
        
             <Col><img onClick={() => this.enlarge(11)} src={images["p"+11+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(10)} src={images["p"+10+".png"]}/></Col>
+
             <Col><img onClick={() => this.enlarge(12)} src={images["p"+12+".gif"]}/></Col>
             <Col><img onClick={() => this.enlarge(13)}src={images["p"+13+".png"]}/></Col>
           </Row>
@@ -70,15 +72,17 @@ class Mlarch extends React.Component {
           <Row>
             <Col><img onClick={() => this.enlarge(8)} src={images["p"+8+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(9)} src={images["p"+9+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(10)} src={images["p"+10+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(14)} src={images["p"+14+".png"]}/></Col>
             
           </Row>
 
           <Row>
             <Col><img onClick={() => this.enlarge(15)} src={images["p"+15+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(19)} src={images["p"+19+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(20)} src={images["p"+20+".png"]}/></Col>
+
             <Col><img onClick={() => this.enlarge(16)} src={images["p"+16+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(17)} src={images["p"+17+".jpg"]}/></Col>
+            <Col><img onClick={() => this.enlarge(17)} src={images["p"+17+".png"]}/></Col>
          
           </Row>
         </Container>
