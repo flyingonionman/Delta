@@ -24,14 +24,12 @@ html,body{
   background-color: black;
   height:100%;
   margin:0;
-  overflow:hidden;
 }
 .gallery{
 
     html,body{
 
     margin:0;
-    overflow:hidden;
     .container-fluid{
       div{
         height:100%;
@@ -69,12 +67,15 @@ body::-webkit-scrollbar {
     color: white;
     position: relative;
     width: 80%;
-    margin: 13% 10%;
+    margin: 6% 10%;
     /* height: inherit; */
     height: 80%;
     border-color:white;
     border-style: solid;
 
+    h1{
+      font-size:8vw;
+    }
     button{
       margin: 5%;
       position: absolute;
@@ -82,7 +83,7 @@ body::-webkit-scrollbar {
       border-style: none;
       background-color: white;
       border-color: black;
-      padding: 2%;
+      padding: 3%;
       bottom: 0;
     }
 

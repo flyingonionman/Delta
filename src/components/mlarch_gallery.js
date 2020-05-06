@@ -48,6 +48,7 @@ class Mlarch extends React.Component {
   render() {
     return (
       <div className ="gallery">
+        <h1>Gallery</h1>
         <Container fluid> 
           <Row>
             <Col><img  onClick={() => this.enlarge(1)} src={images["p"+1+".png"]}/></Col>
@@ -60,15 +61,26 @@ class Mlarch extends React.Component {
           </Row>
 
           <Row>
-            <Col><img onClick={() => this.enlarge(8)} src={images["p"+8+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(9)} src={images["p"+9+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(10)} src={images["p"+10+".png"]}/></Col>
+       
             <Col><img onClick={() => this.enlarge(11)} src={images["p"+11+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(12)} src={images["p"+12+".gif"]}/></Col>
             <Col><img onClick={() => this.enlarge(13)}src={images["p"+13+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(14)} src={images["p"+14+".png"]}/></Col>
           </Row>
 
+          <Row>
+            <Col><img onClick={() => this.enlarge(8)} src={images["p"+8+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(9)} src={images["p"+9+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(10)} src={images["p"+10+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(14)} src={images["p"+14+".png"]}/></Col>
+            
+          </Row>
+
+          <Row>
+            <Col><img onClick={() => this.enlarge(15)} src={images["p"+15+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(16)} src={images["p"+16+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(17)} src={images["p"+17+".jpg"]}/></Col>
+         
+          </Row>
         </Container>
 
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
@@ -115,7 +127,7 @@ function Describe(props){
 
             break;  
         case 5:
-          return <p>Code used for training the model</p>;
+          return <p>Rooms</p>;
   
           break;  
         case 6:
