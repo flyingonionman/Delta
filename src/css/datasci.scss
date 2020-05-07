@@ -45,7 +45,7 @@ html, body {
     border: solid 1px;
     padding: 2%;
     width: 34%;
-    right: 0;
+    left: 0;
     bottom: 0;
     margin: 2%;
     z-index: 100;
@@ -68,6 +68,16 @@ html, body {
     font-size: 1.3em;
 }
 
+#intro1{
+  position:fixed;
+  transition:  1s;
+
+}
+
+.hidden{
+  opacity:0
+
+}
 button{
   margin-left:2%;
 }

@@ -7,12 +7,9 @@ import {
 
 import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
+import { OrbitControls } from '../module/OrbitControls';
 
 import TWEEN from '@tweenjs/tween.js';
-import { EffectComposer } from '../module/EffectComposer';
-import { UnrealBloomPass  } from '../module/UnrealBloomPass';
-import { RenderPass } from '../module/RenderPass';
-
 
 //import SVG
 function importAll(r) {
@@ -22,6 +19,16 @@ function importAll(r) {
   }
   
 const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
+
+//import font
+function importfont(r) {
+  let listfonts = {};
+  r.keys().map((item, index) => { listfonts[item.replace('./', '')] = r(item); });
+  return listfonts;
+}
+
+const listfonts = importfont(require.context('../font', false, /\.(json)$/));
+
 
 //globals
 var camera, scene, renderer,controls;
@@ -44,6 +51,31 @@ var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
 
+//bloomrelated
+var ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
+
+var bloomLayer = new THREE.Layers();
+bloomLayer.set( BLOOM_SCENE );
+
+//Text related
+var params = {
+  text : "three.js",
+  height : 1,
+  size : 1,
+  hover : 0,
+  curveSegments : 4,
+  bevelThickness : 1,
+  bevelSize : 1.5,
+  bevelEnabled : true,
+  font : undefined,
+  fontName : "optimer", // helvetiker, optimer, gentilis, droid sans, droid serif
+  fontWeight : "bold"
+
+};
+
+var words = ["New York","Louisiana", "Arkansas", "Michigan"]
+var group, textMesh1, textGeo, materials;
+
 //Prelim data for
 var guiData = {
     currentURL: 'src/svg/Seminopoly.svg',
@@ -53,6 +85,24 @@ var guiData = {
     strokesWireframe: false
 };
 
+//hive 
+var hive = {
+    intro:{
+      slot3:{occupied:false}
+    },
+    c1:{
+      r1:{occupied:false},
+      r2:{occupied:false},
+      r3:{occupied:false}
+    }
+    ,
+    c2:{
+      r1:{occupied:false},
+      r2:{occupied:false},
+      r3:{occupied:false},
+      r4:{occupied:false}
+    }
+}
 var flag = 0;
 var gui;
 class Datasci extends React.Component {
@@ -99,6 +149,7 @@ class Datasci extends React.Component {
     plane.receiveShadow = true;
 
     //ADD CAMERA
+
     camera = new THREE.PerspectiveCamera(
       45,
       width / height,
@@ -107,26 +158,36 @@ class Datasci extends React.Component {
     )
     camera.position.set( 0, 15, 0 );
     camera.lookAt(0,0,0);
+
     // Lights
+
     scene.add( new THREE.HemisphereLight( 0x000000, 0x111122 ) );
     this.addShadowedLight( 1, 1, 1, 0x000000,5 );
     this.addShadowedLight( 0.5, 1, - 1, 0xbbaaff, .51 );
 
     //ADD RENDERER
+
     renderer = new THREE.WebGLRenderer({ antialias: true })
     renderer.setSize(width, height)
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.outputEncoding = THREE.sRGBEncoding;
     renderer.shadowMap.enabled = true;
-
     this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    //controls = new OrbitControls(camera,renderer.domElement );
-    //controls.update();
+    controls = new OrbitControls(camera,renderer.domElement );
+    controls.update();
 
-    //GUI
+    //Add Text
+    /* loadFont(); */
 
+    group = new THREE.Group();
+    group.position.y = 1;
+    group.position.z = 1;
+    group.position.x = 1;
+
+    scene.add( group );
+        
     //Load SVG
     loadSVG();
 
@@ -142,7 +203,7 @@ class Datasci extends React.Component {
     var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
     torus = new THREE.Mesh( geometry, material );
     torus.rotation.x = 1.57;
-    torus.position.set(20,-.1,14.5);
+    torus.position.set(17.5,-.1,17.5);
     scene.add( torus );
     
 
@@ -152,7 +213,9 @@ class Datasci extends React.Component {
     window.addEventListener( 'keydown', this.onKeyDown, false );
     window.addEventListener( 'keyup', this.onKeyUp, false );
     
+      
   }
+
 
   addShadowedLight = ( x, y, z, color, intensity ) =>{
 
@@ -233,11 +296,13 @@ class Datasci extends React.Component {
     <div className="datasci" >    
         <div id="c" ref={ref => (this.mount = ref)} />
      
-        {/* <div className="information">
+       <div className="information">
     
             <Describe name={this.state.descriptor} ></Describe>
 
-        </div> */}
+        </div> 
+
+       <Hive></Hive>
     </div>    
  
     );
@@ -294,36 +359,23 @@ function animate () {
 
   torus.position.z -= - velocity.z * delta 
   torus.position.x += - velocity.x * delta 
-
+  //console.log(torus.position)
   // Prompt 
   prompt();
   // Scene update
   
-  console.log(torus.position)
-  //controls.update();
+  controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
 }
 
 function prompt() {
-  if (torus.position.z <= 4 && torus.position.z >=2  && torus.position.x <= -4.5 && torus.position.x >= -6.5 ){
-      flag = 1;
 
-      //Draw lines for directions
-      var material = new THREE.LineBasicMaterial( { color: 0xff00ff } );
-      var points = [];
-      points.push( new THREE.Vector3( -3, 1,-2 ) );
-      points.push( new THREE.Vector3( -6, 1, -2) );
-
-      var geometry = new THREE.BufferGeometry().setFromPoints( points );
-      var line = new THREE.Line( geometry, material );
-      line.name = "blackindividual"
-      scene.add( line );
+  if (torus.position.z <= 21 && torus.position.z >=18  && torus.position.x <= 23 && torus.position.x >=  20.5 ){
+    flag = 'move here';
 
   }
-  if (torus.position.x > 43 ){
-    
-}
+ 
   else{
       var person = scene.getObjectByName('blackindividual')
         if(person){
@@ -332,6 +384,7 @@ function prompt() {
       flag = 0;
   }
 }
+
 function loadSVG( ) {
     var loader = new SVGLoader();
 
@@ -414,6 +467,13 @@ function loadSVG( ) {
 	} );
 }
 
+function Hive(props){
+  return(
+    <div >
+      <p className={ hive.intro.slot3.occupied ? 'intro1': 'hidden'} id="intro1">Surprise</p>
+    </div>
+  );
+}
 function Describe(props){
       switch(props.name) {
          case 3:
@@ -428,14 +488,12 @@ function Describe(props){
           return <p>Black individuals are discrimnated by certain charges and pay more bail on average </p>;
     
              break;  
-          case 4:
-          return <p>Latent space walk through the progressive gan trained on randomly assembled timber members at some points finding regularity with straight member perpendicularly connected while other times melting into glitchy bird’s nests  </p>;
+          case 'move here':
+          return <p>This box will contain whichever information that is helpful to you to progess further</p>;
   
               break;  
          default:
-           return <p> Welcome to our datascience exhibition ! In this simulation, we attempt to estimate the bond amount
-                      for a given crime varied by specific race / gender / location, to give a sense of the discrepancy
-                      and irregularity in the amounts.
+           return <p>kek 
            </p>;
        }
   }
