@@ -40,17 +40,19 @@ var trailgeometry;
 var trailmaterial;
 var trail
 
-var finished = false;
+var finished = false,finishedanim =false;
 //Movement 
 var moveForward = false;
 var moveBackward = false;
 var moveRight = false;
 var moveLeft = false;
-
-
 var prevTime = performance.now();
 var velocity = new THREE.Vector3();
 var direction = new THREE.Vector3();
+
+//User data
+var resultset = [ ];
+
 
 //bloomrelated
 var ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
@@ -322,8 +324,7 @@ function renderScene () {
     camera.lookAt(torus.position.x,0,torus.position.z);
   }
   else{
-    camera.position.set( 0, 70, 0 );
-
+    camera.position.set(20,60,10)
   }
   renderer.render(scene, camera)
 }
@@ -376,8 +377,9 @@ function prompt() {
     flag = 'surprise'
     
     var blurb =svgfiles['intro_1.svg']
-    
-    loadSVG(blurb ,hive.intro.slot3.location);
+    if ( !hive.intro.slot3.occupied ){ loadSVG(blurb ,hive.intro.slot3.location);}
+    hive.intro.slot3.occupied = true
+
   }
 
   else if (torus.position.z <= 20.5 && torus.position.z >=18.5  && torus.position.x <= 32.5 && torus.position.x >=  30 ){
@@ -385,7 +387,112 @@ function prompt() {
     
     var blurb =svgfiles['intro_2.svg']
     
-    loadSVG(blurb ,hive.intro.slot4.location);
+    if ( !hive.intro.slot4.occupied ) {loadSVG(blurb ,hive.intro.slot4.location);}
+    hive.intro.slot4.occupied = true
+
+  }
+
+  else if (torus.position.z <= 18 && torus.position.z >=16   && torus.position.x <= 37 && torus.position.x >=  34.5 ){
+    flag = 'us'
+    
+    var ny =svgfiles['state_NY.svg']
+    var la =svgfiles['state_LA.svg']
+    var ar =svgfiles['state_AR.svg']
+    var mi =svgfiles['state_MI.svg']
+
+    if ( !hive.c1.r2.occupied) {
+      loadSVG(ny ,hive.c1.r1.location);
+      loadSVG(la ,hive.c1.r3.location);
+      loadSVG(ar ,hive.c2.r2.location);
+      loadSVG(mi ,hive.c2.r3.location);
+    }
+
+    hive.c1.r2.occupied= true
+
+  }
+
+  else if (torus.position.z <= 12.5 && torus.position.z >=10.5   && torus.position.x <= 37 && torus.position.x >=  34.5 ){
+    flag = 'ny'
+    if ( !hive.c1.r1.occupied) {  
+      loadSVG(svgfiles['state_NY_fill.svg'], hive.c1.r1.location )
+      loadSVG(svgfiles['BJS_code.svg'], hive.c2.r1.location )
+      resultset.push("NewYork")
+
+    }
+    hive.c1.r1.occupied= true
+  }
+
+  else if (torus.position.z <= 23.5 && torus.position.z >=21   && torus.position.x <= 37 && torus.position.x >=  34.5 ){
+    flag = 'la'
+    if ( !hive.c1.r3.occupied) { 
+      loadSVG(svgfiles['state_LA_fill.svg'], hive.c1.r3.location )
+      loadSVG(svgfiles['BJS_code.svg'], hive.c2.r1.location )
+    }
+    hive.c1.r3.occupied= true
+  }
+
+  else if (torus.position.z <= 15.5 && torus.position.z >=13   && torus.position.x <= 42 && torus.position.x >=  39.5 ){
+    flag = 'ar'
+    if ( !hive.c2.r2.occupied) {  
+      loadSVG(svgfiles['state_AR_fill.svg'], hive.c2.r2.location )
+      loadSVG(svgfiles['BJS_code.svg'], hive.c2.r1.location )
+    }
+    hive.c2.r2.occupied= true
+  }
+
+  else if (torus.position.z <= 20.5 && torus.position.z >=18.5   && torus.position.x <= 42 && torus.position.x >=  39.5  ){
+    flag = 'mi'
+    if ( !hive.c2.r3.occupied) {  
+      loadSVG(svgfiles['state_MI_fill.svg'], hive.c2.r3.location )
+    
+    }
+    hive.c2.r3.occupied= true
+
+  }
+  
+  else if (torus.position.z <= 10 && torus.position.z >= 7.5   && torus.position.x <= 42 && torus.position.x >=  39.5  ){
+    flag = 'BJScode'
+    if ( !hive.c2.r1.occupied) { 
+       loadSVG(svgfiles['BJS_code_fill.svg'], hive.c2.r1.location )
+       loadSVG(svgfiles['BJS_cat.svg'], hive.c3.r2.location )
+
+    }
+    hive.c2.r1.occupied= true
+
+  }
+
+  else if (torus.position.z <= 13.2 && torus.position.z >= 10.5   && torus.position.x <= 46 && torus.position.x >=  43.5  ){
+    flag = 'crimecat'
+    if ( !hive.c3.r2.occupied) { 
+       loadSVG(svgfiles['BJS_cat_fill.svg'], hive.c3.r2.location )
+    }
+    hive.c3.r2.occupied= true
+
+  }
+
+  else if (torus.position.z <= 7.5 && torus.position.z >= 5   && torus.position.x <= 46 && torus.position.x >=  43.5  ){
+    flag = 'drugs'
+    if ( !hive.c3.r1.occupied) { 
+       loadSVG(svgfiles['crime_drug_fill.svg'], hive.c3.r1.location )
+       resultset.push('drugs')
+
+    }
+    hive.c3.r1.occupied= true
+    //finished = true;
+  }
+
+  else if (torus.position.z <= 10 && torus.position.z >= 7.8   && torus.position.x >= 48.3 && torus.position.x <=  50.5  ){
+    flag = 'violent'
+    if ( !hive.c4.r2.occupied) { 
+       loadSVG(svgfiles['crime_violent_fill.svg'], hive.c4.r2.location )
+       loadSVG(svgfiles['bonds_meaningful.svg'], hive.c5.r2.location )
+       loadSVG(svgfiles['bonds_placeholder.svg'], hive.c5.r3.location )
+
+       resultset.push('violent')
+
+    }
+    hive.c4.r2.occupied= true
+    //finished = true;
   }
 
 
@@ -490,21 +597,39 @@ function Describe(props){
             Move to the United states hex
           </p>;
   
-           break;
          case 'surprise':
           return <p>The content of the Hexes appear as you go, and it leaves a trail behind. Continue moving</p>;
   
-           break;
-         case 1:
-          return <p>Black individuals are discrimnated by certain charges and pay more bail on average </p>;
+
+         case 'ny':
+          return <p>New York happens to be the only state will dollar bail. </p>;
     
-             break;  
-          
+         case 'la':
+          return <p>States have varying degree of information  </p>;
+    
+          ;  
+         case 'ar':
+          return <p>States have varying degree of information  </p>;
+    
+         case 'mi':
+          return <p>States have varying degree of information  </p>;
+        case 'us':
+          return <p>Choose a state to begin your entry ( only NYC works now)  </p>;
+        case 'BJScode':
+          return <p>BJS codes  </p>;
+        case 'crimecat':
+          return <p>Choose a category of crime ( go to violent crime for now) </p>;
+        case 'drugs':
+          return <p>Drug related crimes average about 83204 in NY{resultset}</p>
+        case 'violent':
+          return <p>Violent crimes average about 84819 per NY{resultset}</p>
          default:
-           return <p>kek 
+           return <p>
            </p>;
        }
   }
   
+
+
 
 export default Datasci;
