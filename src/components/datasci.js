@@ -7,9 +7,12 @@ import {
 
 import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
-import { GUI } from '../gui/dat.gui.module.js';
-import { OrbitControls } from '../module/OrbitControls';
+
 import TWEEN from '@tweenjs/tween.js';
+import { EffectComposer } from '../module/EffectComposer';
+import { UnrealBloomPass  } from '../module/UnrealBloomPass';
+import { RenderPass } from '../module/RenderPass';
+
 
 //import SVG
 function importAll(r) {
@@ -20,6 +23,7 @@ function importAll(r) {
   
 const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
 
+//globals
 var camera, scene, renderer,controls;
 var frameId;
 var torus;
@@ -85,7 +89,7 @@ class Datasci extends React.Component {
     // Ground
 
     var plane = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry( 120, 50 ),
+      new THREE.PlaneBufferGeometry( 200,200 ),
       new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0xFFFFFF } )
     );
     plane.rotation.x = - Math.PI / 2;
@@ -106,7 +110,7 @@ class Datasci extends React.Component {
     // Lights
     scene.add( new THREE.HemisphereLight( 0x000000, 0x111122 ) );
     this.addShadowedLight( 1, 1, 1, 0x000000,5 );
-    this.addShadowedLight( 0.5, 1, - 1, 0x00aaff, .51 );
+    this.addShadowedLight( 0.5, 1, - 1, 0xbbaaff, .51 );
 
     //ADD RENDERER
     renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -134,11 +138,11 @@ class Datasci extends React.Component {
 
 
     //ADD torus 
-    var geometry = new THREE.TorusGeometry( .4, .07, 16, 100 );
-    var material = new THREE.MeshBasicMaterial( { color: 0x0000FF } );
+    var geometry = new THREE.TorusGeometry( 1, .07, 16, 100 );
+    var material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
     torus = new THREE.Mesh( geometry, material );
     torus.rotation.x = 1.57;
-    torus.position.set(-9,-.1,0);
+    torus.position.set(20,-.1,14.5);
     scene.add( torus );
     
 
@@ -228,15 +232,12 @@ class Datasci extends React.Component {
 
     <div className="datasci" >    
         <div id="c" ref={ref => (this.mount = ref)} />
-        <div id="legend" >
-          W A S D to move around
-          <button onClick ={deletetrail}>Reset Trail</button>
-        </div>
-        <div className="information">
+     
+        {/* <div className="information">
     
             <Describe name={this.state.descriptor} ></Describe>
 
-        </div>
+        </div> */}
     </div>    
  
     );
@@ -255,7 +256,7 @@ function start () {
 
 function renderScene () {
   if (!finished){
-    camera.position.set( torus.position.x, 15, torus.position.z );
+    camera.position.set( torus.position.x, 20, torus.position.z );
     camera.lookAt(torus.position.x,0,torus.position.z);
   }
   else{
@@ -289,7 +290,7 @@ function animate () {
   }
 
   prevTime = time;
-  puttrail();
+  //puttrail();
 
   torus.position.z -= - velocity.z * delta 
   torus.position.x += - velocity.x * delta 
@@ -321,8 +322,7 @@ function prompt() {
 
   }
   if (torus.position.x > 43 ){
-    console.log("pog")
-    finished=true;
+    
 }
   else{
       var person = scene.getObjectByName('blackindividual')
@@ -332,29 +332,6 @@ function prompt() {
       flag = 0;
   }
 }
-
-function createGUI() {
-
-    if ( gui ) gui.destroy();
-
-    gui = new GUI( { width: 350 } );
-
-    gui.add( guiData, 'drawStrokes' ).name( 'W A S D to MOVE' ).onChange( update );
-
-    gui.add( guiData, 'drawFillShapes' ).name( 'Go to the blue question mark' ).onChange( update );
-
-    gui.add( guiData, 'strokesWireframe' ).name( 'Wireframe strokes' ).onChange( update );
-
-    gui.add( guiData, 'fillShapesWireframe' ).name( 'Wireframe fill shapes' ).onChange( update );
-
-    function update() {
-
-        loadSVG(  );
-
-    }
-
-}
-
 function loadSVG( ) {
     var loader = new SVGLoader();
 
