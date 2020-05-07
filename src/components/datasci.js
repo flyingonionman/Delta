@@ -10,6 +10,7 @@ import { SVGLoader } from '../svg/SVGLoader.js';
 import { OrbitControls } from '../module/OrbitControls';
 
 import TWEEN from '@tweenjs/tween.js';
+import {hive} from "./hivegeo";
 
 //import SVG
 function importAll(r) {
@@ -86,23 +87,8 @@ var guiData = {
 };
 
 //hive 
-var hive = {
-    intro:{
-      slot3:{occupied:false}
-    },
-    c1:{
-      r1:{occupied:false},
-      r2:{occupied:false},
-      r3:{occupied:false}
-    }
-    ,
-    c2:{
-      r1:{occupied:false},
-      r2:{occupied:false},
-      r3:{occupied:false},
-      r4:{occupied:false}
-    }
-}
+
+
 var flag = 0;
 var gui;
 class Datasci extends React.Component {
@@ -189,7 +175,19 @@ class Datasci extends React.Component {
     scene.add( group );
         
     //Load SVG
-    loadSVG();
+    
+    var boardlocation ={
+      x:-11,
+      y:-.35,
+      z:-6.5
+    }
+
+    var board =svgfiles['board.svg']
+
+
+    loadSVG(board,boardlocation);
+
+    
 
     //Add Trail
     trailgeometry = new THREE.SphereGeometry( .2, 32, 32 );
@@ -302,7 +300,6 @@ class Datasci extends React.Component {
 
         </div> 
 
-       <Hive></Hive>
     </div>    
  
     );
@@ -345,12 +342,10 @@ function animate () {
 
   if ( moveForward || moveBackward ) {
       velocity.z -= direction.z * 100.0 * delta;
-      prompt();
 
   }
   if ( moveRight || moveLeft ) {
       velocity.x -= direction.x * 100.0 * delta;
-      prompt();
 
   }
 
@@ -362,9 +357,10 @@ function animate () {
   //console.log(torus.position)
   // Prompt 
   prompt();
+
   // Scene update
   
-  controls.update();
+  //controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
 }
@@ -375,7 +371,24 @@ function prompt() {
     flag = 'move here';
 
   }
- 
+  
+  else if (torus.position.z <= 18 && torus.position.z >=16  && torus.position.x <= 27.5 && torus.position.x >=  25 ){
+    flag = 'surprise'
+    
+    var blurb =svgfiles['intro_1.svg']
+    
+    loadSVG(blurb ,hive.intro.slot3.location);
+  }
+
+  else if (torus.position.z <= 20.5 && torus.position.z >=18.5  && torus.position.x <= 32.5 && torus.position.x >=  30 ){
+    flag = 'purpose'
+    
+    var blurb =svgfiles['intro_2.svg']
+    
+    loadSVG(blurb ,hive.intro.slot4.location);
+  }
+
+
   else{
       var person = scene.getObjectByName('blackindividual')
         if(person){
@@ -385,17 +398,17 @@ function prompt() {
   }
 }
 
-function loadSVG( ) {
+function loadSVG( file , svglocation) {
     var loader = new SVGLoader();
 
-    loader.load( svgfiles['board.svg'], function ( data ) {
+    loader.load( file, function ( data ) {
         var paths = data.paths;
         var group = new THREE.Group();
         group.scale.multiplyScalar( 0.01 );
-        group.position.x = -11;
-        group.position.z = -6.5;
+        group.position.x = svglocation.x;
+        group.position.z = svglocation.z;
 
-        group.position.y = -.35;
+        group.position.y = svglocation.y;
         group.scale.y *= 1;
         group.rotation.x = 1.57;
 
@@ -467,58 +480,31 @@ function loadSVG( ) {
 	} );
 }
 
-function Hive(props){
-  return(
-    <div >
-      <p className={ hive.intro.slot3.occupied ? 'intro1': 'hidden'} id="intro1">Surprise</p>
-    </div>
-  );
-}
 function Describe(props){
       switch(props.name) {
-         case 3:
-          return <p>1500 image data set of two benches randomly (and individually) rotating and shearing to create a confusing multi-perspectival images where the objects can no longer understood in reference to the ground plane.    </p>;
+        case 'move here':
+          return <p>This box will contain whichever information that is helpful to you to progess further. Move on to the next Hex</p>;
+              break;  
+         case 'purpose':
+          return <p>The point of this project is to illustrate the discrepancies in the bond amount and represent with paths.
+            Move to the United states hex
+          </p>;
   
            break;
-         case 2:
-          return <p>Latent space walk in which a progressive gan is learning and becoming confused by the multi-perspectival bench images where the benches twist, grow, split, and meld like amoebas in a petri dish.</p>;
+         case 'surprise':
+          return <p>The content of the Hexes appear as you go, and it leaves a trail behind. Continue moving</p>;
   
            break;
          case 1:
           return <p>Black individuals are discrimnated by certain charges and pay more bail on average </p>;
     
              break;  
-          case 'move here':
-          return <p>This box will contain whichever information that is helpful to you to progess further</p>;
-  
-              break;  
+          
          default:
            return <p>kek 
            </p>;
        }
   }
   
-function puttrail(){
-  trail  = new THREE.Mesh( trailgeometry, trailmaterial );
-  trail.name = "trail"
-  trail.position.z = torus.position.z
-  trail.position.x = torus.position.x
-  trail.position.y = -.3
-  
-  scene.add( trail );  
-  
-}
 
-function deletetrail(){
-  scene.traverse(function(child) {
-        if (child.name === "trail") {
-          if (child.length> 0){
-
-          scene.remove(child)
-          }
-        }
-      
-  })
-  
-}
 export default Datasci;
