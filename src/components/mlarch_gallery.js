@@ -29,7 +29,7 @@ class Mlarch extends React.Component {
 
     this.state = { 
       isActive: false ,
-      chosenimg : 1
+      chosenimg : null
     };
   }
   
@@ -40,7 +40,7 @@ class Mlarch extends React.Component {
       this.setState({ chosenimg: number });
     }
     else{
-      setTimeout(() => {this.setState({ chosenimg: null });}, 700);
+      setTimeout(() => {this.setState({ chosenimg: null });}, 500);
 
     }
   }
@@ -48,43 +48,53 @@ class Mlarch extends React.Component {
   render() {
     return (
       <div className ="gallery">
-        <h1>Gallery</h1>
         <Container fluid> 
           <Row>
-            <Col><img  onClick={() => this.enlarge(1)} src={images["p"+1+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(2)} src={images["p"+2+".gif"]}/></Col>
-            <Col><img onClick={() => this.enlarge(3)} src={images["p"+3+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(4)}src={images["p"+4+".gif"]}/></Col>
-            <Col><img onClick={() => this.enlarge(5)}src={images["p"+5+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(6)}src={images["p"+6+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(7)}src={images["p"+7+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(1)} src={images["A"+1+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(2)} src={images["A"+2+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(3)} src={images["A"+3+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(4)}src={images["A"+4+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(5)}src={images["A"+5+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(6)}src={images["A"+6+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(7)}src={images["A"+7+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(8)}src={images["A"+8+".png"]}/></Col>
           </Row>
 
           <Row>
-       
-            <Col><img onClick={() => this.enlarge(11)} src={images["p"+11+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(10)} src={images["p"+10+".png"]}/></Col>
-
-            <Col><img onClick={() => this.enlarge(12)} src={images["p"+12+".gif"]}/></Col>
-            <Col><img onClick={() => this.enlarge(13)}src={images["p"+13+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(9)} src={images["A"+9+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(10)} src={images["A"+10+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(11)} src={images["A"+11+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(12)}src={images["A"+12+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(13)}src={images["A"+13+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(14)}src={images["A"+14+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(15)}src={images["A"+15+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(16)}src={images["A"+16+".png"]}/></Col>
           </Row>
+
 
           <Row>
-            <Col><img onClick={() => this.enlarge(8)} src={images["p"+8+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(9)} src={images["p"+9+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(14)} src={images["p"+14+".png"]}/></Col>
-            
+            <Col><img  onClick={() => this.enlarge(17)} src={images["A"+17+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(18)} src={images["A"+18+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(19)} src={images["A"+19+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(20)}src={images["A"+20+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(21)}src={images["A"+21+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(22)}src={images["A"+22+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(23)}src={images["A"+23+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(24)}src={images["A"+24+".png"]}/></Col>
           </Row>
+
 
           <Row>
-            <Col><img onClick={() => this.enlarge(15)} src={images["p"+15+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(19)} src={images["p"+19+".gif"]}/></Col>
-            <Col><img onClick={() => this.enlarge(20)} src={images["p"+20+".png"]}/></Col>
-
-            <Col><img onClick={() => this.enlarge(16)} src={images["p"+16+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(17)} src={images["p"+17+".png"]}/></Col>
-         
+            <Col><img  onClick={() => this.enlarge(25)} src={images["A"+25+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(26)} src={images["A"+26+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(27)} src={images["A"+27+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(28)}src={images["A"+28+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(29)}src={images["A"+29+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(30)}src={images["A"+30+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(31)}src={images["A"+31+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(32)}src={images["A"+32+".png"]}/></Col>
           </Row>
+
         </Container>
 
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
@@ -161,13 +171,10 @@ function Describe(props){
 }
 
 function Welcome(props) {
-  if (props.name==2 || props.name==4 || props.name==12 || props.name==19){
-    return <img src={images["p"+props.name+".gif"]}></img>;
-  }
-  else{
-    return <img src={images["p"+props.name+".png"]}></img>;
 
-  }
+    return <img src={images["A"+props.name+".png"]}></img>;
+
+ 
 }
 
 

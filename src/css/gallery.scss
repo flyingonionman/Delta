@@ -44,8 +44,8 @@ html,body{
 }
 
 .col{
-  padding-right: 2px;
-  padding-left: 2px;
+  padding-right: 3px;
+  padding-left: 3px;
 }
 
 @font-face {
@@ -79,12 +79,12 @@ body::-webkit-scrollbar {
     button{
       margin: 5%;
       position: absolute;
-      right: 0;
+      left: 0;
       border-style: none;
       background-color: white;
       border-color: black;
-      padding: 4%;
       bottom: 0;
+      font-size:3vw
     }
 
     .menu{
@@ -101,7 +101,7 @@ body::-webkit-scrollbar {
       top: 0;
       right: -50%;
       background: white;
-      transition:  1s;
+      transition:  .8s;
     
     }
     
@@ -112,7 +112,7 @@ body::-webkit-scrollbar {
       top: 0;
       left: -50%;
       background: black;
-      transition:  1s;
+      transition:   .8s;
     
     }
 
@@ -124,7 +124,7 @@ body::-webkit-scrollbar {
         top: 0;
         right: 0;
         background: white;
-        transition:  1s;
+        transition:  .8s;
     }
 
     .imgenlarge{
@@ -134,7 +134,7 @@ body::-webkit-scrollbar {
         top: 0;
         left: 0;
         background: black;
-        transition:  1s;
+        transition:  .8s;
         z-index:200;
 
         h1{
