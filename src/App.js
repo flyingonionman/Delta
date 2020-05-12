@@ -8,7 +8,6 @@ import {
   
 } from "react-router-dom";
 import Home from './components/home'
-import Archive from './components/archivepage.js';
 
 import Mlarch from './components/mlarch';
 import MlarchGallery from './components/mlarch_gallery';
@@ -37,11 +36,6 @@ class App extends React.Component {
             <Route path="/mlarch_gallery" >
               
               <MlarchGallery/>
-            </Route>
-
-            <Route path="/archivepage" >
-              
-              <Archive/>
             </Route>
 
             <Route path="/datasci" >
