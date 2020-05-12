@@ -56,8 +56,8 @@ class Mlarch extends React.Component {
             <Col><img  onClick={() => this.enlarge(4)}src={images["A"+4+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(5)}src={images["A"+5+".png"]}/></Col>
             <Col><img  onClick={() => this.enlarge(6)}src={images["A"+6+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(7)}src={images["A"+7+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(8)}src={images["A"+8+".png"]}/></Col>
+            <Col></Col>
+            <Col></Col>
           </Row>
 
           <Row>
@@ -95,6 +95,56 @@ class Mlarch extends React.Component {
             <Col><img onClick={() => this.enlarge(32)}src={images["A"+32+".png"]}/></Col>
           </Row>
 
+          <Row>
+           <Col><img  onClick={() => this.enlarge(33)} src={images["A"+33+".png"]}/></Col>
+
+          </Row>
+
+          <Row>
+            <Col><img  onClick={() => this.enlarge(34)} src={images["A"+34+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(35)} src={images["A"+35+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(36)} src={images["A"+36+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(37)}src={images["A"+37+".gif"]}/></Col>
+            <Col><img onClick={() => this.enlarge(38)}src={images["A"+38+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(39)}src={images["A"+39+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(40)}src={images["A"+40+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(41)}src={images["A"+41+".png"]}/></Col>
+          </Row>
+
+          <Row>
+            <Col><img  onClick={() => this.enlarge(42)} src={images["A"+42+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(43)} src={images["A"+43+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(44)} src={images["A"+44+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(45)}src={images["A"+45+".gif"]}/></Col>
+            <Col><img onClick={() => this.enlarge(46)}src={images["A"+46+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(47)}src={images["A"+47+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(48)}src={images["A"+48+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(49)}src={images["A"+49+".png"]}/></Col>
+          </Row>
+
+          <Row>
+            <Col><img  onClick={() => this.enlarge(50)} src={images["A"+50+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(51)} src={images["A"+51+".png"]}/></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+          </Row>
+
+          <Row>
+            <Col><img  onClick={() => this.enlarge(52)} src={images["A"+52+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(53)} src={images["A"+53+".png"]}/></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+            <Col></Col>
+          </Row>
+
+
         </Container>
 
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
@@ -124,55 +174,68 @@ function Describe(props){
   console.log(props.name)
 
     switch(props.name) {
-       case 3:
-        return <p>1500 image data set of two benches randomly (and individually) rotating and shearing to create a confusing multi-perspectival images where the objects can no longer understood in reference to the ground plane.    </p>;
+      case 1: return <p>AI-Progettazione an homage to the simple instructions and constructions of Enzo Mari.</p>
+      case 2: return <p>A prototypical bench in the style of Enzo Mari’s Autoprogettazione.</p>;
+      case 3: return <p>The four images below this represent the ground truth. The data the machine learns from.</p>;       
+      case 4: return <p>You are now entering the matrix...  </p>;
+      case 5: return <p>LSTM Captioning model</p>;
+      case 6: return  <p>The four images in this column are outputs from machine learning models. </p>
+      case 7: return  <p>Scan this on your phone! You’ll be directed right back here. Lol.</p>
+      case 8: return  <p>Nailed it!</p>
 
-         break;
-       case 2:
-        return <p>Latent space walk in which a progressive gan is learning and becoming confused by the multi-perspectival bench images where the benches twist, grow, split, and meld like amoebas in a petri dish.</p>;
+      case 9: return <p>Text instruction precedents from Sol Lewitt. What we like to call a 1 dimensional instruction. </p>
+      case 10: return <p>How we might make a 1D instruction for this simple bench. </p>;
+      case 11: return <p>A parametrically generated data set of unique bench instructions to train with. </p>;       
+      case 12: return <p>:0 </p>;
+      case 13: return <p>LSTM Captioning model</p>;
+      case 14: return  <p>:(</p>
+      case 15: return  <p>Generated cut sheets using LSTM captioning</p>
+      case 16: return  <p>JIHOOOOOOOOON.png</p>
 
-         break;
-       case 1:
-        return <p>1500 image data set that displays a bottom up construction approach to random timber joinery where these members are sequentially daisy-chained and occasionally become cluttered in a bird’s nest logic. </p>;
-  
-           break;  
-        case 4:
-        return <p>Latent space walk through the progressive gan trained on randomly assembled timber members at some points finding regularity with straight member perpendicularly connected while other times melting into glitchy bird’s nests  </p>;
+      case 17: return <p>2 dimensional (pretend you don’t see the axon) instructions from none other than Enzo Mari.</p>
+      case 18: return <p>Our interpretation of an Enzo style drawing set for a simple bench. </p>;
+      case 19: return <p>A parametrically generated data set of unique bench renderings to train with.</p>;       
+      case 20: return <p>:? </p>;
+      case 21: return <p>Inside the mind of a progressive gan machine learning model.</p>;
+      case 22: return  <p>:/</p>
+      case 23: return  <p>Generated outputs from the progressive gan trained on a data set of simple bench renderings. It turned out to be too accurate, so we sought to make it all a little more crazy.</p>
+      case 24: return  <p>A closer look at one of the ML generated bench images.</p>
 
-            break;  
-        case 5:
-          return <p>Rooms</p>;
-  
-          break;  
-        case 6:
-          return  <p>Thousands of unique parametrically generated renders serve as the ground truth bench data set for the machine learning model.</p>
-          break; 
-        case 8:
-          return  <p>Generative model in progress. </p>
-          break; 
-        case 9:
-          return  <p>Generative model in progress. </p>
-          break;   
-        case 11:
-          return  <p>Quaternion transformation instructions </p>
-          break;   
-        case 11:
-          return  <p>A 12 second MS Paint sketch tests the model’s accuracy. </p>
-          break; 
-        case 12:
-          return  <p>Construction of a bench</p>
-          break;   
-        case 13:
-          return  <p>Input benches v. output benches</p>
-          break; 
+      case 25: return <p>Oh IKEA. It’s a love hate relationship, but their assembly instructions are undeniably the quintessential non-verbal instructions. We see them as the precedent for 3D instructions, exploded axonometric drawings that illustrate dimensions to scale.</p>
+      case 26: return <p>An attempt at how we might consider generating 3D instructions in axon. </p>;
+      case 27: return <p>The same benches as the original “boring” data set with added parameters to randomize the data and confuse the progressive gan. The renderings depict benches that are randomly tumbling and shearing at different magnitudes so the ML model has less similarities to expect and latch on to.</p>;       
+      case 28: return <p>;) </p>;
+      case 29: return <p>Progressive gans eat wheaties</p>;
+      case 30: return  <p>:^)</p>
+      case 31: return  <p>Outputs from a slightly confused progressive gan. Note the occasional mishaps, fading edges, etc.</p>
+      case 32: return  <p>A cute little asymmetrical  mini bench created by the progressive gan</p>
+
+      case 33: return  <p>Our approach to machine learning is both generative and analytical. We use a progressive gan to create novel outputs and then feed those into a LSTM captioning model that was trained on the rendered images paired with their 3D quaternion data such that it will spit out a string of vectors (quaternions). Afterwards, we post process in Grasshopper to bring those unique quaternions back into a world where we can interact with them the CAD software.      </p>
+
+      case 34: return <p>A parametrically generated data set of 1500 unique renderings of benches.</p>
+      case 35: return <p>One of the many benches in the data set. </p>;
+      case 37: return <p>A video traversing the latent space (the space between generated images) in the progressive gan.</p>;       
+      case 39: return <p>After post processing this generated image from the progressive gan, here we have a 3D model!</p>;
+      case 40: return <p>A post processed orthographic instruction from the infamous progressive gan image.</p>;
+      case 41: return  <p>We built one of these little buddies!</p>
+
+      case 42: return <p>1500 randomized renderings of morphing benches--two of them!--that were used to train a progress gan and ½ of the data for the LSTM captioning model.</p>
+      case 43: return <p>A closer look at the kind of data being used in the models. </p>;
+      case 45: return <p>A video traversing the latent space (the space between generated images) in the progressive gan.</p>; 
+      case 46: return <p>A wonky output from the progressive gan trained on two benches at once.</p>; 
+
        default:
-         return <p>I havne't figured out what to write here yet</p>;
+         return <p></p>;
      }
 }
 
 function Welcome(props) {
-
+  if (props.name == 45 || props.name == 37  ){
+    return <img src={images["A"+props.name+".gif"]}></img>;
+  }
+  else{
     return <img src={images["A"+props.name+".png"]}></img>;
+  }
 
  
 }
