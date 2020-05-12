@@ -105,8 +105,9 @@ class Mlarch extends React.Component {
             <Col><img  onClick={() => this.enlarge(35)} src={images["A"+35+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(36)} src={images["A"+36+".gif"]}/></Col>
             <Col><img  onClick={() => this.enlarge(37)}src={images["A"+37+".gif"]}/></Col>
-            <Col><img onClick={() => this.enlarge(38)}src={images["A"+38+".gif"]}/></Col>
             <Col><img  onClick={() => this.enlarge(39)}src={images["A"+39+".png"]}/></Col>
+            <Col><img onClick={() => this.enlarge(38)}src={images["A"+38+".gif"]}/></Col>
+
             <Col><img onClick={() => this.enlarge(40)}src={images["A"+40+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(41)}src={images["A"+41+".png"]}/></Col>
           </Row>
@@ -116,8 +117,8 @@ class Mlarch extends React.Component {
             <Col><img  onClick={() => this.enlarge(43)} src={images["A"+43+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(44)} src={images["A"+44+".gif"]}/></Col>
             <Col><img  onClick={() => this.enlarge(45)}src={images["A"+45+".gif"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(47)}src={images["A"+47+".gif"]}/></Col>  
             <Col><img onClick={() => this.enlarge(46)}src={images["A"+46+".png"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(47)}src={images["A"+47+".gif"]}/></Col>  
             <Col><img onClick={() => this.enlarge(48)}src={images["A"+48+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(49)}src={images["A"+49+".png"]}/></Col>
           </Row>
@@ -214,9 +215,9 @@ function Describe(props){
 
       case 34: return <p>A parametrically generated data set of 1500 unique renderings of benches.</p>
       case 35: return <p>One of the many benches in the data set. </p>;
-      case 36: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
-      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
-      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      case 36: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0 <br></br>
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0 <br></br>
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0 <br></br>
       Move X,	            Move Y,             Move Z ,           0</p>;
       case 37: return <p>A video traversing the latent space (the space between generated images) in the progressive gan.</p>;       
       case 39: return <p>After post processing this generated image from the progressive gan, here we have a 3D model!</p>;
@@ -225,26 +226,26 @@ function Describe(props){
 
       case 42: return <p>1500 randomized renderings of morphing benches--two of them!--that were used to train a progress gan and ½ of the data for the LSTM captioning model.</p>
       case 43: return <p>A closer look at the kind of data being used in the models. </p>;
-      case 44: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
-      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
-      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      case 44: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0 <br></br>
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0 <br></br>
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0 <br></br>
       Move X,	            Move Y,             Move Z ,           0</p>; 
       case 45: return <p>A video traversing the latent space (the space between generated images) in the progressive gan.</p>; 
       case 46: return <p>A wonky output from the progressive gan trained on two benches at once.</p>; 
 
       case 50: return <p>A parametrically generated data set of 1500 unique renderings of wood framed buildings. </p>;
       case 51: return <p>One image of randomly joined wood. </p>; 
-      case 54: return <p> Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
-      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
-      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      case 54: return <p> Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0 <br></br>
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0 <br></br>
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0 <br></br>
       Move X,	            Move Y,             Move Z ,           0</p>;
       case 56: return <p>A video traversing the latent space (the space between generated images) in the progressive gan. </p>; 
 
       case 52: return <p>A parametrically generated data set of 1500 unique renderings of wood framed buildings. </p>;
       case 53: return <p>One  wood frame buildings. </p>; 
-      case 55: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
-      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
-      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      case 55: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0 <br></br>
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0 <br></br>
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0 <br></br>
       Move X,	            Move Y,             Move Z ,           0
       </p>; 
 
