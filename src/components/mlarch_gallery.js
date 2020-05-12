@@ -116,8 +116,8 @@ class Mlarch extends React.Component {
             <Col><img  onClick={() => this.enlarge(43)} src={images["A"+43+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(44)} src={images["A"+44+".gif"]}/></Col>
             <Col><img  onClick={() => this.enlarge(45)}src={images["A"+45+".gif"]}/></Col>
+            <Col><img  onClick={() => this.enlarge(47)}src={images["A"+47+".gif"]}/></Col>  
             <Col><img onClick={() => this.enlarge(46)}src={images["A"+46+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(47)}src={images["A"+47+".gif"]}/></Col>
             <Col><img onClick={() => this.enlarge(48)}src={images["A"+48+".png"]}/></Col>
             <Col><img onClick={() => this.enlarge(49)}src={images["A"+49+".png"]}/></Col>
           </Row>
@@ -126,7 +126,7 @@ class Mlarch extends React.Component {
             <Col><img  onClick={() => this.enlarge(50)} src={images["A"+50+".png"]}/></Col>
             <Col><img  onClick={() => this.enlarge(51)} src={images["A"+51+".png"]}/></Col>
             <Col><img  onClick={() => this.enlarge(54)} src={images["A"+54+".gif"]}/></Col>
-            <Col></Col>
+            <Col><img  onClick={() => this.enlarge(56)} src={images["A"+56+".gif"]}/></Col>
             <Col></Col>
             <Col></Col>
             <Col></Col>
@@ -214,6 +214,10 @@ function Describe(props){
 
       case 34: return <p>A parametrically generated data set of 1500 unique renderings of benches.</p>
       case 35: return <p>One of the many benches in the data set. </p>;
+      case 36: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      Move X,	            Move Y,             Move Z ,           0</p>;
       case 37: return <p>A video traversing the latent space (the space between generated images) in the progressive gan.</p>;       
       case 39: return <p>After post processing this generated image from the progressive gan, here we have a 3D model!</p>;
       case 40: return <p>A post processed orthographic instruction from the infamous progressive gan image.</p>;
@@ -221,8 +225,28 @@ function Describe(props){
 
       case 42: return <p>1500 randomized renderings of morphing benches--two of them!--that were used to train a progress gan and ½ of the data for the LSTM captioning model.</p>
       case 43: return <p>A closer look at the kind of data being used in the models. </p>;
+      case 44: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      Move X,	            Move Y,             Move Z ,           0</p>; 
       case 45: return <p>A video traversing the latent space (the space between generated images) in the progressive gan.</p>; 
       case 46: return <p>A wonky output from the progressive gan trained on two benches at once.</p>; 
+
+      case 50: return <p>A parametrically generated data set of 1500 unique renderings of wood framed buildings. </p>;
+      case 51: return <p>One image of randomly joined wood. </p>; 
+      case 54: return <p> Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      Move X,	            Move Y,             Move Z ,           0</p>;
+      case 56: return <p>A video traversing the latent space (the space between generated images) in the progressive gan. </p>; 
+
+      case 52: return <p>A parametrically generated data set of 1500 unique renderings of wood framed buildings. </p>;
+      case 53: return <p>One  wood frame buildings. </p>; 
+      case 55: return <p>Rotate Y-Rotate Z-Scale X, Rotate Z, Rotate Y , 0
+      Rotate Z, Rotate X-Rotate Z-Scale Y, Rotate X , 0
+      Rotate Y, Rotate X, Rotate X-Rotate Y-Scale Z , 0
+      Move X,	            Move Y,             Move Z ,           0
+      </p>; 
 
        default:
          return <p></p>;
@@ -230,7 +254,7 @@ function Describe(props){
 }
 
 function Welcome(props) {
-  if (props.name == 45 || props.name == 37 || props.name == 38  || props.name == 36 || props.name == 54 || props.name == 55   ){
+  if (props.name == 45 ||props.name == 44||  props.name == 37 || props.name == 38  || props.name == 36 || props.name == 54 || props.name == 55   || props.name == 47|| props.name == 56 ){
     return <img src={images["A"+props.name+".gif"]}></img>;
   }
   else{
