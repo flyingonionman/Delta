@@ -19,22 +19,26 @@ export var hive = {
     c3:{
         r1:{occupied:false, location:{x:42.3, y:-.35, z:4.4 }},
         r2:{occupied:false, location:{x:42.3, y:-.35, z:9.4 }},
-        r3:{occupied:false, location:{x:42.3, y:-.35, z:22.35 }},
+        r3:{occupied:false, location:{x:42.3, y:-.35, z:14.4 }},
         r4:{occupied: false, location:{x:42.3, y:-.35, z:17.45 }}
       },
     c4:{
         r1:{occupied:false, location:{x:47, y:-.35, z:4.4 }},
         r2:{occupied:false, location:{x:47, y:-.35, z:6.8 }},
-        r3:{occupied:false, location:{x:47, y:-.35, z:22.35 }},
+        r3:{occupied:false, location:{x:47, y:-.35, z:11.8 }},
         r4:{occupied: false, location:{x:47, y:-.35, z:17.45 }}
     },
     c5:{
         r1:{occupied:false, location:{x:51.7, y:-.35, z:4.4 }},
-        r2:{occupied:false, location:{x:51.7, y:-.35, z:3.8 }},
+        r2:{occupied:false, location:{x:51.7, y:-.35, z:4.2 }},
         r3:{occupied:false, location:{x:51.7, y:-.35, z:9.35 }},
-        r4:{occupied: false, location:{x:51.7, y:-.35, z:17.45 }}
+        r4:{occupied: false, location:{x:51.7, y:-.35, z:14.3 }}
     },
-
+    c6:{
+      r1:{occupied:false, location:{x:56.4, y:-.35, z:4.4 }},
+      r2:{occupied:false, location:{x:56.4, y:-.35, z:12}},
+  
+  }
   }
 
 

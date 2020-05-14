@@ -38,7 +38,8 @@ var torus;
 var tween;
 var trailgeometry;
 var trailmaterial;
-var trail
+var trail;
+var zoomedout= false;
 
 var finished = false,finishedanim =false;
 //Movement 
@@ -290,6 +291,8 @@ class Datasci extends React.Component {
 
   }
 
+  
+
   render() {
   return (
 
@@ -324,8 +327,10 @@ function renderScene () {
     camera.lookAt(torus.position.x,0,torus.position.z);
   }
   else{
-    camera.position.set(20,60,10)
+    camera.position.set( 20, 60,10 );
   }
+
+
   renderer.render(scene, camera)
 }
 
@@ -359,8 +364,10 @@ function animate () {
   // Prompt 
   prompt();
 
+
+
   // Scene update
-  
+  //console.log(scene.children)
   //controls.update();
   renderScene()
   frameId = window.requestAnimationFrame(animate)
@@ -465,6 +472,11 @@ function prompt() {
     flag = 'crimecat'
     if ( !hive.c3.r2.occupied) { 
        loadSVG(svgfiles['BJS_cat_fill.svg'], hive.c3.r2.location )
+       loadSVG(svgfiles['crime_drug.svg'], hive.c3.r1.location )
+       loadSVG(svgfiles['crime_violent.svg'], hive.c4.r2.location )
+       loadSVG(svgfiles['crime_property.svg'], hive.c3.r3.location )
+       loadSVG(svgfiles['crime_other.svg'], hive.c4.r3.location )
+
     }
     hive.c3.r2.occupied= true
 
@@ -478,23 +490,43 @@ function prompt() {
 
     }
     hive.c3.r1.occupied= true
-    //finished = true;
   }
 
   else if (torus.position.z <= 10 && torus.position.z >= 7.8   && torus.position.x >= 48.3 && torus.position.x <=  50.5  ){
     flag = 'violent'
     if ( !hive.c4.r2.occupied) { 
        loadSVG(svgfiles['crime_violent_fill.svg'], hive.c4.r2.location )
-       loadSVG(svgfiles['bonds_meaningful.svg'], hive.c5.r2.location )
-       loadSVG(svgfiles['bonds_placeholder.svg'], hive.c5.r3.location )
+       loadSVG(svgfiles['race_white.svg'], hive.c5.r2.location )
+       loadSVG(svgfiles['race_black.svg'], hive.c5.r3.location )
 
        resultset.push('violent')
 
     }
     hive.c4.r2.occupied= true
-    //finished = true;
   }
 
+  else if (torus.position.z <= 12.5 && torus.position.z >= 10   && torus.position.x >= 53 && torus.position.x <=  55.5  ){
+    if ( !hive.c5.r2.occupied) { 
+      loadSVG(svgfiles['race_black_fill.svg'], hive.c5.r3.location )
+      loadSVG(svgfiles['gender_male.svg'], hive.c6.r2.location )
+      loadSVG(svgfiles['gender_female.svg'], hive.c5.r4.location )
+
+      resultset.push('black')
+
+    }
+    hive.c5.r2.occupied= true
+  }
+
+  else if (torus.position.z <= 15 && torus.position.z >= 13   && torus.position.x >= 57.5 && torus.position.x <=  60  ){
+    flag = 'finished'
+
+    if ( !hive.c6.r2.occupied) { 
+      loadSVG(svgfiles['gender_male_fill.svg'], hive.c6.r2.location )
+      finished = true;
+
+    }
+    hive.c6.r2.occupied= true
+  }
 
   else{
       flag = 0;
@@ -514,6 +546,7 @@ function loadSVG( file , svglocation) {
         group.position.y = svglocation.y;
         group.scale.y *= 1;
         group.rotation.x = 1.57;
+
 
         for ( var i = 0; i < paths.length; i ++ ) {
 
@@ -618,14 +651,16 @@ function Describe(props){
         case 'drugs':
           return <p>Drug related crimes average about 83204 in NY{resultset}</p>
         case 'violent':
-          return <p>Violent crimes average about 84819 per NY{resultset}</p>
+          return <p>Violent crimes average about 84819 per NY</p>
+        case 'finished':
+          return <p>{resultset}: is the path you have taken...</p>
+
          default:
            return <p>
            </p>;
        }
   }
   
-
 
 
 export default Datasci;
