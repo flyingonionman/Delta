@@ -319,6 +319,10 @@ class Datasci extends React.Component {
 
         </div> 
 
+        <div id="AR" className= { flag == 'finished' ? 'appear' : 'hiddenright'}>black male avg bail bond: 24971.05 (41 individuals)</div>
+        <div id="NY" className= { flag == 'finished' ? 'appear' : 'hiddenright'}>black male avg bail bond: 85799.36 (617 individuals)</div>
+        <div id="LA" className= { flag == 'finished' ? 'appear' : 'hiddenright'}>black male avg bail bond: 5130.88 (2274 individuals)</div>
+
     </div>    
  
     );
@@ -671,7 +675,12 @@ function Describe(props){
         case 'violent':
           return <p>Violent crimes average about 84819 per NY</p>
         case 'finished':
-          return <p>{resultset}: is the path you have taken...</p>
+          return <p>{resultset}: is the path you have taken... <br></br>
+          There was no gender/race data for Michigan so we could not make a point of comparison with the state.
+          We hope that this visual ontology can represent not only an accurate bail bond amount for 
+          a specific node, but also the diversity of the paths one can take. 
+          
+          </p>
 
          default:
            return <p>

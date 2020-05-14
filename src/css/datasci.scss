@@ -81,3 +81,43 @@ html, body {
 button{
   margin-left:2%;
 }
+
+.appear{
+  position: fixed;
+    color: white;
+    top: -53px;
+    margin-top: 9%;
+    font-family: 'Bahnschrift';
+    font-size: 1.6vw;
+    transition: 1s;
+    right: 5%;
+    width: 28%;
+    margin-right: 5%;
+}
+
+.hiddenright{
+  position: fixed;
+    color: white;
+    top: -53px;
+    margin-top: 9%;
+    font-family: 'Bahnschrift';
+    font-size: 2vw;
+    transition: 1s;
+    right: 5%;
+    width: 28%;
+
+    margin-right: -37%;
+
+}
+
+#AR{
+
+}
+
+#NY{
+  margin-top: 22%;
+}
+
+#LA{
+  margin-top: 40%;
+}
