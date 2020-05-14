@@ -128,7 +128,7 @@ class Datasci extends React.Component {
     // Ground
 
     var plane = new THREE.Mesh(
-      new THREE.PlaneBufferGeometry( 200,200 ),
+      new THREE.PlaneBufferGeometry( 300,150 ),
       new THREE.MeshPhongMaterial( { color: 0xFFFFFF, specular: 0xFFFFFF } )
     );
     plane.rotation.x = - Math.PI / 2;
@@ -164,8 +164,8 @@ class Datasci extends React.Component {
     this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    controls = new OrbitControls(camera,renderer.domElement );
-    controls.update();
+    //controls = new OrbitControls(camera,renderer.domElement );
+    //controls.update();
 
     //Add Text
     /* loadFont(); */
@@ -184,13 +184,27 @@ class Datasci extends React.Component {
       y:-.35,
       z:-6.5
     }
+    var example1location ={
+      x:31.4,
+      y:-.35,
+      z:-16.5
+    }
+    var example2location ={
+      x:31.4,
+      y:-.35,
+      z:30.5
+    }
 
     var board =svgfiles['board.svg']
+    var example1 =svgfiles['example1.svg']
+    var example2 =svgfiles['example2.svg']
 
 
     loadSVG(board,boardlocation);
 
-    
+    loadSVG(example1,example1location);
+    loadSVG(example2,example2location);
+
 
     //Add Trail
     trailgeometry = new THREE.SphereGeometry( .2, 32, 32 );
@@ -327,7 +341,9 @@ function renderScene () {
     camera.lookAt(torus.position.x,0,torus.position.z);
   }
   else{
-    camera.position.set( 20, 60,10 );
+    camera.position.set( 55, 80,20 );
+    camera.lookAt(55,0,20);
+
   }
 
 
@@ -645,7 +661,9 @@ function Describe(props){
         case 'us':
           return <p>Choose a state to begin your entry ( only NYC works now)  </p>;
         case 'BJScode':
-          return <p>BJS codes  </p>;
+          return <p>we used BJS ( Bureau of Justice Statistics ) codes to create this ontology. Each of the states have
+             their own labeling of the same crimes, and they can be grouped into one BJS offense category.
+             This gives a national view of how a crime is represented in each of the states.   </p>;
         case 'crimecat':
           return <p>Choose a category of crime ( go to violent crime for now) </p>;
         case 'drugs':
