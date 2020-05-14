@@ -497,10 +497,6 @@ function prompt() {
 
 
   else{
-      var person = scene.getObjectByName('blackindividual')
-        if(person){
-        scene.remove( person );
-      }
       flag = 0;
   }
 }
