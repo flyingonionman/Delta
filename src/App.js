@@ -43,9 +43,9 @@ class App extends React.Component {
               <Datasci/>
             </Route>
 
-            <Route path="/bideogames" >
+            {/* <Route path="/bideogames" >
               <Bideo/>
-            </Route>
+            </Route> */}
             
           </Switch>
       </div>

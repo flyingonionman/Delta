@@ -21,11 +21,11 @@ time, mark, audio, video {
 }
 
 html, body {
-  .Mlarch_intro{
+  
 
   margin: 0; height: 100%; overflow: hidden
 
-  }
+  
 
  
 
@@ -107,12 +107,13 @@ html, body {
     width: 40%;
     text-align: left;
     z-index: 100;
-    display:block;
-    color:white;
-    right :0 ;
-    margin-top:-10%;
-    margin-right:5%;
+    display: block;
+    color: white;
+    right: 0;
+    margin-top: 7%;
+    margin-right: 5%;
     height: 75%;
+    top: 0;
   }
 
   #credits{

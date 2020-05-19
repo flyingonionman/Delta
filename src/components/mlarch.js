@@ -45,10 +45,10 @@ class Mlarch extends React.Component {
   }
   componentDidMount(){
     this.init();
-    this.drawing();
+    /* this.drawing(); */
   }
 
-  drawing = () =>{
+  /* drawing = () =>{
     canvas = this.refs.canvas
     ctx = canvas.getContext("2d")
     testimg = new Image()
@@ -57,7 +57,7 @@ class Mlarch extends React.Component {
     testimg.onload = () => {
       ctx.drawImage(testimg, 0, 0)
     }
-  }
+  } */
 
   init = () =>{
     var loader = new STLLoader()
@@ -216,8 +216,8 @@ class Mlarch extends React.Component {
           <div id="c" ref={ref => (this.mount = ref)} />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider2" orient="vertical" />
-          <canvas id="canvas" ref="canvas" width={224} height={224} />
-
+{/*           <canvas id="canvas" ref="canvas" width={224} height={224} />
+ */}
           <div id="info-body">
           <h1>AI-progettazione</h1>
           <h3>Move around ! </h3>
