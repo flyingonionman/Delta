@@ -23,6 +23,7 @@ const fontfiles = importAll(require.context('../font', false, /\.(json)$/));
 var camera, scene, renderer,controls,frameId,composer,raycaster;
 const cube ={};
 var tween;
+var tween1, tween2;
 var gzoom = false;
 
 var project_list =["mlarch","datasci","unionjrnl","babymon","dropblocks"]
@@ -30,6 +31,8 @@ var about_list = ["about_me","about_school"]
 //Camera views
 var project = false;
 var afterimagePass;
+
+var zoomcontrol = false;
 
 //Layering
 var ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
@@ -46,16 +49,14 @@ var params_bloom  = {
 //text
 var text_materials, textMesh;
 
-
-
 //mouse movement
 var mouse = new THREE.Vector2(), INTERSECTED;
 class Home extends React.Component {
   constructor(props){
     super(props);
     this.state = { 
-      zoomedin: false ,
-      zoomedin_about: false ,
+      zoomedin: zoomcontrol ,
+      zoomedin_about: zoomcontrol ,
       currabout:0,
       currproj: 0
     };
@@ -217,36 +218,7 @@ class Home extends React.Component {
       scene.add( sphere );
     } 
 
-    //
-    // Adding labels
-    /* var loader = new THREE.FontLoader();
-
-    loader.load( fontfiles['default.json'], function ( font ) {
-      text_materials = [
-        new THREE.MeshPhongMaterial( { color: 0xffffff, flatShading: true } ), // front
-        new THREE.MeshPhongMaterial( { color: 0xffffff } ) // side
-      ];
-
-
-      var textgeo = new THREE.TextGeometry( 'Projects', {
-        font: font,
-        size: 80,
-        height: 5,
-        curveSegments: 12,
-        bevelEnabled: true,
-        bevelThickness: 10,
-        bevelSize: 8,
-        bevelOffset: 0,
-        bevelSegments: 5
-      } );
-
-      geometry = new THREE.BufferGeometry().fromGeometry( textgeo );
-      textMesh = new THREE.Mesh( geometry, text_materials );
-
-      textMesh.position.x = 0 ;      textMesh.position.y = 0 ;      textMesh.position.z = 0 ;
-      scene.add(textMesh);
-    } );  */
-    //
+    
     const interaction = new Interaction(renderer, scene, camera);
 
     // Set up ray casting
@@ -316,6 +288,8 @@ class Home extends React.Component {
         <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
           <button id="cycle" onClick={this.cycle}> Next</button>
+          <button onClick={() => transition("mlarch")}  id="tomlarch">To MLARCH</button>
+          {/* Have the buttons go here so that I can make descriptions dissapear when they are clicked */}
 
         </container> 
 
@@ -401,7 +375,6 @@ function Projectlist(props) {
       architecture to create a system in which you can obtain model files from a png image. We are also using GAN to generate 
       monstrous furnitures that can be plugged back into the model to see how we would actually construct it.
       </p>
-      <button onClick={() => transition("mlarch")}  id="tomlarch">To MLARCH</button>
       </div>;
   case "datasci":
     return <div>
@@ -462,18 +435,26 @@ function Aboutlist(props) {
 
  
 function transition(pageurl){
-  
+  zoomcontrol = true;
 
-  tween = new TWEEN.Tween(camera.position)
-  .to({ y:0,x:0,z:1000}, 1500) 
+  tween1 = new TWEEN.Tween(camera.position)
+  .to({ y:0,x:0,z: 200}, 2000) 
+  .easing(TWEEN.Easing.Quadratic.Out)
+
+  tween2 = new TWEEN.Tween(camera.position)
+  .to({ y:0,x:0,z:2.3}, 1000) 
+  .easing(TWEEN.Easing.Quadratic.Out)
+
+  tween = new TWEEN.Tween(camera.rotation)
+  .to({ y:0 }, 2000) 
   .easing(TWEEN.Easing.Quadratic.Out)
   .start(); 
+
+  tween1.chain(tween2)
   
-  /* tween = new TWEEN.Tween(camera.position)
-  .to({ y:0,x:0,z:0}, 1500) 
-  .easing(TWEEN.Easing.Quadratic.Out)
-  .start(); */
-    setTimeout(function(){   window.location = pageurl; }, 3000);
+  tween1.start();
+
+  setTimeout(function(){   window.location = pageurl; }, 3000);
 
 }
 
