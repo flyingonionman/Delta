@@ -25,9 +25,10 @@ const cube ={};
 var tween;
 var tween1, tween2;
 var gzoom = false;
-
+var selector // Determines which cube it spins
 var project_list =["mlarch","datasci","unionjrnl","babymon","dropblocks"]
 var about_list = ["about_me","about_school"]
+var random_list= [ "soundcloud", "graphicdesign","bideogame","diary"]
 //Camera views
 var project = false;
 var afterimagePass;
@@ -57,8 +58,10 @@ class Home extends React.Component {
     this.state = { 
       zoomedin: zoomcontrol ,
       zoomedin_about: zoomcontrol ,
+      zoomedin_random:zoomcontrol,
       currabout:0,
-      currproj: 0
+      currproj: 0,
+      currrandom:0
     };
   }
   componentDidMount(){
@@ -80,19 +83,19 @@ class Home extends React.Component {
       .start(); 
 
       tween = new TWEEN.Tween(camera.rotation)
-      .to({ y:0 }, 1500) 
+      .to({ x:0,y:0,z:0 }, 1500) 
       .easing(TWEEN.Easing.Quadratic.Out)
       .start(); 
     
       cube[1].material.emissive.setHSL( .1, .8, .2);
 
-    this.setState({ zoomedin: false , zoomedin_about:false });
+    this.setState({ zoomedin: false , zoomedin_about:false, zoomedin_random:false });
     gzoom = false;
   }
 
   onclick = (event) =>{
     event.preventDefault();
-    var important = [scene.children[1],scene.children[2]]
+    var important = [scene.children[1],scene.children[2],scene.children[3]]
     var intersects = raycaster.intersectObjects(  important );
   
     if ( intersects.length > 0 ) {
@@ -103,12 +106,12 @@ class Home extends React.Component {
         gzoom = true;
         this.setState({ zoomedin: true });
         tween = new TWEEN.Tween(camera.position)
-        .to({ x: -13 ,y:1 , z:17}, 1500) 
+        .to({ x: -12.5 ,y:-3 , z:12}, 1500) 
         .easing(TWEEN.Easing.Quadratic.Out)
         .start(); 
   
         tween = new TWEEN.Tween(camera.rotation)
-        .to({ y:-1 }, 1500) 
+        .to({ x:.8,y:-1,z:.7}, 1500) 
         .easing(TWEEN.Easing.Quadratic.Out)
         .start(); 
        
@@ -120,7 +123,7 @@ class Home extends React.Component {
           gzoom = true;
           this.setState({ zoomedin_about: true });
           tween = new TWEEN.Tween(camera.position)
-          .to({ x: -2 ,y:0 , z:12}, 1500) 
+          .to({ x: -2 ,y:-3 , z:8.5}, 1500) 
           .easing(TWEEN.Easing.Quadratic.Out)
           .start(); 
           
@@ -134,7 +137,24 @@ class Home extends React.Component {
           break;
 
           }
-
+          case "random" :{
+            gzoom = true;
+            this.setState({ zoomedin_random: true });
+            tween = new TWEEN.Tween(camera.position)
+            .to({ x: 2.5 ,y:-3 , z:9.5}, 1500) 
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start(); 
+            
+            tween = new TWEEN.Tween(camera.rotation)
+            .to({ y:-1 }, 1500) 
+            .easing(TWEEN.Easing.Quadratic.Out)
+            .start(); 
+           
+      
+          
+            break;
+  
+            }
         default:
           break;
       }
@@ -176,26 +196,37 @@ class Home extends React.Component {
 
     //ADD CUBE 
     var geometry = new THREE.BoxGeometry( 3, 3, 3 );
-    var geometry2 = new THREE.BoxGeometry( 3, 3, 3 );
+    var geometry2 = new THREE.BoxGeometry( 2, 2, 2 );
 
     var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
     var material2 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
+    var material3 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
 
     cube[1] = new THREE.Mesh( geometry, material );
     cube[1].material.emissive.setHSL( .1, .8, .2);
 
     cube[2] = new THREE.Mesh( geometry2, material2 );
     cube[2].material.emissive.setHSL( .4, .8, .1);
+    
+    cube[3] = new THREE.Mesh( geometry2, material3 );
+    cube[3].material.emissive.setHSL( .6, .8, .1);
 
-    cube[1].position.y = 1;
-    cube[2].position.x = -12;
+    cube[1].position.y = 4;
+    cube[2].position.x = -10;    cube[2].position.y = -3;
+    cube[3].position.x = 10;    cube[3].position.y = -3;
+
+
     cube[1].name = "projects";
     cube[2].name = "about";
+    cube[3].name = "random";
 
 
     scene.add(cube[1]);
 
     scene.add(cube[2]);
+
+    scene.add(cube[3]);
+
     window.addEventListener('resize', this.handleWindowResize);
     
     var renderScene = new RenderPass( scene, camera );
@@ -242,32 +273,77 @@ class Home extends React.Component {
   }
 
   cycle = () =>{
-    if( this.state.currproj < 4){
-      this.setState({currproj: this.state.currproj+1})
+    selector = 1;
+    if (this.state.zoomedin) {
+      selector = 1;
+      if( this.state.currproj < 4){       this.setState({currproj: this.state.currproj+1})    }
+      else{  this.setState({currproj: 0})  }
+    } 
 
-    }
-    else{
-      this.setState({currproj: 0})
-    }
+    if (this.state.zoomedin_about) {
+      selector = 2;
+
+      if( this.state.currabout < 1){       this.setState({currabout: this.state.currabout+1})    }
+      else{  this.setState({currabout: 0})  }
+    } 
+
+    if (this.state.zoomedin_random) {
+      selector = 3;
+      if( this.state.currrandom < 3){       this.setState({currrandom: this.state.currrandom+1})    }
+      else{  this.setState({currrandom: 0})  }
+    } 
+
 
     if (Math.random() >.5){
-      tween = new TWEEN.Tween( cube[1].rotation)
-      .to({ x:cube[1].rotation.x+2}, 500) 
+      tween = new TWEEN.Tween( cube[selector].rotation)
+      .to({ x:cube[selector].rotation.x+2}, 500) 
       .easing(TWEEN.Easing.Quadratic.Out)
       .start();
 
-      cube[1].material.emissive.setHSL( Math.random()*.3+.1, .8, .15);
-
+      cube[selector].material.emissive.setHSL( Math.random()*.3+.1, .8, .15);
     }
     else{
-      tween = new TWEEN.Tween( cube[1].rotation)
-      .to({ y:cube[1].rotation.y+2}, 500) 
+      tween = new TWEEN.Tween( cube[selector].rotation)
+      .to({ y:cube[selector].rotation.y+2}, 500) 
       .easing(TWEEN.Easing.Quadratic.Out)
       .start();
 
-      cube[1].material.emissive.setHSL( Math.random()*.3, .8, .15);
+      cube[selector].material.emissive.setHSL( Math.random()*.3, .8, .15);
 
     }
+  }
+  
+  transition = (pageurl) =>{
+    zoomcontrol = true;
+    this.setState({ zoomedin: false , zoomedin_about:false,zoomedin_random:false });
+    gzoom = false;
+  
+    tween1 = new TWEEN.Tween(camera.position)
+    .to({ y:0,x:0,z: 200}, 2000) 
+    .easing(TWEEN.Easing.Quadratic.Out)
+  
+    tween2 = new TWEEN.Tween(camera.position)
+    .to({ y:4,x:0,z:2.9}, 1000) 
+    .easing(TWEEN.Easing.Quadratic.Out)
+  
+    tween = new TWEEN.Tween(camera.rotation)
+    .to({ x:0,y:0,z:0 }, 2000) 
+    .easing(TWEEN.Easing.Quadratic.Out)
+    .start(); 
+  
+    tween1.chain(tween2)
+    
+    tween1.start();
+    
+    if (pageurl == 'unionjrnl'){
+      setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);
+  
+    }
+    else{
+      setTimeout(function(){   window.location = pageurl; }, 3000);
+    }
+  
+  
   }
   
   render() {
@@ -277,7 +353,6 @@ class Home extends React.Component {
       <div className="navigation">
       <ul>
         <li><a href="#contact">//A MINYOUNG NA WORKS//</a></li>
-        <li><a href="#about">WEBSITE CURRENTLY UNDER CONSTRUCTION</a></li>
       </ul>
 
       </div>
@@ -287,19 +362,26 @@ class Home extends React.Component {
 
         <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
+          <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">To {String(project_list[this.state.currproj])}</button>
           <button id="cycle" onClick={this.cycle}> Next</button>
-          <button onClick={() => transition("mlarch")}  id="tomlarch">To MLARCH</button>
           {/* Have the buttons go here so that I can make descriptions dissapear when they are clicked */}
 
         </container> 
 
         <container className={  this.state.zoomedin_about ? 'aboutappear': 'hidden_left'}>
           <Aboutlist name={about_list[this.state.currabout]}></Aboutlist>
+          <button onClick={() => this.transition(String(about_list[this.state.currabout]))}  id="tomlarch">To {String(about_list[this.state.currabout])}</button>
           <button id="cycle" onClick={this.cycle}> Next</button>
 
         </container> 
 
+        <container className={  this.state.zoomedin_random ? 'projectappear': 'hidden_right'}>
+          <Randomlist name={random_list[this.state.currrandom]}></Randomlist>
+          <button onClick={() => this.transition(String(random_list[this.state.currrandom]))}  id="tomlarch">To {String(random_list[this.state.currrandom])}</button>
+          <button id="cycle" onClick={this.cycle}> Next</button>
 
+        </container> 
+        
         <button id="return" onClick={this.return}  >return</button>
 
       </div>    
@@ -324,7 +406,6 @@ function animate (time) {
 
     };
   }
-  camera.rotation.y -= .00001;  
   TWEEN.update();
 
   position(time);
@@ -335,7 +416,7 @@ function animate (time) {
 
 function position(time){
   raycaster.setFromCamera( mouse, camera );
-  var important = [scene.children[1],scene.children[2]]
+  var important = [scene.children[1],scene.children[2],scene.children[3]]
 
   var intersects = raycaster.intersectObjects(  important );
 
@@ -381,21 +462,18 @@ function Projectlist(props) {
       <h1>Data science for social good</h1>
       <p>Creating simple but effective visualization for the purpose of helping the bail project.
       </p>
-      <button onClick={() => transition("datasci")}  id="tomlarch">To Datasci </button>
       </div>;
   case "unionjrnl":
     return <div>
       <h1>UNION web journal design </h1>
       <p>Helped artists
       </p>
-      <button onClick={() => transition("unionjrnl")}  id="tomlarch">To UNION journal </button>
       </div>;
   case "babymon":
     return <div>
       <h1>Baby monitoring device project</h1>
       <p>Done as a part of my senior engineering projects.
       </p>
-      <button onClick={() => transition("babymon")}  id="tomlarch">To Baby monitor </button>
       </div>;
   case "dropblocks":
     return <div>
@@ -403,7 +481,6 @@ function Projectlist(props) {
       <p>Implemented Dropblocks in resnet-50 according to <a href="https://arxiv.org/abs/1810.12890">this article</a>. 
       <a href="https://github.com/ArianaFreitag/cgml-midterm">Source code</a>.
       </p>
-      <button onClick={() => transition("dropblocks")}  id="tomlarch">To Drop blocks </button>
       </div>;
   default:
     return 0
@@ -418,14 +495,12 @@ function Aboutlist(props) {
       <p>
       I am Minyoung Na
       </p>
-      <button onClick={() => transition("mlarch")}  id="tomlarch">To MLARCH</button>
       </div>;
   case "about_school":
     return <div>
       <h1>Curriculum</h1>
       <p>Creating simple but effective visualization for the purpose of helping the bail project.
       </p>
-      <button onClick={() => transition("datasci")}  id="tomlarch">To Datasci </button>
       </div>;
 
   default:
@@ -433,29 +508,37 @@ function Aboutlist(props) {
   }
 }
 
- 
-function transition(pageurl){
-  zoomcontrol = true;
-
-  tween1 = new TWEEN.Tween(camera.position)
-  .to({ y:0,x:0,z: 200}, 2000) 
-  .easing(TWEEN.Easing.Quadratic.Out)
-
-  tween2 = new TWEEN.Tween(camera.position)
-  .to({ y:0,x:0,z:2.3}, 1000) 
-  .easing(TWEEN.Easing.Quadratic.Out)
-
-  tween = new TWEEN.Tween(camera.rotation)
-  .to({ y:0 }, 2000) 
-  .easing(TWEEN.Easing.Quadratic.Out)
-  .start(); 
-
-  tween1.chain(tween2)
-  
-  tween1.start();
-
-  setTimeout(function(){   window.location = pageurl; }, 3000);
-
+function Randomlist(props) {
+  switch ( props.name) { 
+  case "soundcloud":
+    return <div>
+      <h1>I do a little bit of music</h1>
+      <p>
+      I played a bit of piano when I was younger
+      </p>
+      </div>;
+  case "graphicdesign":
+    return <div>
+      <h1>Graphic design</h1>
+      <p>Some design stuff I learned to do as an engineer
+      </p>
+      </div>;
+  case "bideogame":
+    return <div>
+      <h1>Bideo game</h1>
+      <p>lol
+      </p>
+      </div>;
+  case "diary":
+    return <div>
+      <h1>Dear diary</h1>
+      <p>stuff
+      </p>
+      </div>;    
+  default:
+    return 0
+  }
 }
+ 
 
 export default Home;

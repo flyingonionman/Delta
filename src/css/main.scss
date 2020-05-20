@@ -104,10 +104,11 @@ container{
   }
   transition: margin 1s;
   #tomlarch{
-    display:inline;
-    padding:1%;
-    margin-top:3%;
-    margin-left:0;
+    display: inline;
+    padding: 1%;
+    margin-top: 3%;
+    margin-left: 0;
+    margin-right: 3%;
   }
   #cycle{
     display:inline;
@@ -124,7 +125,7 @@ container{
   font-family: 'Bahnschrift';
   bottom: 0;
   font-size: 1vw;
-  margin: 17% 50%;
+  margin: 20% 50%;
   width: 45%;
 }
 
@@ -169,4 +170,3 @@ container{
     outline: none;
     bottom: 0;
 }
-
