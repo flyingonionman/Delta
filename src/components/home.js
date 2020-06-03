@@ -31,7 +31,7 @@ var gzoom = false;
 var selector // Determines which cube it spins
 var project_list =["mlarch","datasci","unionjrnl","babymon","dropblocks"]
 var about_list = ["about_me","about_school"]
-var random_list= [ "soundcloud", "graphicdesign","bideogame","diary"]
+var random_list= [ "soundcloud", "graphicdesign"]
 //Camera views
 var project = false;
 var afterimagePass;
@@ -312,7 +312,7 @@ class Home extends React.Component {
 
     if (this.state.zoomedin_random) {
       selector = 3;
-      if( this.state.currrandom < 3){       this.setState({currrandom: this.state.currrandom+1})    }
+      if( this.state.currrandom < 1){       this.setState({currrandom: this.state.currrandom+1})    }
       else{  this.setState({currrandom: 0})  }
     } 
 
@@ -337,6 +337,8 @@ class Home extends React.Component {
   }
   
   transition = (pageurl) =>{
+    console.log(pageurl)
+
     zoomcontrol = true;
     this.setState({ zoomedin: false , zoomedin_about:false,zoomedin_random:false });
     gzoom = false;
@@ -357,21 +359,13 @@ class Home extends React.Component {
     tween1.chain(tween2)
     
     tween1.start();
-    
-    switch(pageurl) 
-    {
-      case 'mlarch':  setTimeout(function(){   window.location.href = "http://minyoungna.com/mlarch";  }, 3000);
-      case 'unionjnl':  setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);
-      case 'soundcloud':  setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);
-      case 'babymon':  setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);
+    if (pageurl == "unionjrnl") {     setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);  }
+    if (pageurl == "babymon") {       setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);  }
+    if (pageurl == "mlarch") {     setTimeout(function(){   window.location.href = "https://www.minyoungna.com/mlarch";  }, 3000);  }
+    if (pageurl == "datasci") {      setTimeout(function(){   window.location.href = "https://www.minyoungna.com/datasci";  }, 3000);  }
+    if (pageurl == "dropblocks") {   setTimeout(function(){   window.location.href = "https://github.com/ArianaFreitag/cgml-midterm";  }, 3000);  }
+    if (pageurl == "soundcloud") {   setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);  }
 
-      default :      setTimeout(function(){   window.location = pageurl; }, 3000);
-
-    }
-
-    
-  
-  
   }
   
   render() {
@@ -506,7 +500,6 @@ function Projectlist(props) {
     return <div>
       <h1>Drop Blocks</h1>
       <p>Implemented Dropblocks in resnet-50 according to <a href="https://arxiv.org/abs/1810.12890">[this article]</a>. 
-      <a href="https://github.com/ArianaFreitag/cgml-midterm">[Source code]</a>.
       </p>
       </div>;
   default:
@@ -550,18 +543,6 @@ function Randomlist(props) {
       <p>Some design stuff I learned to do as an engineer
       </p>
       </div>;
-  case "bideogame":
-    return <div>
-      <h1>Bideo game</h1>
-      <p>lol
-      </p>
-      </div>;
-  case "diary":
-    return <div>
-      <h1>Dear diary</h1>
-      <p>stuff
-      </p>
-      </div>;    
   default:
     return 0
   }
