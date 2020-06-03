@@ -370,7 +370,6 @@ class Home extends React.Component {
 
         <container className={  this.state.zoomedin_about ? 'aboutappear': 'hidden_left'}>
           <Aboutlist name={about_list[this.state.currabout]}></Aboutlist>
-          <button onClick={() => this.transition(String(about_list[this.state.currabout]))}  id="tomlarch">To {String(about_list[this.state.currabout])}</button>
           <button id="cycle" onClick={this.cycle}> Next</button>
 
         </container> 
