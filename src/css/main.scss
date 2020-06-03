@@ -165,10 +165,20 @@ container{
     background-color: transparent;
     color: white;
     /* margin-top: 0; */
-    font-size: 1.5vw;
+    font-size: 2vw;
     left: 0;
     outline: none;
-    bottom: 0;
+    transition: bottom .6s;
+}
+
+.return_appear{
+  bottom: 0;
+
+}
+
+.return_hidden{
+  bottom: -10%;
+
 }
 
 button{

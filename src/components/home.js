@@ -5,19 +5,22 @@ import * as THREE from "three";
 import { EffectComposer } from '../module/EffectComposer';
 import { UnrealBloomPass  } from '../module/UnrealBloomPass';
 import { RenderPass } from '../module/RenderPass';
+import { SVGLoader } from '../svg/SVGLoader.js';
 
 import { OrbitControls } from '../module/OrbitControls';
 import TWEEN from '@tweenjs/tween.js';
 
 import { Interaction } from 'three.interaction';
 
+//import SVG
 function importAll(r) {
-  let fontfiles = {};
-  r.keys().map((item, index) => { fontfiles[item.replace('./', '')] = r(item); });
-  return fontfiles;
+  let svgfiles = {};
+  r.keys().map((item, index) => { svgfiles[item.replace('./', '')] = r(item); });
+  return svgfiles;
 }
 
-const fontfiles = importAll(require.context('../font', false, /\.(json)$/));
+const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
+
 
 //Globals
 var camera, scene, renderer,controls,frameId,composer,raycaster;
@@ -42,9 +45,18 @@ bloomLayer.set( BLOOM_SCENE );
       
 var params_bloom  = {
   exposure: 1,
-  bloomStrength: 1.2,
+  bloomStrength: .7,
   bloomThreshold: 0,
-  bloomRadius: 1
+  bloomRadius: 1.2
+};
+
+//Prelim data for svg
+var guiData = {
+  currentURL: 'src/svg/Seminopoly.svg',
+  drawFillShapes: true,
+  drawStrokes: true,
+  fillShapesWireframe: false,
+  strokesWireframe: false
 };
 
 //text
@@ -78,12 +90,12 @@ class Home extends React.Component {
 
   return = () =>{
     tween = new TWEEN.Tween(camera.position)
-      .to({ x: 0 ,y:0 , z:35}, 1500) 
+      .to({ x:0 ,y:0 , z:37}, 1000) 
       .easing(TWEEN.Easing.Quadratic.Out)
       .start(); 
 
       tween = new TWEEN.Tween(camera.rotation)
-      .to({ x:0,y:0,z:0 }, 1500) 
+      .to({ x:0,y:0,z:0 }, 1000) 
       .easing(TWEEN.Easing.Quadratic.Out)
       .start(); 
     
@@ -175,7 +187,8 @@ class Home extends React.Component {
       1,
       1000
     )
-    camera.position.z = 35
+
+    camera.position.z = 37
     camera.lookAt( new THREE.Vector3(0,0,0) );
 
     // Lights
@@ -191,8 +204,8 @@ class Home extends React.Component {
     this.mount.appendChild(renderer.domElement)
 
     //ADD CONTROLS
-    //controls = new OrbitControls(camera,renderer.domElement );
-    //controls.update();
+    /* controls = new OrbitControls(camera,renderer.domElement );
+    controls.update(); */
 
     //ADD CUBE 
     var geometry = new THREE.BoxGeometry( 3, 3, 3 );
@@ -268,8 +281,18 @@ class Home extends React.Component {
     composer.addPass( renderScene );
     composer.addPass( bloomPass ); 
 
-    //cube interaction
-   
+    var banner_project  ={      x:-7,      y:9,      z:.2    }
+    var banner_about  ={      x:-17,      y:1,      z:.2    }
+    var banner_random  ={      x:5,      y:1,      z:.2    }
+
+    var project =svgfiles['main_projects.svg']
+    loadSVG(project,banner_project);
+
+    var about =svgfiles['main_about.svg']
+    loadSVG(about,banner_about);   
+    
+    var random =svgfiles['main_random.svg']
+    loadSVG(random,banner_random);   
   }
 
   cycle = () =>{
@@ -335,13 +358,17 @@ class Home extends React.Component {
     
     tween1.start();
     
-    if (pageurl == 'unionjrnl'){
-      setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);
-  
+    switch(pageurl) 
+    {
+      case 'unionjnl':  setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);
+      case 'soundcloud':  setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);
+      case 'babymon':  setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);
+
+      default :      setTimeout(function(){   window.location = pageurl; }, 3000);
+
     }
-    else{
-      setTimeout(function(){   window.location = pageurl; }, 3000);
-    }
+
+    
   
   
   }
@@ -381,7 +408,7 @@ class Home extends React.Component {
 
         </container> 
         
-        <button id="return" onClick={this.return}  >return</button>
+        <button className={  this.state.zoomedin || this.state.zoomedin_about || this.state.zoomedin_random ? 'return_appear': 'return_hidden'}  id="return" onClick={this.return}  >return</button>
 
       </div>    
        
@@ -477,8 +504,8 @@ function Projectlist(props) {
   case "dropblocks":
     return <div>
       <h1>Drop Blocks</h1>
-      <p>Implemented Dropblocks in resnet-50 according to <a href="https://arxiv.org/abs/1810.12890">this article</a>. 
-      <a href="https://github.com/ArianaFreitag/cgml-midterm">Source code</a>.
+      <p>Implemented Dropblocks in resnet-50 according to <a href="https://arxiv.org/abs/1810.12890">[this article]</a>. 
+      <a href="https://github.com/ArianaFreitag/cgml-midterm">[Source code]</a>.
       </p>
       </div>;
   default:
@@ -511,9 +538,9 @@ function Randomlist(props) {
   switch ( props.name) { 
   case "soundcloud":
     return <div>
-      <h1>I do a little bit of music</h1>
-      <p>
-      I played a bit of piano when I was younger
+      <h1>Music</h1>
+      <p> I make tunes on FL studio when I have time. If you don't expect anything it might sound bearable.
+
       </p>
       </div>;
   case "graphicdesign":
@@ -539,5 +566,88 @@ function Randomlist(props) {
   }
 }
  
+function loadSVG( file , svglocation) {
+  var loader = new SVGLoader();
 
+  loader.load( file, function ( data ) {
+      var paths = data.paths;
+      var group = new THREE.Group();
+      group.scale.multiplyScalar( 0.007);
+      group.position.x = svglocation.x;
+      group.position.z = svglocation.z;
+
+      group.position.y = svglocation.y;
+      group.scale.y *= 1;
+      group.rotation.y = 3.2;
+      group.rotation.z= 3.15;
+
+
+
+      for ( var i = 0; i < paths.length; i ++ ) {
+
+          var path = paths[ i ];
+          
+          var fillColor = path.userData.style.fill;
+          if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none' ) {
+
+              var material = new THREE.MeshBasicMaterial( {
+                  color: new THREE.Color().setStyle( fillColor ),
+                  opacity: path.userData.style.fillOpacity,
+                  transparent: path.userData.style.fillOpacity < 1,
+                  side: THREE.DoubleSide,
+                  depthWrite: false,
+                  wireframe: guiData.fillShapesWireframe
+              } );
+
+              var shapes = path.toShapes( true );
+
+              for ( var j = 0; j < shapes.length; j ++ ) {
+
+                  var shape = shapes[ j ];
+
+                  var geometry = new THREE.ShapeBufferGeometry( shape );
+                  var mesh = new THREE.Mesh( geometry, material );
+
+                  group.add( mesh );
+
+              }
+
+          }
+
+          var strokeColor = path.userData.style.stroke;
+
+          if ( guiData.drawStrokes && strokeColor !== undefined && strokeColor !== 'none' ) {
+
+              var material = new THREE.MeshBasicMaterial( {
+                  color: new THREE.Color().setStyle( strokeColor ),
+                  opacity: path.userData.style.strokeOpacity,
+                  transparent: path.userData.style.strokeOpacity < 1,
+                  side: THREE.DoubleSide,
+                  depthWrite: false,
+                  wireframe: guiData.strokesWireframe
+              } );
+
+              for ( var j = 0, jl = path.subPaths.length; j < jl; j ++ ) {
+
+                  var subPath = path.subPaths[ j ];
+
+                  var geometry = SVGLoader.pointsToStroke( subPath.getPoints(), path.userData.style );
+
+                  if ( geometry ) {
+
+                      var mesh = new THREE.Mesh( geometry, material );
+
+                      group.add( mesh );
+
+                  }
+
+              }
+
+          }
+
+      }
+      scene.add( group );
+
+} );
+}
 export default Home;
