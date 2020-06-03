@@ -365,6 +365,7 @@ class Home extends React.Component {
     if (pageurl == "datasci") {      setTimeout(function(){   window.location.href = "https://www.minyoungna.com/datasci";  }, 3000);  }
     if (pageurl == "dropblocks") {   setTimeout(function(){   window.location.href = "https://github.com/ArianaFreitag/cgml-midterm";  }, 3000);  }
     if (pageurl == "soundcloud") {   setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);  }
+    if (pageurl == "graphicdesign") {   setTimeout(function(){   window.location.href = "https://github.com/flyingonionman/Design-Portfolio";  }, 3000);  }
 
   }
   
@@ -374,7 +375,7 @@ class Home extends React.Component {
     <div className="App" >    
       <div className="navigation">
       <ul>
-        <li><a href="#contact">//A MINYOUNG NA WORKS//</a></li>
+        <li><a href="#contact">//A MINYOUNG NA WORKS//    Three.js + React</a></li>
       </ul>
 
       </div>
