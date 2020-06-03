@@ -360,6 +360,7 @@ class Home extends React.Component {
     
     switch(pageurl) 
     {
+      case 'mlarch':  setTimeout(function(){   window.location.href = "http://minyoungna.com/mlarch";  }, 3000);
       case 'unionjnl':  setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);
       case 'soundcloud':  setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);
       case 'babymon':  setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);
