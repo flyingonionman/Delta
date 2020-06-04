@@ -11,7 +11,7 @@ import { OrbitControls } from '../module/OrbitControls';
 import TWEEN from '@tweenjs/tween.js';
 
 import { Interaction } from 'three.interaction';
-
+import mypic from '../images/me.jpg'
 //import SVG
 function importAll(r) {
   let svgfiles = {};
@@ -375,7 +375,7 @@ class Home extends React.Component {
     <div className="App" >    
       <div className="navigation">
       <ul>
-        <li><a href="#contact">//A MINYOUNG NA WORKS//    Three.js + React</a></li>
+        <li><a href="#contact">//A MINYOUNG NA WORKS//    Three.js + React// Click on cubes !</a></li>
       </ul>
 
       </div>
@@ -514,14 +514,24 @@ function Aboutlist(props) {
     return <div>
       <h1>Who am I?</h1>
       <p>
-      I am Minyoung Na
+      I am Minyoung Na, a recent graduate of Cooper Union for the Advancement of Science and Art. 
+      I graduated with a bachelor of science degree with computer science as a minor. During my time in college, 
+      I took a variety of courses and engaged in multiple projects that not only made me a good engineer, but a good designer as well.
       </p>
+      <img className="mypic" src={mypic}></img>
       </div>;
   case "about_school":
     return <div>
       <h1>Curriculum</h1>
-      <p>Creating simple but effective visualization for the purpose of helping the bail project.
-      </p>
+      <p> ECE-471-1 : Machine Learning and architecture  </p>
+      <p> ECE-491-1 : Data science for social good  </p>
+      <p> EID-364-2 : Empathetic Robots  </p>
+      <p> ECE-371-1 : Data Visualization  </p>
+      <p> ECE-464-1 : Databases  </p>
+      <p> ECE-469-1 : Artificial Intelligence  </p>
+      <p> ECE-471-1 : Machine Learning  </p>
+      <p> ECE-366-1 : Software Engg & Lrg Sys Design  </p>
+
       </div>;
 
   default:
