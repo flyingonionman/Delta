@@ -20,16 +20,14 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-html, body {
-  .App{
 
-  margin: 0; height: 100%; overflow: hidden;
-    width:100%;
-  }
 
- 
+.App{ body {
+  overflow: hidden;
+  margin: 0; height: 100%; 
+  width:100%;
 
-}
+}}
 
 
 .App{
@@ -47,7 +45,7 @@ html, body {
   }
 
   p{
-    font-size:.9vw;
+    font-size:1vw;
   }
   a{
     text-decoration: none;
@@ -121,12 +119,12 @@ container{
 
 .projectappear{
   position: absolute;
-  color: white;
-  font-family: 'Bahnschrift';
-  bottom: 0;
-  font-size: 1vw;
-  margin: 20% 62%;
-  width: 32%;
+    color: white;
+    font-family: 'Bahnschrift';
+    bottom: 0;
+    font-size: 1vw;
+    margin: 18% 58%;
+    width: 32%;
 }
 
 .aboutappear{
@@ -136,7 +134,7 @@ container{
   bottom: 0;
   font-size: 1vw;
   margin: 10% 10%;
-  width: 36%;
+  width: 32%;
 }
 
 .hidden_right{
@@ -190,3 +188,4 @@ button{
     width:36%;
   
 }
+

@@ -1,6 +1,5 @@
 import React from 'react';
 import '../css/main.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import * as THREE from "three";
 import { EffectComposer } from '../module/EffectComposer';
 import { UnrealBloomPass  } from '../module/UnrealBloomPass';
@@ -112,18 +111,17 @@ class Home extends React.Component {
   
     if ( intersects.length > 0 ) {
       var id = intersects[0].object.name
-      console.log(id)
       switch (id){
         case "projects" :{
         gzoom = true;
         this.setState({ zoomedin: true });
         tween = new TWEEN.Tween(camera.position)
-        .to({ x: 3 ,y:5 , z:15}, 800) 
+        .to({ x: -3 ,y:3 , z:15}, 800) 
         .easing(TWEEN.Easing.Quadratic.Out)
         .start(); 
   
         tween = new TWEEN.Tween(camera.rotation)
-        .to({ x:0,y:0,z:0}, 1500) 
+        .to({ x:.1,y:-.4,z:0}, 800) 
         .easing(TWEEN.Easing.Quadratic.Out)
         .start(); 
        
@@ -293,6 +291,9 @@ class Home extends React.Component {
     
     var random =svgfiles['main_random.svg']
     loadSVG(random,banner_random);   
+
+    
+
   }
 
   cycle = () =>{
@@ -337,7 +338,9 @@ class Home extends React.Component {
   }
   
   transition = (pageurl) =>{
-    console.log(pageurl)
+    if (pageurl == "dropblocks") {  window.open( "https://github.com/ArianaFreitag/cgml-midterm", '_blank') ;  return; }
+    if (pageurl == "unionjrnl") {    window.open(  "http://unionjournal.space/", '_blank' ) ; return;  }
+
 
     zoomcontrol = true;
     this.setState({ zoomedin: false , zoomedin_about:false,zoomedin_random:false });
@@ -359,11 +362,9 @@ class Home extends React.Component {
     tween1.chain(tween2)
     
     tween1.start();
-    if (pageurl == "unionjrnl") {     setTimeout(function(){   window.location.href = "http://unionjournal.space/";  }, 3000);  }
     if (pageurl == "babymon") {       setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);  }
     if (pageurl == "mlarch") {     setTimeout(function(){   window.location.href = "https://www.minyoungna.com/mlarch";  }, 3000);  }
     if (pageurl == "datasci") {      setTimeout(function(){   window.location.href = "https://www.minyoungna.com/datasci";  }, 3000);  }
-    if (pageurl == "dropblocks") {   setTimeout(function(){   window.location.href = "https://github.com/ArianaFreitag/cgml-midterm";  }, 3000);  }
     if (pageurl == "soundcloud") {   setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);  }
     if (pageurl == "graphicdesign") {   setTimeout(function(){   window.location.href = "https://github.com/flyingonionman/Design-Portfolio";  }, 3000);  }
 
@@ -386,8 +387,8 @@ class Home extends React.Component {
         <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
           <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">Learn More</button>
-          <button id="cycle" onClick={this.cycle}> Next</button>
           {/* Have the buttons go here so that I can make descriptions dissapear when they are clicked */}
+          <button id="cycle" onClick={this.cycle}> Next</button>
 
         </container> 
 
@@ -405,6 +406,8 @@ class Home extends React.Component {
         </container> 
         
         <button className={  this.state.zoomedin || this.state.zoomedin_about || this.state.zoomedin_random ? 'return_appear': 'return_hidden'}  id="return" onClick={this.return}  >return</button>
+
+
 
       </div>    
        

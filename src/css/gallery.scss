@@ -20,15 +20,13 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-html,body{
-  background-color: black;
-  height:100%;
-  margin:0;
-  overflow: auto;
-}
+
 .gallery{
 
     html,body{
+      overflow: auto;
+      height:100%;
+      background-color: black;
 
     margin:0;
     .container-fluid{
