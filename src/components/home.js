@@ -118,12 +118,12 @@ class Home extends React.Component {
         gzoom = true;
         this.setState({ zoomedin: true });
         tween = new TWEEN.Tween(camera.position)
-        .to({ x: -12.5 ,y:-3 , z:12}, 1500) 
+        .to({ x: 3 ,y:5 , z:15}, 800) 
         .easing(TWEEN.Easing.Quadratic.Out)
         .start(); 
   
         tween = new TWEEN.Tween(camera.rotation)
-        .to({ x:.8,y:-1,z:.7}, 1500) 
+        .to({ x:0,y:0,z:0}, 1500) 
         .easing(TWEEN.Easing.Quadratic.Out)
         .start(); 
        
@@ -224,7 +224,7 @@ class Home extends React.Component {
     cube[3] = new THREE.Mesh( geometry2, material3 );
     cube[3].material.emissive.setHSL( .6, .8, .1);
 
-    cube[1].position.y = 4;
+    cube[1].position.y = 4.25;
     cube[2].position.x = -10;    cube[2].position.y = -3;
     cube[3].position.x = 10;    cube[3].position.y = -3;
 
@@ -375,7 +375,7 @@ class Home extends React.Component {
     <div className="App" >    
       <div className="navigation">
       <ul>
-        <li><a href="#contact">//A MINYOUNG NA WORKS//    Three.js + React// Click on cubes !</a></li>
+        <li><a>MINYOUNG NA // minyoungwork1997@gmail.com //</a><a href="https://www.minyoungna.com">Return Home</a></li>
       </ul>
 
       </div>
@@ -385,7 +385,7 @@ class Home extends React.Component {
 
         <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
-          <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">To {String(project_list[this.state.currproj])}</button>
+          <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">Learn More</button>
           <button id="cycle" onClick={this.cycle}> Next</button>
           {/* Have the buttons go here so that I can make descriptions dissapear when they are clicked */}
 
@@ -399,7 +399,7 @@ class Home extends React.Component {
 
         <container className={  this.state.zoomedin_random ? 'projectappear': 'hidden_right'}>
           <Randomlist name={random_list[this.state.currrandom]}></Randomlist>
-          <button onClick={() => this.transition(String(random_list[this.state.currrandom]))}  id="tomlarch">To {String(random_list[this.state.currrandom])}</button>
+          <button onClick={() => this.transition(String(random_list[this.state.currrandom]))}  id="tomlarch">Learn More</button>
           <button id="cycle" onClick={this.cycle}> Next</button>
 
         </container> 
@@ -544,7 +544,7 @@ function Randomlist(props) {
   case "soundcloud":
     return <div>
       <h1>Music</h1>
-      <p> I make tunes on FL studio when I have time. If you don't expect anything it might sound bearable.
+      <p> I make tunes on FL studio when I have time.
 
       </p>
       </div>;
