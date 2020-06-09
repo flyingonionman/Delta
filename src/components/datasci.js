@@ -311,13 +311,14 @@ class Datasci extends React.Component {
   return (
 
     <div className="datasci" >    
-        <div id="c" ref={ref => (this.mount = ref)} />
+        <ul>
+          <li><a>MINYOUNG NA // minyoungwork1997@gmail.com //</a><a href="https://www.minyoungna.com">Return Home</a></li>
+        </ul>
+      <div id="c" ref={ref => (this.mount = ref)} />
      
-       <div className="information">
-    
-            <Describe name={this.state.descriptor} ></Describe>
-
-        </div> 
+      <div className="information">
+        <Describe name={this.state.descriptor} ></Describe>
+      </div> 
 
         <div id="AR" className= { flag == 'finished' ? 'appear' : 'hiddenright'}>black male avg bail bond: 24971.05 (41 individuals)</div>
         <div id="NY" className= { flag == 'finished' ? 'appear' : 'hiddenright'}>black male avg bail bond: 85799.36 (617 individuals)</div>

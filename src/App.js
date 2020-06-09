@@ -12,7 +12,7 @@ import Home from './components/home'
 import Mlarch from './components/mlarch';
 import MlarchGallery from './components/mlarch_gallery';
 import Datasci from './components/datasci';
-import Bideo from './components/bideogame';
+import Graphic from './components/design_gallery';
 
 import {isMobile} from 'react-device-detect';
 
@@ -43,6 +43,10 @@ class App extends React.Component {
               <Datasci/>
             </Route>
 
+            <Route path="/graphicdesign" >
+              
+              <Graphic/>
+            </Route>
             {/* <Route path="/bideogames" >
               <Bideo/>
             </Route> */}

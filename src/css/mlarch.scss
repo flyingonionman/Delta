@@ -146,6 +146,18 @@ html, body {
     text-decoration: none;
     color:white;
   }
+
+  ul{
+    position:fixed;
+    margin:2%;
+    list-style:none;
+    right:0;
+  }
+
+  ul a {
+    color:black;
+  }
+
 }
 
 #canvas{

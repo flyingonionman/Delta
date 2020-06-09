@@ -213,6 +213,12 @@ class Mlarch extends React.Component {
   return (
 
     <div className="Mlarch_intro" >    
+            <ul>
+              <li><a>MINYOUNG NA // minyoungwork1997@gmail.com //</a><a href="https://www.minyoungna.com">Return Home</a></li>
+            </ul>
+
+          
+
           <div id="c" ref={ref => (this.mount = ref)} />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider" orient="vertical" />
           <input className="controller" type="range" min="0" max="10" step="0.1" id="slider2" orient="vertical" />

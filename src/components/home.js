@@ -186,9 +186,20 @@ class Home extends React.Component {
       1000
     )
 
-    camera.position.z = 37
+    //Zoom in
+    camera.position.z = 240
     camera.lookAt( new THREE.Vector3(0,0,0) );
 
+    setTimeout(function(){
+      tween = new TWEEN.Tween(camera.position)
+      .to({ x: 0 ,y: 0 , z:37}, 1000) 
+      .easing(TWEEN.Easing.Cubic.InOut
+        )
+      .start(); 
+    } , 1000)
+
+    
+    
     // Lights
     scene.add( new THREE.HemisphereLight( 0x443333, 0x111122 ) );
 
