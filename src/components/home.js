@@ -29,7 +29,7 @@ var tween1, tween2;
 var gzoom = false;
 var selector // Determines which cube it spins
 var project_list =["mlarch","datasci","unionjrnl","babymon","dropblocks"]
-var about_list = ["about_me","about_school"]
+var about_list = ["about_me","about_school", "about_site"]
 var random_list= [ "soundcloud", "graphicdesign"]
 //Camera views
 var project = false;
@@ -307,6 +307,7 @@ class Home extends React.Component {
 
   }
 
+  // Handles cycling of panels within each section
   cycle = () =>{
     selector = 1;
     if (this.state.zoomedin) {
@@ -318,7 +319,7 @@ class Home extends React.Component {
     if (this.state.zoomedin_about) {
       selector = 2;
 
-      if( this.state.currabout < 1){       this.setState({currabout: this.state.currabout+1})    }
+      if( this.state.currabout < 2){       this.setState({currabout: this.state.currabout+1})    }
       else{  this.setState({currabout: 0})  }
     } 
 
@@ -535,18 +536,34 @@ function Aboutlist(props) {
       <img className="mypic" src={mypic}></img>
       </div>;
   case "about_school":
-    return <div>
+    return <div id="curriculum">
       <h1>Curriculum</h1>
-      <p> ECE-471-1 : Machine Learning and architecture  </p>
-      <p> ECE-491-1 : Data science for social good  </p>
-      <p> EID-364-2 : Empathetic Robots  </p>
-      <p> ECE-371-1 : Data Visualization  </p>
-      <p> ECE-464-1 : Databases  </p>
-      <p> ECE-469-1 : Artificial Intelligence  </p>
-      <p> ECE-471-1 : Machine Learning  </p>
-      <p> ECE-366-1 : Software Engg & Lrg Sys Design  </p>
+        <p> ECE-471-1 : Machine Learning and architecture  </p>
+        <p> ECE-491-1 : Data science for social good  </p>
+        <p> EID-364-2 : Empathetic Robots  </p>
+        <p> ECE-371-1 : Data Visualization  </p>
+        <p> ECE-464-1 : Databases  </p>
+        <p> ECE-469-1 : Artificial Intelligence  </p>
+        <p> ECE-471-1 : Machine Learning  </p>
+        <p> ECE-366-1 : Software Engg & Lrg Sys Design  </p>
 
       </div>;
+  case "about_site":
+    return <div id="site_description">
+      <h1>Why make this website?</h1>
+      <p>
+      Software engineering students and graduates, as a testament to their abilities, make portfolio websites 
+      that display their abilities. At once, it is a good metric to show that the person is capable of doing 
+      a basic front-end project. However, all too often, we see the same old react / bootstrap formula that 
+      makes the website look almost identical. There is nothing wrong with such a convention, but it can 
+      be limiting especially if the individual is interested in web development. I used three.js, a 3D javascript 
+      library, to not only demonstrate my capacity in developing basic front-end features,but also my creative 
+      nature and understanding of different frameworks at hand.
+
+
+</p>
+      </div>;
+
 
   default:
     return 0

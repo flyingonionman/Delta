@@ -128,13 +128,26 @@ container{
 }
 
 .aboutappear{
-  position: absolute;
+  /* position: absolute;
   color: white;
   font-family: 'Bahnschrift';
   bottom: 0;
   font-size: 1vw;
   margin: 10% 10%;
-  width: 32%;
+  width: 32%; */
+
+  position: absolute;
+  color: white;
+  font-family: 'Bahnschrift';
+  bottom: 0;
+  font-size: 1vw;
+  height: 80%;
+  margin: 7% 6%;
+  width: 37%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
 }
 
 .hidden_right{
@@ -148,10 +161,15 @@ container{
 
 .hidden_left{
   position: absolute;
-  margin: 17% -38%;
+  margin: 6% -38%;
   transition: margin .8s;
-  width: 36%;
+  width: 37%;
   bottom: 0;
+  height: 80%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
   color: white;
 }
 
@@ -189,3 +207,11 @@ button{
   
 }
 
+
+#curriculum{
+  height: 65%;
+}
+
+#site_description{
+  height: 70%;
+}
