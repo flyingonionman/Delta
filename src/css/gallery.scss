@@ -20,13 +20,16 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
+html,body{
+  background-color: black;
+
+}
 
 .gallery{
 
     html,body{
       overflow: auto;
       height:100%;
-      background-color: black;
 
     margin:0;
     .container-fluid{
@@ -40,6 +43,18 @@ time, mark, audio, video {
       
     }
   }
+
+  ul{
+    position:fixed;
+    margin: -4% 1%;    
+    list-style:none;
+    right:0;
+  }
+
+  ul a {
+    color:white;
+  }
+
 }
 
 .col{

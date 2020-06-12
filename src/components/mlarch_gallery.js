@@ -48,6 +48,9 @@ class Mlarch extends React.Component {
   render() {
     return (
       <div className ="gallery">
+        <ul>
+              <li><a>MINYOUNG NA // minyoungwork1997@gmail.com //</a><a href="https://www.minyoungna.com">Return Home</a></li>
+        </ul>
         <Container fluid> 
           <Row>
             <Col><img  onClick={() => this.enlarge(1)} src={images["A"+1+".png"]}/></Col>
