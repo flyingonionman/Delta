@@ -531,7 +531,8 @@ function Aboutlist(props) {
       <p>
       I am Minyoung Na, a recent graduate of Cooper Union for the Advancement of Science and Art. 
       I graduated with a bachelor of science degree with computer science as a minor. During my time in college, 
-      I took a variety of courses and engaged in multiple projects that not only made me a good engineer, but a good designer as well.
+      I took a variety of courses and engaged in multiple projects that not only made me a web developer, but also an
+      exellent UI designer.
       </p>
       <img className="mypic" src={mypic}></img>
       </div>;
