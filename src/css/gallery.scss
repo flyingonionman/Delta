@@ -45,12 +45,18 @@ html,body{
   }
 
   ul{
-    position:fixed;
-    margin: -4% 2%;    
-    list-style:none;
-    right:0;
+    position: fixed;
+    margin: -4% 2%;
+    list-style: none;
+    right: 0;
+    width:32%;
+    z-index: 100;
+    background-color: black;
   }
 
+  li{
+    padding:1%;
+  }
   ul a {
     color:white;
   }

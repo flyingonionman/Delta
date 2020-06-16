@@ -503,7 +503,8 @@ function Projectlist(props) {
   case "unionjrnl":
     return <div>
       <h1>UNION web journal design </h1>
-      <p>Helped artists
+      <p>Collaborated with artists on a web page for the school journal, the UNION.
+          Used HTML and JQuery to inact static images into an interactive webpage
       </p>
       </div>;
   case "babymon":

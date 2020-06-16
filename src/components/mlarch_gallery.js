@@ -18,6 +18,7 @@ function importAll(r) {
 
 
 const images = importAll(require.context('../images', false, /\.(png|jpe?g|svg|gif)$/));
+const gifs = [36,37,38,44,45,47,54,56]
 
 
 class Mlarch extends React.Component {
@@ -45,137 +46,78 @@ class Mlarch extends React.Component {
     }
   }
 
+  Lister(row) {
+    const listItems = row.map((number) =>
+        this.gifcheck(number)
+    );
+    return (
+      <>{listItems}</>
+    );
+  }
+
+  Grider(grid){
+    const grided = grid.map((select) =>
+        <Row>{this.Lister(select)}</Row>
+    );
+    return (
+      <>{grided}</>
+    );
+  }
+  
+  gifcheck(num){
+    if (gifs.includes(num)){
+      return(
+        <Col><img key={num.toString()}  onClick={() => this.enlarge(num)} src={images["A"+num+".gif"]}/></Col>
+      )
+    }
+    else{
+      return(
+        <Col><img key={num.toString()}  onClick={() => this.enlarge(num)} src={images["A"+num+".png"]}/></Col>
+      )
+    }
+  }
+  
+
+
   render() {
+    const first_row = [1,2,3,4,5,6,7,8]
+    const second_row = [9,10,11,12,13,14,15,16]
+    const third_row = [17,18,19,20,21,22,23,24]
+    const fourth_row = [25,26,27,28,29,30,31,32]
+    const fifth_row = [34,35,36,37,38,39,40,41]
+    const sixth_row = [42,43,44,45,46,47,48,49]
+    const seventh_row = [50,51,54,56,100,100,100,100]
+    const eighth_row = [52,53,55,100,100,100,100,100]
+    const extra = [33]
+
+    const grid = [first_row,second_row,third_row,fourth_row,extra,fifth_row,sixth_row,seventh_row,eighth_row]
     return (
       <div className ="gallery">
         <ul>
               <li><a>MINYOUNG NA // minyoungwork1997@gmail.com //</a><a href="https://www.minyoungna.com">Return Home</a></li>
         </ul>
         <Container fluid> 
-          <Row>
-            <Col><img  onClick={() => this.enlarge(1)} src={images["A"+1+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(2)} src={images["A"+2+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(3)} src={images["A"+3+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(4)}src={images["A"+4+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(5)}src={images["A"+5+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(6)}src={images["A"+6+".png"]}/></Col>
-            <Col></Col>
-            <Col><img  onClick={() => this.enlarge(8)}src={images["A"+8+".png"]}/></Col>
-          </Row>
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(9)} src={images["A"+9+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(10)} src={images["A"+10+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(11)} src={images["A"+11+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(12)}src={images["A"+12+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(13)}src={images["A"+13+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(14)}src={images["A"+14+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(15)}src={images["A"+15+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(16)}src={images["A"+16+".png"]}/></Col>
-          </Row>
-
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(17)} src={images["A"+17+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(18)} src={images["A"+18+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(19)} src={images["A"+19+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(20)}src={images["A"+20+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(21)}src={images["A"+21+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(22)}src={images["A"+22+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(23)}src={images["A"+23+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(24)}src={images["A"+24+".png"]}/></Col>
-          </Row>
-
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(25)} src={images["A"+25+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(26)} src={images["A"+26+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(27)} src={images["A"+27+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(28)}src={images["A"+28+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(29)}src={images["A"+29+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(30)}src={images["A"+30+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(31)}src={images["A"+31+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(32)}src={images["A"+32+".png"]}/></Col>
-          </Row>
-
-          <Row>
-           <Col><img  onClick={() => this.enlarge(33)} src={images["A"+33+".png"]}/></Col>
-
-          </Row>
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(34)} src={images["A"+34+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(35)} src={images["A"+35+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(36)} src={images["A"+36+".gif"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(37)}src={images["A"+37+".gif"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(39)}src={images["A"+39+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(38)}src={images["A"+38+".gif"]}/></Col>
-
-            <Col><img onClick={() => this.enlarge(40)}src={images["A"+40+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(41)}src={images["A"+41+".png"]}/></Col>
-          </Row>
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(42)} src={images["A"+42+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(43)} src={images["A"+43+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(44)} src={images["A"+44+".gif"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(45)}src={images["A"+45+".gif"]}/></Col>
-            <Col><img onClick={() => this.enlarge(46)}src={images["A"+46+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(47)}src={images["A"+47+".gif"]}/></Col>  
-            <Col><img onClick={() => this.enlarge(48)}src={images["A"+48+".png"]}/></Col>
-            <Col><img onClick={() => this.enlarge(49)}src={images["A"+49+".png"]}/></Col>
-          </Row>
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(50)} src={images["A"+50+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(51)} src={images["A"+51+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(54)} src={images["A"+54+".gif"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(56)} src={images["A"+56+".gif"]}/></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-          </Row>
-
-          <Row>
-            <Col><img  onClick={() => this.enlarge(52)} src={images["A"+52+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(53)} src={images["A"+53+".png"]}/></Col>
-            <Col><img  onClick={() => this.enlarge(55)} src={images["A"+55+".gif"]}/></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-            <Col></Col>
-          </Row>
-
-
+          {this.Grider(grid)}
         </Container>
 
         <div className={  this.state.isActive ? 'imgenlarge': 'hidden-left'}> 
-            <p className={"description"}>
+          <p className={"description"}>
               <Welcome name={this.state.chosenimg} ></Welcome>
           </p>
-
         </div>
         
         <div className={  this.state.isActive ? 'blurb': 'hidden-right'}> 
             <p className={"description"}>
               <Describe name={this.state.chosenimg} ></Describe>
-
-
-          </p>
-          <button  onClick={this.enlarge}  >return</button>
-
+            </p>
+            <button  onClick={this.enlarge}  >return</button>
         </div>
-       {/*  <button id="return"><Link  style={{ textDecoration: 'none' , color:'black'}} to="/mlarch">Go back</Link></button> */}
-
       </div>
     );
   }
 }
 
 function Describe(props){
-  console.log(props.name)
 
     switch(props.name) {
       case 1: return <p>AI-Progettazione an homage to the simple instructions and constructions of Enzo Mari.</p>
