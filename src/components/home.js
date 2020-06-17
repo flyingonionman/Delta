@@ -497,7 +497,13 @@ function Projectlist(props) {
   case "datasci":
     return <div>
       <h1>Data science for social good</h1>
-      <p>Creating simple but effective visualization for the purpose of helping the bail project.
+      <p>Creating simple but effective visualization for the purpose of helping the bail project. The current bail system was shaped 
+        under the Bail Reform Act of 1966 when the political climate favored the detention of all defendants.
+        The bail system has been viewed negatively by the public as it can exploit minorities and the poor. 
+        One of our initial goals was to build an ontology given these datasets, and to that end categorizing the disparate State-level penal codes 
+        into a National scheme such that we can draw comparisons across states in a more consistent manner. This is one of the attempts
+        to visually represent that ontology.
+
       </p>
       </div>;
   case "unionjrnl":
@@ -510,7 +516,13 @@ function Projectlist(props) {
   case "babymon":
     return <div>
       <h1>Baby monitoring device project</h1>
-      <p>Done as a part of my senior engineering projects.
+      <p>Our project is a home automation system that detects a baby’s motion in a crib, and sends notifications to 
+        the guardians' phones when the baby is about to crawl out. Raspberry Pi, connected to the camera, upon 
+        detecting motion of a baby that’s large enough to be interpreted as an irregularity ( baby stepped out of the 
+        crib, is shaking, etc.), would notify an app installed on a smartphone. The user will have an option to 
+        respond to the alarm on the phone and view the baby through the phone. If the user sees that it was a 
+        false alarm, they can simply turn off the notification on the app. Users will be able to access the 
+        stream at any time and change options according to their needs.
       </p>
       </div>;
   case "dropblocks":

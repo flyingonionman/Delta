@@ -104,14 +104,14 @@ container{
   #tomlarch{
     display: inline;
     padding: 1%;
-    margin-top: 3%;
+    margin-bottom: 3%;
     margin-left: 0;
     margin-right: 3%;
   }
   #cycle{
     display:inline;
       padding:1%;
-      margin-top:3%;
+      margin-bottom:3%;
       margin-left:0;
 
   }
@@ -119,12 +119,18 @@ container{
 
 .projectappear{
   position: absolute;
-    color: white;
-    font-family: 'Bahnschrift';
-    bottom: 0;
-    font-size: 1vw;
-    margin: 18% 58%;
-    width: 32%;
+  color: white;
+  font-family: 'Bahnschrift';
+  bottom: 0;
+  font-size: 1vw;
+  height: 80%;
+  margin: 5% 6%;
+  width: 37%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column; 
+  right:0
 }
 
 .aboutappear{
@@ -142,7 +148,7 @@ container{
   bottom: 0;
   font-size: 1vw;
   height: 80%;
-  margin: 7% 6%;
+  margin: 5% 6%;
   width: 37%;
   justify-content: flex-end;
   align-items: flex-start;
@@ -152,16 +158,25 @@ container{
 
 .hidden_right{
   position: absolute;
-  margin: 15% 100%;
-  transition: margin .8s;
-  width: 32%;
-  bottom: 0;
   color: white;
+  font-family: 'Bahnschrift';
+  bottom: 0;
+  font-size: 1vw;
+  height: 80%;
+  margin: 5% -50%;
+  width: 37%;
+  justify-content: flex-end;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column; 
+  
+  right: 0;
+
 }
 
 .hidden_left{
   position: absolute;
-  margin: 6% -38%;
+  margin: 5% -38%;
   transition: margin .8s;
   width: 37%;
   bottom: 0;
@@ -203,7 +218,7 @@ button{
 
 .mypic{
     margin:3% 0%;
-    width:36%;
+    width:47%;
   
 }
 
