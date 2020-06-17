@@ -509,8 +509,9 @@ function Projectlist(props) {
   case "unionjrnl":
     return <div>
       <h1>UNION web journal design </h1>
-      <p>Collaborated with artists on a web page for the school journal, the UNION.
-          Used HTML and JQuery to inact static images into an interactive webpage
+      <p>UNION is an interdisciplinary journal for art and literature run by the students of The Cooper Union. 
+        I Collaborated with artists on a web page for our first digital only issue.
+           IUsed HTML and JQuery to transform static images into an interactive webpage.
       </p>
       </div>;
   case "babymon":
@@ -539,7 +540,7 @@ function Projectlist(props) {
 function Aboutlist(props) {
   switch ( props.name) { 
   case "about_me":
-    return <div>
+    return <div className="aboutlist">
       <h1>Who am I?</h1>
       <p>
       I am Minyoung Na, a recent graduate of Cooper Union for the Advancement of Science and Art. 
@@ -550,7 +551,7 @@ function Aboutlist(props) {
       <img className="mypic" src={mypic}></img>
       </div>;
   case "about_school":
-    return <div id="curriculum">
+    return <div className="aboutlist" id="curriculum">
       <h1>Curriculum</h1>
         <p> ECE-471-1 : Machine Learning and architecture  </p>
         <p> ECE-491-1 : Data science for social good  </p>
@@ -563,7 +564,7 @@ function Aboutlist(props) {
 
       </div>;
   case "about_site":
-    return <div id="site_description">
+    return <div className="aboutlist" id="site_description">
       <h1>Why make this website?</h1>
       <p>
       Software engineering students and graduates, as a testament to their abilities, make portfolio websites 
