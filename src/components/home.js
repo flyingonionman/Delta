@@ -28,7 +28,7 @@ var tween;
 var tween1, tween2;
 var gzoom = false;
 var selector // Determines which cube it spins
-var project_list =["mlarch","datasci","unionjrnl","babymon","dropblocks"]
+var project_list =["pied","mlarch","datasci","unionjrnl","babymon","dropblocks"]
 var about_list = ["about_me","about_school", "about_site"]
 var random_list= [ "soundcloud", "graphicdesign"]
 //Camera views
@@ -312,7 +312,7 @@ class Home extends React.Component {
     selector = 1;
     if (this.state.zoomedin) {
       selector = 1;
-      if( this.state.currproj < 4){       this.setState({currproj: this.state.currproj+1})    }
+      if( this.state.currproj < 5){       this.setState({currproj: this.state.currproj+1})    }
       else{  this.setState({currproj: 0})  }
     } 
 
@@ -374,6 +374,7 @@ class Home extends React.Component {
     tween1.chain(tween2)
     
     tween1.start();
+    if (pageurl == "pied") {       setTimeout(function(){   window.location.href = "https://www.piedpaper.net";  }, 3000);  }
     if (pageurl == "babymon") {       setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);  }
     if (pageurl == "mlarch") {     setTimeout(function(){   window.location.href = "https://www.minyoungna.com/mlarch";  }, 3000);  }
     if (pageurl == "datasci") {      setTimeout(function(){   window.location.href = "https://www.minyoungna.com/datasci";  }, 3000);  }
@@ -486,6 +487,17 @@ function onDocumentMouseMove( event ) {
 
 function Projectlist(props) {
   switch ( props.name) { 
+  case "pied":
+    return <div>
+      <h1>Pied Paper, ML based news aggregator.</h1>
+      <p>
+        Our project is a truth-based news aggregator. With the rise of smaller, internet-based news publications, and political value in controlling 
+        the spread of information, fake news has become a genuine problem. Pied Paper seeks to provide a clearer view of online news, using 
+        real news articles scraped from the web. Our website aggregates news from various media sites, and uses a PyTorch-based neural net 
+        model to classify articles as fake or real. This model is trained on a fake/real news dataset obtained from Kaggle. 
+        The model’s prediction is shown to the user, and user input is also taken to measure users’ agreement with the model. Articles can be sorted by genre and date.
+      </p>
+      </div>;
   case "mlarch":
     return <div>
       <h1>Machine learning with architecture</h1>
