@@ -9,7 +9,6 @@ import {
 } from "react-router-dom";
 import Home from './components/home'
 
-import Mlarch from './components/mlarch';
 import MlarchGallery from './components/mlarch_gallery';
 import Datasci from './components/datasci';
 import Graphic from './components/design_gallery';
@@ -28,10 +27,7 @@ class App extends React.Component {
             <Route exact path="/" > 
               <Home/>
             </Route>
-            <Route path="/mlarch" >
 
-              <Mlarch/>
-            </Route>
 
             <Route path="/mlarch_gallery" >
               

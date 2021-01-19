@@ -10,7 +10,6 @@ import { OrbitControls } from '../module/OrbitControls';
 import TWEEN from '@tweenjs/tween.js';
 
 import { Interaction } from 'three.interaction';
-import mypic from '../images/me.jpg'
 //import SVG
 function importAll(r) {
   let svgfiles = {};
@@ -29,8 +28,6 @@ var tween1, tween2;
 var gzoom = false;
 var selector // Determines which cube it spins
 var project_list =["pied","mlarch","datasci","unionjrnl","babymon","dropblocks"]
-var about_list = ["about_me","about_school", "about_site"]
-var random_list= [ "soundcloud", "graphicdesign"]
 //Camera views
 var project = false;
 var afterimagePass;
@@ -58,8 +55,6 @@ var guiData = {
   strokesWireframe: false
 };
 
-//text
-var text_materials, textMesh;
 
 //mouse movement
 var mouse = new THREE.Vector2(), INTERSECTED;
@@ -68,13 +63,10 @@ class Home extends React.Component {
     super(props);
     this.state = { 
       zoomedin: zoomcontrol ,
-      zoomedin_about: zoomcontrol ,
-      zoomedin_random:zoomcontrol,
-      currabout:0,
       currproj: 0,
-      currrandom:0
     };
   }
+
   componentDidMount(){
     this.init();
     animstart();
@@ -100,7 +92,7 @@ class Home extends React.Component {
     
       cube[1].material.emissive.setHSL( .1, .8, .2);
 
-    this.setState({ zoomedin: false , zoomedin_about:false, zoomedin_random:false });
+    this.setState({ zoomedin: false });
     gzoom = false;
   }
 
@@ -111,66 +103,21 @@ class Home extends React.Component {
   
     if ( intersects.length > 0 ) {
       var id = intersects[0].object.name
-      switch (id){
-        case "projects" :{
-        gzoom = true;
-        this.setState({ zoomedin: true });
-        tween = new TWEEN.Tween(camera.position)
-        .to({ x: -3 ,y:3 , z:15}, 800) 
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .start(); 
-  
-        tween = new TWEEN.Tween(camera.rotation)
-        .to({ x:.1,y:-.4,z:0}, 800) 
-        .easing(TWEEN.Easing.Quadratic.Out)
-        .start(); 
-       
-  
-        
-        break;
-        }
-        case "about" :{
-          gzoom = true;
-          this.setState({ zoomedin_about: true });
-          tween = new TWEEN.Tween(camera.position)
-          .to({ x: -2 ,y:-3 , z:8.5}, 1500) 
-          .easing(TWEEN.Easing.Quadratic.Out)
-          .start(); 
-          
-          tween = new TWEEN.Tween(camera.rotation)
-          .to({ y:1 }, 1500) 
-          .easing(TWEEN.Easing.Quadratic.Out)
-          .start(); 
-         
-    
-        
-          break;
+      gzoom = true;
+      this.setState({ zoomedin: true });
+      tween = new TWEEN.Tween(camera.position)
+      .to({ x: -3 ,y:3 , z:15}, 800) 
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start(); 
 
-          }
-          case "random" :{
-            gzoom = true;
-            this.setState({ zoomedin_random: true });
-            tween = new TWEEN.Tween(camera.position)
-            .to({ x: 2.5 ,y:-3 , z:9.5}, 1500) 
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .start(); 
-            
-            tween = new TWEEN.Tween(camera.rotation)
-            .to({ y:-1 }, 1500) 
-            .easing(TWEEN.Easing.Quadratic.Out)
-            .start(); 
-           
-      
-          
-            break;
-  
-            }
-        default:
-          break;
-      }
-      
-    } 
+      tween = new TWEEN.Tween(camera.rotation)
+      .to({ x:.1,y:-.4,z:0}, 800) 
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .start(); 
+        
+    }  
   }
+  
   init = () =>{
     var width = window.innerWidth
     var height = window.innerHeight
@@ -217,37 +164,18 @@ class Home extends React.Component {
     controls.update(); */
 
     //ADD CUBE 
+    //Create cube by using BoxGeometry.
     var geometry = new THREE.BoxGeometry( 3, 3, 3 );
-    var geometry2 = new THREE.BoxGeometry( 2, 2, 2 );
 
     var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
-    var material2 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
-    var material3 = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
 
     cube[1] = new THREE.Mesh( geometry, material );
     cube[1].material.emissive.setHSL( .1, .8, .2);
-
-    cube[2] = new THREE.Mesh( geometry2, material2 );
-    cube[2].material.emissive.setHSL( .4, .8, .1);
-    
-    cube[3] = new THREE.Mesh( geometry2, material3 );
-    cube[3].material.emissive.setHSL( .6, .8, .1);
-
     cube[1].position.y = 4.25;
-    cube[2].position.x = -10;    cube[2].position.y = -3;
-    cube[3].position.x = 10;    cube[3].position.y = -3;
-
-
     cube[1].name = "projects";
-    cube[2].name = "about";
-    cube[3].name = "random";
 
 
     scene.add(cube[1]);
-
-    scene.add(cube[2]);
-
-    scene.add(cube[3]);
 
     window.addEventListener('resize', this.handleWindowResize);
     
@@ -291,19 +219,10 @@ class Home extends React.Component {
     composer.addPass( bloomPass ); 
 
     var banner_project  ={      x:-7,      y:9,      z:.2    }
-    var banner_about  ={      x:-17,      y:1,      z:.2    }
-    var banner_random  ={      x:5,      y:1,      z:.2    }
 
     var project =svgfiles['main_projects.svg']
     loadSVG(project,banner_project);
 
-    var about =svgfiles['main_about.svg']
-    loadSVG(about,banner_about);   
-    
-    var random =svgfiles['main_random.svg']
-    loadSVG(random,banner_random);   
-
-    
 
   }
 
@@ -315,21 +234,6 @@ class Home extends React.Component {
       if( this.state.currproj < 5){       this.setState({currproj: this.state.currproj+1})    }
       else{  this.setState({currproj: 0})  }
     } 
-
-    if (this.state.zoomedin_about) {
-      selector = 2;
-
-      if( this.state.currabout < 2){       this.setState({currabout: this.state.currabout+1})    }
-      else{  this.setState({currabout: 0})  }
-    } 
-
-    if (this.state.zoomedin_random) {
-      selector = 3;
-      if( this.state.currrandom < 1){       this.setState({currrandom: this.state.currrandom+1})    }
-      else{  this.setState({currrandom: 0})  }
-    } 
-
-
     if (Math.random() >.5){
       tween = new TWEEN.Tween( cube[selector].rotation)
       .to({ x:cube[selector].rotation.x+2}, 500) 
@@ -355,7 +259,7 @@ class Home extends React.Component {
 
 
     zoomcontrol = true;
-    this.setState({ zoomedin: false , zoomedin_about:false,zoomedin_random:false });
+    this.setState({ zoomedin: false , zoomedin_about:false});
     gzoom = false;
   
     tween1 = new TWEEN.Tween(camera.position)
@@ -401,19 +305,6 @@ class Home extends React.Component {
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
           <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">Learn More</button>
           {/* Have the buttons go here so that I can make descriptions dissapear when they are clicked */}
-          <button id="cycle" onClick={this.cycle}> Next</button>
-
-        </container> 
-
-        <container className={  this.state.zoomedin_about ? 'aboutappear': 'hidden_left'}>
-          <Aboutlist name={about_list[this.state.currabout]}></Aboutlist>
-          <button id="cycle" onClick={this.cycle}> Next</button>
-
-        </container> 
-
-        <container className={  this.state.zoomedin_random ? 'projectappear': 'hidden_right'}>
-          <Randomlist name={random_list[this.state.currrandom]}></Randomlist>
-          <button onClick={() => this.transition(String(random_list[this.state.currrandom]))}  id="tomlarch">Learn More</button>
           <button id="cycle" onClick={this.cycle}> Next</button>
 
         </container> 
@@ -549,74 +440,8 @@ function Projectlist(props) {
   }
 }
 
-function Aboutlist(props) {
-  switch ( props.name) { 
-  case "about_me":
-    return <div className="aboutlist">
-      <h1>Who am I?</h1>
-      <p>
-      I am Minyoung Na, a recent graduate of Cooper Union for the Advancement of Science and Art. 
-      I graduated with a bachelor of science degree with computer science as a minor. During my time in college, 
-      I took a variety of courses and engaged in multiple projects that not only made me a web developer, but also an
-      exellent UI designer.
-      </p>
-      <img className="mypic" src={mypic}></img>
-      </div>;
-  case "about_school":
-    return <div className="aboutlist" id="curriculum">
-      <h1>Curriculum</h1>
-        <p> ECE-471-1 : Machine Learning and architecture  </p>
-        <p> ECE-491-1 : Data science for social good  </p>
-        <p> EID-364-2 : Empathetic Robots  </p>
-        <p> ECE-371-1 : Data Visualization  </p>
-        <p> ECE-464-1 : Databases  </p>
-        <p> ECE-469-1 : Artificial Intelligence  </p>
-        <p> ECE-471-1 : Machine Learning  </p>
-        <p> ECE-366-1 : Software Engg & Lrg Sys Design  </p>
-
-      </div>;
-  case "about_site":
-    return <div className="aboutlist" id="site_description">
-      <h1>Why make this website?</h1>
-      <p>
-      Software engineering students and graduates, as a testament to their abilities, make portfolio websites 
-      that display their abilities. At once, it is a good metric to show that the person is capable of doing 
-      a basic front-end project. However, all too often, we see the same old react / bootstrap formula that 
-      makes the website look almost identical. There is nothing wrong with such a convention, but it can 
-      be limiting especially if the individual is interested in web development. I used three.js, a 3D javascript 
-      library, to not only demonstrate my capacity in developing basic front-end features,but also my creative 
-      nature and understanding of different frameworks at hand.
 
 
-</p>
-      </div>;
-
-
-  default:
-    return 0
-  }
-}
-
-function Randomlist(props) {
-  switch ( props.name) { 
-  case "soundcloud":
-    return <div>
-      <h1>Music</h1>
-      <p> I make tunes on FL studio when I have time.
-
-      </p>
-      </div>;
-  case "graphicdesign":
-    return <div>
-      <h1>Graphic design</h1>
-      <p>Some design stuff I learned to do as an engineer
-      </p>
-      </div>;
-  default:
-    return 0
-  }
-}
- 
 function loadSVG( file , svglocation) {
   var loader = new SVGLoader();
 
