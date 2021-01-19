@@ -98,7 +98,7 @@ class Home extends React.Component {
 
   onclick = (event) =>{
     event.preventDefault();
-    var important = [scene.children[1],scene.children[2],scene.children[3]]
+    var important = [scene.children[1]]
     var intersects = raycaster.intersectObjects(  important );
   
     if ( intersects.length > 0 ) {
@@ -184,24 +184,7 @@ class Home extends React.Component {
     // SETUP BACKGROUND
     var geometry = new THREE.BoxGeometry( .5, .5, .5 );
 
-    for ( var i = 0; i < 80; i ++ ) {
-
-      var color = new THREE.Color();
-
-      var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:30,specular:0xffffff} );
-      var sphere = new THREE.Mesh( geometry, material );
-      sphere.position.x = Math.random() * 100 - 50;
-      sphere.position.y = Math.random() * 100 - 50;
-      sphere.position.z = Math.random() * 100 - 100;
-      sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
-      sphere.material.emissive.setHSL( Math.random()*0.15 + .45, 1, Math.random()*0.4+.4);
-
-      scene.add( sphere );
-    } 
-
-    
-    const interaction = new Interaction(renderer, scene, camera);
-
+  
     // Set up ray casting
     raycaster = new THREE.Raycaster();
     window.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -218,10 +201,7 @@ class Home extends React.Component {
     composer.addPass( renderScene );
     composer.addPass( bloomPass ); 
 
-    var banner_project  ={      x:-7,      y:9,      z:.2    }
 
-    var project =svgfiles['main_projects.svg']
-    loadSVG(project,banner_project);
 
 
   }
@@ -345,27 +325,7 @@ function animate (time) {
 
 function position(time){
   raycaster.setFromCamera( mouse, camera );
-  var important = [scene.children[1],scene.children[2],scene.children[3]]
-
-  var intersects = raycaster.intersectObjects(  important );
-
-  if ( intersects.length > 0 ) {
-    if ( INTERSECTED != intersects[ 0 ].object ) {
-      if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-      INTERSECTED = intersects[0].object;
-      INTERSECTED.currentHex = INTERSECTED.material.emissive.getHex();
-      INTERSECTED.material.emissive.setHex(0xadd8e6);
-      
-    }
-   
-  } else {
-
-    if (INTERSECTED) INTERSECTED.material.emissive.setHex(INTERSECTED.currentHex);
-
-    INTERSECTED = null;
-
-  }
+ 
 }
 
 function onDocumentMouseMove( event ) {
