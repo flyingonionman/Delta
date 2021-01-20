@@ -4,12 +4,9 @@ import * as THREE from "three";
 import { EffectComposer } from '../module/EffectComposer';
 import { UnrealBloomPass  } from '../module/UnrealBloomPass';
 import { RenderPass } from '../module/RenderPass';
-import { SVGLoader } from '../svg/SVGLoader.js';
 
-import { OrbitControls } from '../module/OrbitControls';
 import TWEEN from '@tweenjs/tween.js';
 
-import { Interaction } from 'three.interaction';
 //import SVG
 function importAll(r) {
   let svgfiles = {};
@@ -29,8 +26,6 @@ var gzoom = false;
 var selector // Determines which cube it spins
 var project_list =["pied","mlarch","datasci","unionjrnl","babymon","dropblocks"]
 //Camera views
-var project = false;
-var afterimagePass;
 
 var zoomcontrol = false;
 
@@ -46,18 +41,9 @@ var params_bloom  = {
   bloomRadius: 1.2
 };
 
-//Prelim data for svg
-var guiData = {
-  currentURL: 'src/svg/Seminopoly.svg',
-  drawFillShapes: true,
-  drawStrokes: true,
-  fillShapesWireframe: false,
-  strokesWireframe: false
-};
-
 
 //mouse movement
-var mouse = new THREE.Vector2(), INTERSECTED;
+var mouse = new THREE.Vector2()
 class Home extends React.Component {
   constructor(props){
     super(props);
@@ -401,89 +387,4 @@ function Projectlist(props) {
 }
 
 
-
-function loadSVG( file , svglocation) {
-  var loader = new SVGLoader();
-
-  loader.load( file, function ( data ) {
-      var paths = data.paths;
-      var group = new THREE.Group();
-      group.scale.multiplyScalar( 0.007);
-      group.position.x = svglocation.x;
-      group.position.z = svglocation.z;
-
-      group.position.y = svglocation.y;
-      group.scale.y *= 1;
-      group.rotation.y = 3.2;
-      group.rotation.z= 3.15;
-
-
-
-      for ( var i = 0; i < paths.length; i ++ ) {
-
-          var path = paths[ i ];
-          
-          var fillColor = path.userData.style.fill;
-          if ( guiData.drawFillShapes && fillColor !== undefined && fillColor !== 'none' ) {
-
-              var material = new THREE.MeshBasicMaterial( {
-                  color: new THREE.Color().setStyle( fillColor ),
-                  opacity: path.userData.style.fillOpacity,
-                  transparent: path.userData.style.fillOpacity < 1,
-                  side: THREE.DoubleSide,
-                  depthWrite: false,
-                  wireframe: guiData.fillShapesWireframe
-              } );
-
-              var shapes = path.toShapes( true );
-
-              for ( var j = 0; j < shapes.length; j ++ ) {
-
-                  var shape = shapes[ j ];
-
-                  var geometry = new THREE.ShapeBufferGeometry( shape );
-                  var mesh = new THREE.Mesh( geometry, material );
-
-                  group.add( mesh );
-
-              }
-
-          }
-
-          var strokeColor = path.userData.style.stroke;
-
-          if ( guiData.drawStrokes && strokeColor !== undefined && strokeColor !== 'none' ) {
-
-              var material = new THREE.MeshBasicMaterial( {
-                  color: new THREE.Color().setStyle( strokeColor ),
-                  opacity: path.userData.style.strokeOpacity,
-                  transparent: path.userData.style.strokeOpacity < 1,
-                  side: THREE.DoubleSide,
-                  depthWrite: false,
-                  wireframe: guiData.strokesWireframe
-              } );
-
-              for ( var j = 0, jl = path.subPaths.length; j < jl; j ++ ) {
-
-                  var subPath = path.subPaths[ j ];
-
-                  var geometry = SVGLoader.pointsToStroke( subPath.getPoints(), path.userData.style );
-
-                  if ( geometry ) {
-
-                      var mesh = new THREE.Mesh( geometry, material );
-
-                      group.add( mesh );
-
-                  }
-
-              }
-
-          }
-
-      }
-      scene.add( group );
-
-} );
-}
 export default Home;
