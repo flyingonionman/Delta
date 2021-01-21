@@ -53,36 +53,29 @@ class Home extends React.Component {
     };
   }
 
+  /* 
+  Starts the initial zooming animation 
+  */
   componentDidMount(){
     this.init();
     animstart();
   }
 
+  /* 
+  Handles resizing of the window and resizes the 3D canvas automatically
+  */
   handleWindowResize = () => {
     const width = window.innerWidth;
-    const height = window.innerHeight;
+    const height =window.innerHeight;
     renderer.setSize(width, height)
 
   };
 
-  return = () =>{
-    tween = new TWEEN.Tween(camera.position)
-      .to({ x:0 ,y:0 , z:37}, 1000) 
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start(); 
+  /*  
+  Handles click events on a 3D object, disabled rn
+  */
 
-      tween = new TWEEN.Tween(camera.rotation)
-      .to({ x:0,y:0,z:0 }, 1000) 
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start(); 
-    
-      cube[1].material.emissive.setHSL( .1, .8, .2);
-
-    this.setState({ zoomedin: false });
-    gzoom = false;
-  }
-
-  onclick = (event) =>{
+  /* onclick = (event) =>{
     event.preventDefault();
     var important = [scene.children[1]]
     var intersects = raycaster.intersectObjects(  important );
@@ -102,11 +95,11 @@ class Home extends React.Component {
       .start(); 
         
     }  
-  }
+  } */
   
   init = () =>{
     var width = window.innerWidth
-    var height = window.innerHeight
+    var height = window.innerHeight;
     //ADD SCENE
     scene = new THREE.Scene()
     scene.background = new THREE.Color( 0x000000  );
@@ -219,7 +212,7 @@ class Home extends React.Component {
     }
   }
   
-  transition = (pageurl) =>{
+  /* transition = (pageurl) =>{
     if (pageurl == "dropblocks") {  window.open( "https://github.com/ArianaFreitag/cgml-midterm", '_blank') ;  return; }
     if (pageurl == "unionjrnl") {    window.open(  "http://unionjournal.space/", '_blank' ) ; return;  }
 
@@ -251,35 +244,27 @@ class Home extends React.Component {
     if (pageurl == "soundcloud") {   setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);  }
     if (pageurl == "graphicdesign") {   setTimeout(function(){   window.location.href = "https://github.com/flyingonionman/Design-Portfolio";  }, 3000);  }
 
-  }
+  } */
   
   render() {
   return (
 
     <div className="App" >    
-      <div className="navigation">
-      <ul>
-        <li><a>MINYOUNG NA // minyoungwork1997@gmail.com //</a><a href="https://www.minyoungna.com">Return Home</a></li>
-      </ul>
-
-      </div>
-      <div className="content">
+        
         <div id="canvas" ref={ref => (this.mount = ref)} />
-        {/* <div className="label" >PROJECTS</div> */}
-
-        <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
+        {/* <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
           <Projectlist name={project_list[this.state.currproj]}></Projectlist>
           <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">Learn More</button>
-          {/* Have the buttons go here so that I can make descriptions dissapear when they are clicked */}
           <button id="cycle" onClick={this.cycle}> Next</button>
 
-        </container> 
-        
-        <button className={  this.state.zoomedin || this.state.zoomedin_about || this.state.zoomedin_random ? 'return_appear': 'return_hidden'}  id="return" onClick={this.return}  >return</button>
+        </container>  */}
 
 
-
-      </div>    
+        <div className="content">
+          <container className='right'>
+            <h1> Minyoung Na</h1>
+          </container>
+        </div> 
        
     </div>
     );
@@ -385,6 +370,7 @@ function Projectlist(props) {
     return 0
   }
 }
+
 
 
 export default Home;

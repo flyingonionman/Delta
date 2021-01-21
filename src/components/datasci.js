@@ -7,9 +7,7 @@ import {
 
 import * as THREE from "three";
 import { SVGLoader } from '../svg/SVGLoader.js';
-import { OrbitControls } from '../module/OrbitControls';
 
-import TWEEN from '@tweenjs/tween.js';
 import {hive} from "./hivegeo";
 
 //import SVG
@@ -32,16 +30,14 @@ const listfonts = importfont(require.context('../font', false, /\.(json)$/));
 
 
 //globals
-var camera, scene, renderer,controls;
+var camera, scene, renderer;
 var frameId;
 var torus;
-var tween;
 var trailgeometry;
 var trailmaterial;
-var trail;
 var zoomedout= false;
 
-var finished = false,finishedanim =false;
+var finished = false;
 //Movement 
 var moveForward = false;
 var moveBackward = false;
@@ -209,9 +205,6 @@ class Datasci extends React.Component {
     //Add Trail
     trailgeometry = new THREE.SphereGeometry( .2, 32, 32 );
     trailmaterial = new THREE.MeshBasicMaterial( {color: 0xffff00} );
-    trail  = new THREE.Mesh( trailgeometry, trailmaterial );
-    
-
 
     //ADD torus 
     var geometry = new THREE.TorusGeometry( 1, .07, 16, 100 );

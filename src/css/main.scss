@@ -20,17 +20,14 @@ time, mark, audio, video {
 	vertical-align: baseline;
 }
 
-
-
-.App{ body {
-  overflow: hidden;
-  margin: 0; height: 100%; 
-  width:100%;
-
-}}
-
-
 .App{
+  body {
+    overflow: hidden;
+    margin: 0; height: 100%; 
+    width:100%;
+  
+  }
+
   font-family: 'Bahnschrift';
   h1{
     font-size:3vw;
@@ -53,7 +50,15 @@ time, mark, audio, video {
   }
 }
 
+#canvas{
+  position:absolute;
+}
 
+.content{
+  position: absolute;
+  min-height: 100vh;
+  min-width: 100vw;
+}
 .navigation{
     min-height:100%;
   
@@ -115,78 +120,28 @@ container{
       margin-left:0;
 
   }
-}
 
-.projectappear{
-  position: absolute;
-  color: white;
-  font-family: 'Bahnschrift';
-  bottom: 0;
-  font-size: 1vw;
-  height: 80%;
-  margin: 5% 6%;
-  width: 37%;
-  justify-content: flex-end;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column; 
-  right:0
-}
-
-.aboutappear{
-  /* position: absolute;
-  color: white;
-  font-family: 'Bahnschrift';
-  bottom: 0;
-  font-size: 1vw;
-  margin: 10% 10%;
-  width: 32%; */
-
-  position: absolute;
-  color: white;
-  font-family: 'Bahnschrift';
-  bottom: 0;
-  font-size: 1vw;
-  height: 80%;
-  margin: 5% 6%;
-  width: 37%;
-  justify-content: flex-end;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column;
-}
-
-.hidden_right{
-  position: absolute;
-  color: white;
-  font-family: 'Bahnschrift';
-  bottom: 0;
-  font-size: 1vw;
-  height: 80%;
-  margin: 5% -50%;
-  width: 37%;
-  justify-content: flex-end;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column; 
   
-  right: 0;
-
+  
 }
 
-.hidden_left{
+.right{
   position: absolute;
-  margin: 5% -38%;
-  transition: margin .8s;
-  width: 37%;
+  color: white;
+  font-family: 'Bahnschrift';
   bottom: 0;
-  height: 80%;
-  justify-content: flex-end;
+  font-size: 1vw;
+  height: 100%;
+  padding: 5% 5%;
+  width: 50%;
+  justify-content: flex-start;
   align-items: flex-start;
   display: flex;
-  flex-direction: column;
-  color: white;
+  flex-direction: column; 
+  right:0;
+  overflow:hidden;
 }
+
 
 #return{
   position: absolute;
