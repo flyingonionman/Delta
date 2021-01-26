@@ -261,11 +261,24 @@ class Home extends React.Component {
 
 
         <div className="content">
-          <container className='right'>
+          <div className="right">
             <h1> Minyoung Na</h1>
-          </container>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> Minyoung Na</h1>
+            <h1> poop</h1>
+          </div>
         </div> 
-       
     </div>
     );
   }

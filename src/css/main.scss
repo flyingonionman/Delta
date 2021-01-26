@@ -31,13 +31,13 @@ time, mark, audio, video {
   font-family: 'Bahnschrift';
   h1{
     font-size:3vw;
-    margin: 3% 0%;
+    margin: 5% 0%;
 
   }
 
   h3{
     font-size:1.3vw;
-    margin: 3% 0%;
+    margin: 5% 0%;
 
   }
 
@@ -52,12 +52,30 @@ time, mark, audio, video {
 
 #canvas{
   position:absolute;
+
 }
 
 .content{
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
+  z-index: 100;
+  display: flex;
+  color: white;
+  font-family: 'Bahnschrift';
+  bottom: 0;
+  font-size: 1vw;
+  height: 100%;
+  overflow-y:auto;
+
+
+  .right{
+    position: absolute;
+    height: 100%;
+    width: 50%;
+    right: 0;
+    padding:3%
+  }
 }
 .navigation{
     min-height:100%;
@@ -101,71 +119,7 @@ time, mark, audio, video {
     margin: 12% 47%;
 }
 
-container{
-  hr{
-    color:white;
-  }
-  transition: margin .8s;
-  #tomlarch{
-    display: inline;
-    padding: 1%;
-    margin-bottom: 3%;
-    margin-left: 0;
-    margin-right: 3%;
-  }
-  #cycle{
-    display:inline;
-      padding:1%;
-      margin-bottom:3%;
-      margin-left:0;
 
-  }
-
-  
-  
-}
-
-.right{
-  position: absolute;
-  color: white;
-  font-family: 'Bahnschrift';
-  bottom: 0;
-  font-size: 1vw;
-  height: 100%;
-  padding: 5% 5%;
-  width: 50%;
-  justify-content: flex-start;
-  align-items: flex-start;
-  display: flex;
-  flex-direction: column; 
-  right:0;
-  overflow:hidden;
-}
-
-
-#return{
-  position: absolute;
-    text-decoration: none;
-    padding: 2%;
-    border: none;
-    background-color: transparent;
-    color: white;
-    /* margin-top: 0; */
-    font-size: 2vw;
-    left: 0;
-    outline: none;
-    transition: bottom .6s;
-}
-
-.return_appear{
-  bottom: 0;
-
-}
-
-.return_hidden{
-  bottom: -10%;
-
-}
 
 button{
   border-style: none;
