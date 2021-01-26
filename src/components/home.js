@@ -7,6 +7,8 @@ import { RenderPass } from '../module/RenderPass';
 
 import TWEEN from '@tweenjs/tween.js';
 
+import Navbar from './assets/navbar'
+
 //import SVG
 function importAll(r) {
   let svgfiles = {};
@@ -18,23 +20,22 @@ const svgfiles = importAll(require.context('../svg', false, /\.(svg)$/));
 
 
 //Globals
-var camera, scene, renderer,controls,frameId,composer,raycaster;
+let camera, scene, renderer,controls,frameId,composer,raycaster,bloomPass;
 const cube ={};
-var tween;
-var tween1, tween2;
-var gzoom = false;
-var selector // Determines which cube it spins
-var project_list =["pied","mlarch","datasci","unionjrnl","babymon","dropblocks"]
+let scroll;
+let tween;
+let gzoom = false;
+let selector // Determines which cube it spins
 //Camera views
 
-var zoomcontrol = false;
+let zoomcontrol = false;
 
 //Layering
-var ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
-var bloomLayer = new THREE.Layers();
+let ENTIRE_SCENE = 0, BLOOM_SCENE = 1;
+let bloomLayer = new THREE.Layers();
 bloomLayer.set( BLOOM_SCENE );
       
-var params_bloom  = {
+let params_bloom  = {
   exposure: 1,
   bloomStrength: .7,
   bloomThreshold: 0,
@@ -50,15 +51,18 @@ class Home extends React.Component {
     this.state = { 
       zoomedin: zoomcontrol ,
       currproj: 0,
+      
     };
   }
 
   /* 
-  Starts the initial zooming animation 
+  Initializers
   */
   componentDidMount(){
+    //Animation + 3D object initialization
     this.init();
-    animstart();
+
+
   }
 
   /* 
@@ -71,31 +75,18 @@ class Home extends React.Component {
 
   };
 
+
   /*  
-  Handles click events on a 3D object, disabled rn
+  Handles scroll
   */
+  handleScroll = (content) =>{
+    scroll = content.scrollTop
+    let hypercube = scene.getObjectByName('hypergroup', true)
+    for (let child of hypercube.children){
+      child.position.z +=.1;
+    }
+  }
 
-  /* onclick = (event) =>{
-    event.preventDefault();
-    var important = [scene.children[1]]
-    var intersects = raycaster.intersectObjects(  important );
-  
-    if ( intersects.length > 0 ) {
-      var id = intersects[0].object.name
-      gzoom = true;
-      this.setState({ zoomedin: true });
-      tween = new TWEEN.Tween(camera.position)
-      .to({ x: -3 ,y:3 , z:15}, 800) 
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start(); 
-
-      tween = new TWEEN.Tween(camera.rotation)
-      .to({ x:.1,y:-.4,z:0}, 800) 
-      .easing(TWEEN.Easing.Quadratic.Out)
-      .start(); 
-        
-    }  
-  } */
   
   init = () =>{
     var width = window.innerWidth
@@ -118,7 +109,7 @@ class Home extends React.Component {
 
     setTimeout(function(){
       tween = new TWEEN.Tween(camera.position)
-      .to({ x: 0 ,y: 0 , z:37}, 1000) 
+      .to({ x: 14,y: 3 , z:45}, 1000) 
       .easing(TWEEN.Easing.Cubic.InOut
         )
       .start(); 
@@ -137,33 +128,46 @@ class Home extends React.Component {
     renderer.shadowMap.enabled = true;
 
     this.mount.appendChild(renderer.domElement)
+    // SETUP hypercube
+    var geometry = new THREE.BoxGeometry( .5, .5, .5 );
+    const hypergroup = new THREE.Group();
+    for ( var i = 0; i < 343; i ++ ) {
+      var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:30,specular:0xffffff} );
+      var hypercube = new THREE.Mesh( geometry, material );
+      hypercube.position.x = i%7 ;
+      hypercube.position.y = parseInt(i/7) -  parseInt(i/49) * 7 +2 ;
+      hypercube.position.z = parseInt(i/49) * 1 + 1;
+      hypercube.scale.setScalar( 2 );
+      hypercube.material.emissive.setHSL( 0.1, 1, .2);
 
-    //ADD CONTROLS
-    /* controls = new OrbitControls(camera,renderer.domElement );
-    controls.update(); */
+      hypergroup.add(hypercube)
+    } 
 
-    //ADD CUBE 
-    //Create cube by using BoxGeometry.
-    var geometry = new THREE.BoxGeometry( 3, 3, 3 );
-
-    var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:1} );
-
-    cube[1] = new THREE.Mesh( geometry, material );
-    cube[1].material.emissive.setHSL( .1, .8, .2);
-    cube[1].position.y = 4.25;
-    cube[1].name = "projects";
+    hypergroup.name = "hypergroup"
+    scene.add( hypergroup );
 
 
-    scene.add(cube[1]);
-
-    window.addEventListener('resize', this.handleWindowResize);
-    
-    var renderScene = new RenderPass( scene, camera );
-    
     // SETUP BACKGROUND
     var geometry = new THREE.BoxGeometry( .5, .5, .5 );
 
-  
+    for ( var i = 0; i < 80; i ++ ) {
+      var material = new THREE.MeshPhongMaterial( {color: 0x192841, shininess:30,specular:0xffffff} );
+      var sphere = new THREE.Mesh( geometry, material );
+      sphere.position.x = Math.random() * 80 - 50;
+      sphere.position.y = Math.random() * 80 - 50;
+      sphere.position.z = Math.random() * 80 - 100;
+      sphere.scale.setScalar( Math.random() * Math.random() + 0.5 );
+      sphere.material.emissive.setHSL( Math.random()*0.15 + .45, 1, Math.random()*0.4+.4);
+
+      scene.add( sphere );
+    } 
+
+
+
+    //Set up window resize
+    window.addEventListener('resize', this.handleWindowResize);
+    var renderScene = new RenderPass( scene, camera );
+    
     // Set up ray casting
     raycaster = new THREE.Raycaster();
     window.addEventListener( 'mousemove', onDocumentMouseMove, false );
@@ -171,7 +175,7 @@ class Home extends React.Component {
 
     // postprocessing UNREALBLOOM
 
-    var bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
+    bloomPass = new UnrealBloomPass( new THREE.Vector2( window.innerWidth, window.innerHeight ), 1.5, 0.4, 0.85 );
     bloomPass.threshold = params_bloom.bloomThreshold;
     bloomPass.strength = params_bloom.bloomStrength;
     bloomPass.radius = params_bloom.bloomRadius;
@@ -180,7 +184,14 @@ class Home extends React.Component {
     composer.addPass( renderScene );
     composer.addPass( bloomPass ); 
 
+    
+    //Set up scrolling
+    let content = document.querySelector(".content")
+    content.addEventListener('scroll', ()=> this.handleScroll(content));
 
+
+    // Start animation
+    animstart();
 
 
   }
@@ -212,71 +223,32 @@ class Home extends React.Component {
     }
   }
   
-  /* transition = (pageurl) =>{
-    if (pageurl == "dropblocks") {  window.open( "https://github.com/ArianaFreitag/cgml-midterm", '_blank') ;  return; }
-    if (pageurl == "unionjrnl") {    window.open(  "http://unionjournal.space/", '_blank' ) ; return;  }
-
-
-    zoomcontrol = true;
-    this.setState({ zoomedin: false , zoomedin_about:false});
-    gzoom = false;
-  
-    tween1 = new TWEEN.Tween(camera.position)
-    .to({ y:0,x:0,z: 200}, 2000) 
-    .easing(TWEEN.Easing.Quadratic.Out)
-  
-    tween2 = new TWEEN.Tween(camera.position)
-    .to({ y:4,x:0,z:2.9}, 1000) 
-    .easing(TWEEN.Easing.Quadratic.Out)
-  
-    tween = new TWEEN.Tween(camera.rotation)
-    .to({ x:0,y:0,z:0 }, 2000) 
-    .easing(TWEEN.Easing.Quadratic.Out)
-    .start(); 
-  
-    tween1.chain(tween2)
-    
-    tween1.start();
-    if (pageurl == "pied") {       setTimeout(function(){   window.location.href = "https://www.piedpaper.net";  }, 3000);  }
-    if (pageurl == "babymon") {       setTimeout(function(){   window.location.href = "https://www.youtube.com/watch?v=ycRHIYA70sg";  }, 3000);  }
-    if (pageurl == "mlarch") {     setTimeout(function(){   window.location.href = "https://www.minyoungna.com/mlarch";  }, 3000);  }
-    if (pageurl == "datasci") {      setTimeout(function(){   window.location.href = "https://www.minyoungna.com/datasci";  }, 3000);  }
-    if (pageurl == "soundcloud") {   setTimeout(function(){   window.location.href = "https://soundcloud.com/fantalone";  }, 3000);  }
-    if (pageurl == "graphicdesign") {   setTimeout(function(){   window.location.href = "https://github.com/flyingonionman/Design-Portfolio";  }, 3000);  }
-
-  } */
-  
   render() {
   return (
 
     <div className="App" >    
-        
         <div id="canvas" ref={ref => (this.mount = ref)} />
-        {/* <container className={  this.state.zoomedin ? 'projectappear': 'hidden_right'}>
-          <Projectlist name={project_list[this.state.currproj]}></Projectlist>
-          <button onClick={() => this.transition(String(project_list[this.state.currproj]))}  id="tomlarch">Learn More</button>
-          <button id="cycle" onClick={this.cycle}> Next</button>
-
-        </container>  */}
-
-
         <div className="content">
           <div className="right">
             <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> Minyoung Na</h1>
-            <h1> poop</h1>
+            <h2> Software developer</h2>
+            <h3>
+              Can we make the web not a place to visit but a place to experience? <br></br>
+              I hope to accomplish this goal by building meaningful, aesthetic, and useful websites that enchant people.
+            </h3>
+
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+            <h1>pingoos pingoos</h1>
+
           </div>
         </div> 
     </div>
@@ -291,15 +263,16 @@ function animstart () {
 }
 
 function animate (time) {
-
-  if (!gzoom){
-    for (let property in cube) {
-      cube[property].rotation.x += .01;
-      cube[property].rotation.y += .01;  
-
-    };
+  let axis = new THREE.Vector3(3,4,4).normalize()
+  let hypercube = scene.getObjectByName('hypergroup', true)
+  if( 2000 - time%4000 > 0)   params_bloom.bloomStrength +=.0015;
+  else {
+    params_bloom.bloomStrength -=.0015;
   }
+  hypercube.rotateOnAxis(axis, 0.005)
+
   TWEEN.update();
+  bloomPass.strength = params_bloom.bloomStrength;
 
   position(time);
   //controls.update();

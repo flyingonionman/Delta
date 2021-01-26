@@ -30,9 +30,13 @@ time, mark, audio, video {
 
   font-family: 'Bahnschrift';
   h1{
-    font-size:3vw;
-    margin: 5% 0%;
+    font-size:5.5vw;
+    margin: 3% 0%;
 
+  }
+  h2{
+    font-size:3vw;
+    margin: 2% 0%;
   }
 
   h3{
@@ -59,7 +63,7 @@ time, mark, audio, video {
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  z-index: 100;
+  z-index: 1;
   display: flex;
   color: white;
   font-family: 'Bahnschrift';
