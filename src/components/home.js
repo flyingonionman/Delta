@@ -82,9 +82,18 @@ class Home extends React.Component {
   handleScroll = (content) =>{
     scroll = content.scrollTop
     let hypercube = scene.getObjectByName('hypergroup', true)
+    let elemcount = 0 ;
     for (let child of hypercube.children){
-      child.position.z +=.1;
+      child.position.x+=.002 *  parseInt(elemcount%7);
+
+      child.position.y +=.002 * ( parseInt(elemcount/7) -  parseInt(elemcount/49)* 7 );
+
+      child.position.z +=.002 * parseInt(elemcount/49);
+      elemcount +=1;
+
     }
+
+    elemcount = 0;
   }
 
   
@@ -138,7 +147,7 @@ class Home extends React.Component {
       hypercube.position.y = parseInt(i/7) -  parseInt(i/49) * 7 +2 ;
       hypercube.position.z = parseInt(i/49) * 1 + 1;
       hypercube.scale.setScalar( 2 );
-      hypercube.material.emissive.setHSL( 0.1, 1, .2);
+      hypercube.material.emissive.setHSL( 0.1, 1, .1);
 
       hypergroup.add(hypercube)
     } 
@@ -269,7 +278,7 @@ function animate (time) {
   else {
     params_bloom.bloomStrength -=.0015;
   }
-  hypercube.rotateOnAxis(axis, 0.005)
+  //hypercube.rotateOnAxis(axis, 0.005)
 
   TWEEN.update();
   bloomPass.strength = params_bloom.bloomStrength;
