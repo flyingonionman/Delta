@@ -72,9 +72,11 @@ time, mark, audio, video {
   font-size: 1vw;
   height: 100%;
   overflow-y:auto;
-
+  display:flex; 
+  flex-direction: column;
+  align-items: flex-end;
   .right{
-    position: absolute;
+    position: relative;
     height: 100%;
     width: 50%;
     right: 0;

@@ -248,6 +248,25 @@ class Home extends React.Component {
               I hope to accomplish this goal by building meaningful, aesthetic, and useful websites that enchant people.
             </h3>
           </div>
+
+          <div className="right">
+            <h1> Minyoung Na</h1>
+            <h2> Software developer</h2>
+            <h3>
+              Can we make the web not a place to visit but a place to experience? <br></br>
+              I hope to accomplish this goal by building meaningful, aesthetic, and useful websites that enchant people.
+            </h3>
+          </div>
+
+
+          <div className="right">
+            <h1> Minyoung Na</h1>
+            <h2> Software developer</h2>
+            <h3>
+              Can we make the web not a place to visit but a place to experience? <br></br>
+              I hope to accomplish this goal by building meaningful, aesthetic, and useful websites that enchant people.
+            </h3>
+          </div>
         </div> 
     </div>
     );
@@ -263,9 +282,9 @@ function animstart () {
 function animate (time) {
   let axis = new THREE.Vector3(3,4,4).normalize()
   let hypercube = scene.getObjectByName('hypergroup', true)
-  if( 2000 - time%4000 > 0)   params_bloom.bloomStrength +=.0015;
+  if( 2000 - time%4000 > 0)   params_bloom.bloomStrength +=.0035;
   else {
-    params_bloom.bloomStrength -=.0015;
+    params_bloom.bloomStrength -=.0035;
   }
   //hypercube.rotateOnAxis(axis, 0.005)
 
