@@ -83,12 +83,14 @@ class Home extends React.Component {
     scroll = content.scrollTop
     let hypercube = scene.getObjectByName('hypergroup', true)
     let elemcount = 0 ;
+    /* 
+    When scroll hits a certain point, then cubes explode ( Tween )
+    
+    */
     for (let child of hypercube.children){
-      child.position.x+=.002 *  parseInt(elemcount%7);
-
-      child.position.y +=.002 * ( parseInt(elemcount/7) -  parseInt(elemcount/49)* 7 );
-
-      child.position.z +=.002 * parseInt(elemcount/49);
+      child.position.x+=.004 *  parseInt(elemcount%7);
+      child.position.y +=.004 * ( parseInt(elemcount/7) -  parseInt(elemcount/49)* 7 );
+      child.position.z +=.004 * parseInt(elemcount/49);
       elemcount +=1;
 
     }
@@ -245,19 +247,6 @@ class Home extends React.Component {
               Can we make the web not a place to visit but a place to experience? <br></br>
               I hope to accomplish this goal by building meaningful, aesthetic, and useful websites that enchant people.
             </h3>
-
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-            <h1>pingoos pingoos</h1>
-
           </div>
         </div> 
     </div>

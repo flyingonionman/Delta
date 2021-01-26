@@ -35,8 +35,10 @@ time, mark, audio, video {
 
   }
   h2{
-    font-size:3vw;
-    margin: 2% 0%;
+    font-size: 2vw;
+    padding: 2vw;
+    color: black;
+    background-color: white;
   }
 
   h3{
@@ -64,7 +66,6 @@ time, mark, audio, video {
   min-height: 100vh;
   min-width: 100vw;
   z-index: 1;
-  display: flex;
   color: white;
   font-family: 'Bahnschrift';
   bottom: 0;
@@ -72,13 +73,16 @@ time, mark, audio, video {
   height: 100%;
   overflow-y:auto;
 
-
   .right{
     position: absolute;
     height: 100%;
     width: 50%;
     right: 0;
-    padding:3%
+    padding:3%;
+    justify-content: center;
+    align-items: flex-start;
+    display:flex;
+    flex-direction: column;
   }
 }
 .navigation{
